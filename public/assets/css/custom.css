@@ -1,0 +1,382 @@
+.page-loader-container {
+    z-index: 99999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #22252abf;
+}
+
+.page-loader-container .loader {
+    margin: 0 auto;
+    width: 70px;
+    height: 50px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+.page-loader-container .loader .bar1 {
+    background-color: #fc3c5f;
+}
+.page-loader-container .loader .bar2 {
+    background-color: #993cfc;
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+}
+.page-loader-container .loader .bar3 {
+    background-color: #3ca9fc;
+    -webkit-animation-delay: -0.7s;
+    animation-delay: -0.7s;
+}
+.page-loader-container .loader .bar4 {
+    background-color: #3cfc5f;
+    -webkit-animation-delay: -0.6s;
+    animation-delay: -0.6s;
+}
+.page-loader-container .loader .bar5 {
+    background-color: #fcdf3c;
+    -webkit-animation-delay: -0.5s;
+    animation-delay: -0.5s;
+}
+
+.page-loader-container .loader>div {
+    height: 100%;
+    width: 8px;
+    display: inline-block;
+    margin-left: 2px;
+    -webkit-animation: delay 0.9s infinite ease-in-out;
+    animation: delay 0.9s infinite ease-in-out;
+}
+
+a {
+    cursor: pointer;
+}
+.table a:not([href]) {
+    color: #007bff !important;
+}
+.table a:not([href]):hover, .table a:not([href]):focus {
+    color: #437ac7 !important;
+}
+
+.metismenu a:hover {
+    background: #17C2D7 !important;
+    color: #fff !important;
+}
+
+.metismenu ul a {
+    padding: 6px 15px 6px 22px;
+}
+
+.metismenu ul a::before {
+    
+    left: 5px;
+    width: 10px;
+}
+
+.metismenu ul a:hover::before {
+    width: 95% !important;
+}
+
+.metismenu>li.on>a {
+    background: #17C2D7 !important;
+    color: #fff !important; 
+}
+.metismenu>li.on>a:focus {
+    color: #fff !important; 
+}
+
+.metismenu>li.active>a {
+    color: #fff !important; 
+}
+.metismenu>li.open>a:focus {
+    color: #fff !important; 
+}
+
+.metismenu>li.open>a:focus>i {
+    color: #fff !important; 
+}
+
+.metismenu>li>a:focus {
+    color: #393d42 !important;
+}
+
+.metismenu>li>a:focus>i {
+    color: #393d42 !important;
+}
+
+.metismenu>li>a:hover {
+    color: #fff !important;
+}
+
+.metismenu>li>a:hover>i {
+    color: #fff !important;
+}
+
+.metismenu .has-arrow:after {
+    bottom: 4px;
+    right: 10px;
+}
+
+.metismenu a:focus:after {
+    color: #393d42 !important;
+}
+
+.metismenu .has-arrow:hover:after {
+    color: #fff !important;
+}
+
+.metismenu>li.open .has-arrow:after {
+    color: #fff !important;
+}
+
+.metismenu>li.on .has-arrow:after {
+    color: #fff !important;
+}
+
+.metismenu>li.active>a i .has-arrow:hover:after {
+    color: #fff;
+}
+
+.metismenu a i {
+    background: none !important;
+}
+
+.metismenu a i {
+    background: none !important;
+}
+
+.metismenu ul a:hover {
+    background: none !important;
+    color: #393d42 !important;
+}
+
+.metismenu li>ul>li.on>a {
+    font-weight: bold;
+}
+
+.light_version .top-navbar {
+    width: calc(100% - 175px);
+}
+
+ #left-sidebar {
+    width: 175px;
+ }
+
+ #main-content {
+    width: calc(100% - 175px);
+}   
+
+.user-account .dropdown .dropdown-menu {
+    right: -23px;
+}
+
+.sticky-static {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 80px;
+  margin-bottom: 15px;
+  z-index: 1;
+}
+.sticky-static > ul {
+    width: 100%;
+}
+.sticky-static > ul > li.active {
+    border-left: 3px solid #4a97f7;
+    background-color: #f8f9fa !important;
+}
+.sticky-static > ul > li.active > p a {
+    color: #000 !important;
+}
+
+#main-menu {
+    margin-bottom: 30px !important;
+}
+#main-menu > li {
+    margin-bottom: 5px;
+}
+#main-menu > li > a {
+    background: #f1f4f6;
+    color: #212529;
+    width: 100%;
+    padding: 20px 0 10px 0; 
+    text-align: center;
+}
+#main-menu > li > a > i {
+    font-size: 40px;
+    margin-bottom: 13px;
+}
+#main-menu > li > a > span {
+    display: block;
+    font-size: 12px;
+}
+#main-menu > li > ul {
+    margin-top: 5px !important; 
+    width: 100%;
+}
+
+#main-content {
+    padding-bottom: 30px;
+}
+
+.border--dash {
+    border: 5px dashed #1da1f2;
+    border-radius: 5px;
+    text-align: center;
+}
+.forUpload i {
+    font-size: 80px;
+}
+.forUpload p {
+    font-size: 18px;
+    font-weight: bold;
+}
+#dragDrop .file {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    border: none;
+}
+#dragDrop .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.uploadWrapper h2 {
+    font-size: 18px;
+    color: rgb(240, 51, 51);
+}
+.uploadWrapper h2:hover{
+    /*color: #fff;*/
+}
+.uploadWrapper button {
+    position: absolute;
+    background: #1da1f2;
+    display: block;
+    border: 0 none;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 2px 8px !important;
+    border-radius: 5px;
+    right: 6px !important;
+    top: 6px !important;
+}
+
+.text-center.mt-5.uploadIcon {
+    padding: 10px;
+}
+.forUpload {
+    padding: 20px;
+     outline:none
+}
+
+.file.btn.btn-sm.btn-default {
+    background: #f4f7fa;
+}
+
+.file.btn.btn-sm.btn-default:hover {
+    background: none;
+}
+.border--dash:hover > div:hover,
+.forUpload:hover {
+    color: #1da1f2;
+}
+.text-center.uploadWrapper div div div {
+    position: relative;
+}
+
+.modal button {
+    outline: none !important;
+}
+
+.loading {
+    color: #000;
+   
+}
+.loading:after {
+    content: ' .';
+    animation: dots 1s steps(5, end) infinite;
+}
+  
+@keyframes dots {
+  0%, 20% {
+    color: rgba(0,0,0,0);
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);
+  }
+  40% {
+    color:  #000;
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);
+  }
+  60% {
+    text-shadow:
+      .25em 0 0  #000,
+      .5em 0 0 rgba(0,0,0,0);
+  }
+  80%, 100% {
+    text-shadow:
+      .25em 0 0 #000,
+      .5em 0 0  #000;}
+}
+
+.emoji-mart {
+    z-index: 999;
+}
+
+.chatapp_body .chat-history .message_data li.left .message {
+    background: #f1f4f6;
+    color: #17191c;
+}
+.chatapp_body .chat-history .message_data li.left .message:after {
+    border-right-color: #f1f4f6;
+    border-bottom-color: #f1f4f6;
+}
+
+.chatapp_body .chat-history .message_data li.right .message {
+    background: #e0e0e0;
+    color: #2a2627;
+}
+.chatapp_body .chat-history .message_data li.right .message:after {
+    border-left-color: #e0e0e0;
+    border-bottom-color: #e0e0e0;
+}
+
+.w90 {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+}
+.avtar-pic.w90 span {
+    font-size: 40px;
+}
+
+@media screen and (max-width: 1200px) {
+    .light_version .top-navbar {
+        width: 100%;
+    }
+
+    .metismenu ul a:hover::before {
+        width: 98% !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #main-content {
+        width: 100%;
+        padding: 0;
+    }
+}
