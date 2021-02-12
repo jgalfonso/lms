@@ -37,5 +37,11 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('lessons/new', 'LessonsController@new')->name('new-lesson');
         });
 
+        //-------- ASSIGNMENTS --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('assignments/new', 'AssignmentsController@new')->name('new-assignment');
+            Route::get('assignments/recent', 'AssignmentsController@recent')->name('recent-assignment');
+            Route::get('assignments/archives', 'AssignmentsController@archives')->name('archives-assignment');
+        });
     });
 });

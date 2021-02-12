@@ -23,7 +23,7 @@
             <a href="academic-class_activation.html"><i class="icon-user-following"></i><span>Class Activation</span></a>
         </li>
 
-        <li class="{{ set_nav_status(['admin/academic/*']) }}">
+        <li class="{{ set_nav_status(['admin/academic/lessons*']) }}">
             <a href="#" class="has-arrow">
                 <i class="icon-folder-alt"></i><span>Lessons</span>
             </a>
@@ -42,14 +42,20 @@
             <a href="#"><i class="icon-doc"></i><span>Attendance</span></a>
         </li>
 
-        <li>
+        <li class="{{ set_nav_status(['admin/academic/assignments*']) }}">
             <a href="#" class="has-arrow"><i class="icon-folder-alt"></i><span>Assignments</span></a>
 
             <ul>
-                <li><a  href="classess-new.html">New</a></li>
-                <li><a  href="classess.html">Recent Assignment/s</a></li>
+                <li class="{{ set_nav_status(['admin/academic/assignments/new']) }}">
+                    <a href="{{ route('new-assignment') }}">New Assignment</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/academic/assignments/recent']) }}">
+                    <a href="{{ route('recent-assignment') }}">Recent Assignment/s</a>
+                </li>
                 <li><a  href="classess.html">Assignment Submitted & Evaluation</a></li>
-                <li><a  href="classess-new.html">Archives</a></li>
+                <li class="{{ set_nav_status(['admin/academic/assignments/archives']) }}">
+                    <a href="{{ route('archives-assignment') }}">Archives</a>
+                </li>
             </ul>
         </li>
 
