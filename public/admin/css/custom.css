@@ -1,3 +1,15 @@
+.action-btn {
+    padding-bottom: 3%;
+}
+
+.btn, .sweet-alert button {
+    width: 100px;
+}
+
+.btn-more{
+    width: 130px;
+}
+
 .required {
     color: red;
 }

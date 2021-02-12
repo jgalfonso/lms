@@ -59,14 +59,20 @@
             </ul>
         </li>
 
-        <li>
+        <li class="{{ set_nav_status(['admin/academic/projects*']) }}">
             <a href="#" class="has-arrow"><i class="icon-folder-alt"></i><span>Projects</span></a>
 
             <ul>
-                <li><a  href="classess-new.html">New</a></li>
-                <li><a  href="classess.html">Recent Projects/s</a></li>
+                <li class="{{ set_nav_status(['admin/academic/projects/new']) }}">
+                    <a href="{{ route('new-project') }}">New Project</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/academic/projects/recent']) }}">
+                    <a href="{{ route('recent-project') }}">Recent Project/s</a>
+                </li>
                 <li><a  href="classess.html">Project Submitted & Evaluation</a></li>
-                 <li><a  href="classess-new.html">Archives</a></li>
+                <li class="{{ set_nav_status(['admin/academic/projects/archives']) }}">
+                    <a href="{{ route('archives-project') }}">Archives</a>
+                </li>
             </ul>
         </li>
 
