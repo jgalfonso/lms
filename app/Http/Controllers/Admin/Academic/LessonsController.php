@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\Admin\Lessons;
+use App\Models\Admin\Courses;
+use App\Models\Admin\Classes;
+
 class LessonsController extends Controller
 {
 
@@ -38,7 +42,29 @@ class LessonsController extends Controller
      */
     public function new ()
     {
-        return view('admin.academic.lessons.new');
+        $courses = Courses::getCourses();
+
+        return view('admin.academic.lessons.new', compact('courses'));
+    }
+
+    /**
+     * Saving new lesson
+     */
+    public function store (Request $request)
+    {
+        $new = Lessons::storeLesson($request);
+
+        echo json_encode($new);
+    }
+
+    /**
+     * Getting classes using specific course_id
+     */
+    public function getClasses (Request $request)
+    {
+        $classes = Classes::getByCourse($request);
+
+        echo json_encode($classes);
     }
 
     // public function getEmailTemplate(Request $request)
