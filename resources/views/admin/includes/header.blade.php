@@ -8,7 +8,7 @@
     <meta name="author" content="GetBootstrap, design by: puffintheme.com">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    
+
     <link rel="icon" href="{{ URL::asset('assets/admin/images/favicon.ico') }}" type="image/x-icon">
 
     <!-- VENDOR CSS -->

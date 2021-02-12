@@ -35,6 +35,9 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
         //-------- LESSONS --------//
         Route::group(['middleware' => 'auth'], function () {
             Route::get('lessons/new', 'LessonsController@new')->name('new-lesson');
+            //-------- AJAX REQUEST FOR LESSONS --------//
+            Route::post('lessons/store', 'LessonsController@store')->name('store-lesson');
+            Route::post('lessons/getClasses', 'LessonsController@getClasses')->name('get-classes');
         });
 
     });
