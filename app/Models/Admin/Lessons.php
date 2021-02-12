@@ -11,6 +11,7 @@ class Lessons extends Model
     protected $primaryKey = 'lesson_id';
 
     /**
+<<<<<<< HEAD
      * Getting all lessons
      */
     public static function getLessons()
@@ -52,6 +53,8 @@ class Lessons extends Model
     }
 
     /**
+=======
+>>>>>>> c9e46c0992affbc09d03e1d5ebdb4a06f342f948
      * Saving new lesson
      */
     public static function storeLesson($request)

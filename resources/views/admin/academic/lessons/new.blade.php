@@ -123,12 +123,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>URL</label><span style="color: red"> * </span>
-                                        <label class="float-right"><a href="javascript:void(0);" class="clearLink">Clear </a></label>
-                                        <input type="url" class="form-control" required name="link_url[]">
+                                        <label class="float-right"><a href="javascript:void(0);" class="clearLink">Clear </a> | <a href="javascript:void(0);" class="removeLink">Remove </a></label>
+                                        <input type="text" class="form-control" required name="link_url[]">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="col-lg-12 link newLink links">
                             <div class="row">
@@ -149,17 +150,15 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="text-right">
-                                    <button id="addLink" type="button" class="btn btn-default btn-new"> <i class="fa fa-plus"></i> Add More</button>
-                                </div>
+                        <div class="col-lg-12">
+                            <div class="text-right">
+                                <button id="addLink" type="button" class="btn btn-default btn-new"> <i class="fa fa-plus"></i> Add More</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                 <div class="card">
+                <div class="card">
                     <div class="header">
                         <h2>Attachment</h2>
                     </div>

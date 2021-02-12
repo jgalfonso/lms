@@ -52,6 +52,7 @@ class LessonsController extends Controller
         $classes = Classes::getClasses();
 
         return view('admin.academic.lessons.lesson-plan', compact('lessons', 'classes'));
+
     }
 
     /**
