@@ -11,6 +11,47 @@ class Lessons extends Model
     protected $primaryKey = 'lesson_id';
 
     /**
+     * Getting all lessons
+     */
+    public static function getLessons()
+    {
+        $lessons = self::select(
+                        'lessons.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
+                    )
+                    ->leftJoin('classes', 'lessons.class_id', '=', 'classes.class_id')
+                    ->where('lessons.status', 'Active')
+                    ->get();
+
+        return !empty($lessons) ? $lessons : null;
+    }
+
+    /**
+     * Get all lessons
+     * Filtered by class
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public static function filter ($request)
+    {
+        $class_id = $request->class_id;
+
+        $lessons = self::select(
+                        'lessons.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
+                    )
+                    ->leftJoin('classes', 'lessons.class_id', '=', 'classes.class_id')
+                    ->when($class_id, function ($query) use ($class_id) {
+                        return $query->where('lessons.class_id', $class_id);
+                    })
+                    ->orderBy('lessons.lesson_id', 'desc');
+
+        return !empty($lessons) ? $lessons : null;
+    }
+
+    /**
      * Saving new lesson
      */
     public static function storeLesson($request)
