@@ -28,4 +28,14 @@ Route::get('admin', function (){
 Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+    //-------- ACADEMIC --------//
+    Route::group(['name' => 'academic.', 'prefix' => 'academic', 'namespace' => 'Academic'], function () {
+
+        //-------- LESSONS --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('lessons/new', 'LessonsController@new')->name('new-lesson');
+        });
+
+    });
 });

@@ -1,24 +1,37 @@
 @php
-    $name = Request::segments()[0];
-    $prefix = Request::segments()[1];
-    $action = (isset(Request::segments()[2])) ? Request::segments()[2] : '';
+	$prefix = Request::segments()[0];
+
+
+	$group = (isset(Request::segments()[1])) ? Request::segments()[1] : '';
+
+
+	$controller = (isset(Request::segments()[2])) ? Request::segments()[2] : '';
+    $event = (isset(Request::segments()[3])) ? Request::segments()[3] : '';
+    $action = (isset(Request::segments()[4])) ? Request::segments()[4] : '';
+    $url = $controller == 'archive_galleries' ? 'admin/'. $group .'/'. $controller.'/'.$event : 'admin/'. $group .'/'. $controller;
 @endphp
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-        <li class="breadcrumb-item"><a style="cursor: not-allowed;">{{ ucfirst($name) }}</a></li>
-
-        @if ($action)
-            <li class="breadcrumb-item"><a href="{{ url($name .'/'. $prefix) }}">{{ ucwords(str_replace('_', ' ', $prefix)) }}</a></li>
-
-            @if ($action == 'view')
-                <li class="breadcrumb-item active" aria-current="page"><b>ID: {{ $id }} - <mark class="text-uppercase text-info">{{ ${$prefix}->internal_status_description }}</mark></b></li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        @if ($group == 'email-template')
+            @if($controller)
+                <li class="breadcrumb-item"><a href="/admin/email-template">{{ ucwords(str_replace('-', ' ', $group)) }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ ucfirst($controller) }}</li>
             @else
-                <li class="breadcrumb-item active" aria-current="page">{{ ucfirst($action) }}</li>
+                <li class="breadcrumb-item">{{ ucwords(str_replace('-', ' ', $group)) }}</li>
             @endif
         @else
-            <li class="breadcrumb-item active" aria-current="page">{{ str_replace('Of', 'of', ucwords(str_replace('_', ' ', $prefix))) }}</li>
+            <li class="breadcrumb-item">{{ ucwords(str_replace('-', ' ', $group)) }}</li>
         @endif
+
+		@if ($controller && $group != 'email-template')
+			@if ($event)
+				<li class="breadcrumb-item"><a href="{{ url($url) }}">{{ ucwords(str_replace('-', ' ', $controller)) }}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">{{ ucfirst($event) }}</li>
+			@else
+				<li class="breadcrumb-item active" aria-current="page">{{ ucwords(str_replace('-', ' ', $controller)) }}</li>
+			@endif
+		@endif
     </ol>
 </nav>

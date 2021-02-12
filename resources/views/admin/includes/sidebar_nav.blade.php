@@ -9,7 +9,7 @@
         <li>
             <a href="index.html"><i class="icon-home"></i><span>Home</span></a>
         </li>
-        
+
         <li>
             <a href="calendar.html"><i class="icon-calendar"></i><span>Calendar</span></a>
         </li>
@@ -22,14 +22,15 @@
         <li>
             <a href="academic-class_activation.html"><i class="icon-user-following"></i><span>Class Activation</span></a>
         </li>
-       
-        <li>
-            <a href="#" class="has-arrow"><i class="icon-folder-alt"></i><span>Lessons</span></a>
 
+        <li class="{{ set_nav_status(['admin/academic/*']) }}">
+            <a href="#" class="has-arrow">
+                <i class="icon-folder-alt"></i><span>Lessons</span>
+            </a>
             <ul>
-                <li ><a  href="academic-lessons-new.html">New</a></li>
-                <li ><a  href="academic-lessons-plan.html">Lesson Plan</a></li>
-                <li><a  href="academic-lessons-archives.html">Archives</a></li>
+                <li class="{{ set_nav_status(['admin/academic/lessons*']) }}">
+                    <a href="{{ route('new-lesson') }}">New Lesson</a>
+                </li>
             </ul>
         </li>
 
@@ -113,10 +114,10 @@
         <li>
             <a href="#"><i class="icon-clock"></i><span>Scheduling</span></a>
         </li>
-        
+
         <li>
             <a href="#" class="has-arrow"><i class="icon-magnifier  "></i><span>Assessment</span></a>
-            
+
             <ul>
                 <li><a href="services-assessment-new.html">New Assessment</a></li>
                 <li><a href="services-assessment-recent.html">Recent Assessment</a></li>
@@ -125,7 +126,7 @@
 
         <li>
             <a href="#" class="has-arrow"><i class="icon-printer"></i><span>Certification</span></a>
-            
+
             <ul>
                 <li><a href="services-certificates-moderations.html">Moderations</a></li>
                 <li><a href="services-certificates-published.html">Published</a></li>

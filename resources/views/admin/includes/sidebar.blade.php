@@ -1,6 +1,6 @@
 <div id="left-sidebar" class="sidebar">
     <div class="navbar-brand">
-        <a href="index.html"><img src="assets/images/icon-color.svg" alt="Oculux Logo" class="img-fluid logo"><span style="margin-left: 5px;">a<b>LMS</b> DHVSU V2.0.1</span></a>
+        <a href="/"><img src="{{ URL::asset('assets/images/icon-color.svg') }}" alt="Oculux Logo" class="img-fluid logo"><span style="margin-left: 5px;">a<b>LMS</b> DHVSU V2.0.1</span></a>
         <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu icon-close"></i></button>
     </div>
 
