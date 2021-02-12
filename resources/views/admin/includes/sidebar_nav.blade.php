@@ -28,8 +28,11 @@
                 <i class="icon-folder-alt"></i><span>Lessons</span>
             </a>
             <ul>
-                <li class="{{ set_nav_status(['admin/academic/lessons*']) }}">
+                <li class="{{ set_nav_status(['admin/academic/lessons/new']) }}">
                     <a href="{{ route('new-lesson') }}">New Lesson</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/academic/lessons/lesson-plan']) }}">
+                    <a href="{{ route('lesson-plan') }}">Lesson Plan</a>
                 </li>
             </ul>
         </li>

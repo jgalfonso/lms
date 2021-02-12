@@ -25,10 +25,12 @@
             <li class="breadcrumb-item">{{ ucwords(str_replace('-', ' ', $group)) }}</li>
         @endif
 
+
 		@if ($controller && $group != 'email-template')
 			@if ($event)
+
 				<li class="breadcrumb-item"><a href="{{ url($url) }}">{{ ucwords(str_replace('-', ' ', $controller)) }}</a></li>
-				<li class="breadcrumb-item active" aria-current="page">{{ ucfirst($event) }}</li>
+				<li class="breadcrumb-item active" aria-current="page">{{ ucwords(str_replace('-', ' ', $event)) }}</li>
 			@else
 				<li class="breadcrumb-item active" aria-current="page">{{ ucwords(str_replace('-', ' ', $controller)) }}</li>
 			@endif
