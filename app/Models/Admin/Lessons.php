@@ -135,4 +135,21 @@ class Lessons extends Model
         }
 
     }
+
+    /**
+     * Getting all archive lessons
+     */
+    public static function getArchives()
+    {
+        $archives = self::select(
+                        'lessons.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
+                    )
+                    ->leftJoin('classes', 'lessons.class_id', '=', 'classes.class_id')
+                    ->where('lessons.status', 'Inactive')
+                    ->get();
+
+        return !empty($archives) ? $archives : null;
+    }
 }

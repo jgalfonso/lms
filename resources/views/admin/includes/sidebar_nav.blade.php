@@ -34,6 +34,9 @@
                 <li class="{{ set_nav_status(['admin/academic/lessons/lesson-plan']) }}">
                     <a href="{{ route('lesson-plan') }}">Lesson Plan</a>
                 </li>
+                <li class="{{ set_nav_status(['admin/academic/lessons/archives']) }}">
+                    <a href="{{ route('archives') }}">Archives</a>
+                </li>
             </ul>
         </li>
 
