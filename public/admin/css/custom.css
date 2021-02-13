@@ -2,8 +2,17 @@
     padding-bottom: 3%;
 }
 
+.action-mark {
+    float: left;
+    margin-top: -35px;
+}
+
 .btn, .sweet-alert button {
     width: 100px;
+}
+
+.btn-mark {
+    width: 140px;
 }
 
 .btn-more {
@@ -12,4 +21,16 @@
 
 .required {
     color: red;
+}
+
+.th-action {
+    width: 1%;
+}
+
+.th-mark {
+    width: 1% !important;
+}
+
+.th-status {
+    width: 10%;
 }
