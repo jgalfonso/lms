@@ -70,25 +70,37 @@
             </ul>
         </li>
 
-        <li>
+        <li class="{{ set_nav_status(['admin/academic/quizzes*']) }}">
             <a href="#" class="has-arrow"><i class="icon-folder-alt"></i><span>Quizzes</span></a>
 
             <ul>
-                <li><a  href="classess-new.html">New</a></li>
-                <li><a  href="classess.html">Recent Quizze/s</a></li>
+                <li class="{{ set_nav_status(['admin/academic/quizzes/new']) }}">
+                    <a href="{{ route('new-quiz') }}">New Quiz</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/academic/quizzes/recent']) }}">
+                    <a href="{{ route('recent-quiz') }}">Recent Quizze/s</a>
+                </li>
                 <li><a  href="classess.html">Quiz Taken & Evaluation</a></li>
-                 <li><a  href="classess-new.html">Archives</a></li>
+                <li class="{{ set_nav_status(['admin/academic/assignments/quizzes']) }}">
+                    <a href="{{ route('archives-quiz') }}">Archives</a>
+                </li>
             </ul>
         </li>
 
-        <li>
+        <li class="{{ set_nav_status(['admin/academic/exams*']) }}">
             <a href="#" class="has-arrow"><i class="icon-folder-alt"></i><span>Exams</span></a>
 
             <ul>
-                <li><a  href="classess-new.html">New</a></li>
-                <li><a  href="classess.html">Recent Exam/s</a></li>
+                <li class="{{ set_nav_status(['admin/academic/exams/new']) }}">
+                    <a href="{{ route('new-exam') }}">New Exam</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/academic/exams/recent']) }}">
+                    <a href="{{ route('recent-exam') }}">Recent Exam/s</a>
+                </li>
                 <li><a  href="classess.html">Exam Taken & Evaluation</a></li>
-                <li><a  href="classess-new.html">Archives</a></li>
+                <li class="{{ set_nav_status(['admin/academic/assignments/exams']) }}">
+                    <a href="{{ route('archives-exam') }}">Archives</a>
+                </li>
             </ul>
         </li>
 

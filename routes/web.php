@@ -43,5 +43,19 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/recent', 'AssignmentsController@recent')->name('recent-assignment');
             Route::get('assignments/archives', 'AssignmentsController@archives')->name('archives-assignment');
         });
+
+        //-------- QUIZZES --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('quizzes/new', 'QuizzesController@new')->name('new-quiz');
+            Route::get('quizzes/recent', 'QuizzesController@recent')->name('recent-quiz');
+            Route::get('quizzes/archives', 'QuizzesController@archives')->name('archives-quiz');
+        });
+
+        //-------- EXAMS --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('exams/new', 'ExamsController@new')->name('new-exam');
+            Route::get('exams/recent', 'ExamsController@recent')->name('recent-exam');
+            Route::get('exams/archives', 'ExamsController@archives')->name('archives-exam');
+        });
     });
 });
