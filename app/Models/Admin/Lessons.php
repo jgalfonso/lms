@@ -11,7 +11,6 @@ class Lessons extends Model
     protected $primaryKey = 'lesson_id';
 
     /**
-<<<<<<< HEAD
      * Getting all lessons
      */
     public static function getLessons()
@@ -53,8 +52,6 @@ class Lessons extends Model
     }
 
     /**
-=======
->>>>>>> c9e46c0992affbc09d03e1d5ebdb4a06f342f948
      * Saving new lesson
      */
     public static function storeLesson($request)
@@ -105,7 +102,7 @@ class Lessons extends Model
 
                 foreach ($request->file('attach_file') as $key => $value) {
 
-                    $path = public_path() .'/lessons/' . $request->course_id . '/' . $request->class . '/' . $lessonId . '/';
+                    $path = public_path() .'/lessons/' . $request->course_id . '/' . $request->class_id . '/' . $lessonId . '/';
 
                     if (!file_exists($path)) {
                         mkdir($path,0777,TRUE);
@@ -120,7 +117,7 @@ class Lessons extends Model
                         'lesson_id'  => $lessonId,
                         'title'      => $request->attach_title[$key],
                         'filename'   => $filename,
-                        'path'       => '/lessons/' . $request->course_id . '/' . $request->class . '/' . $lessonId . '/',
+                        'path'       => '/lessons/' . $request->course_id . '/' . $request->class_id . '/' . $lessonId . '/',
                         'created_by' => 1,
                         'dt_created' => date('Y-m-d H:i:s'),
                     ];

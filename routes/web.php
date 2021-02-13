@@ -47,6 +47,10 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/new', 'AssignmentsController@new')->name('new-assignment');
             Route::get('assignments/recent', 'AssignmentsController@recent')->name('recent-assignment');
             Route::get('assignments/archives', 'AssignmentsController@archives')->name('archives-assignment');
+            //-------- AJAX REQUEST FOR ASSIGNMENTS --------//
+            Route::post('assignments/store', 'AssignmentsController@store')->name('store-lesson');
+            Route::post('assignments/getClasses', 'AssignmentsController@getClasses')->name('get-classes');
+            Route::get('assignments/filter', 'AssignmentsController@filter')->name('filter-lessons');
         });
 
         //-------- PROJECTS --------//

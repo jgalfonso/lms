@@ -123,7 +123,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>URL</label><span style="color: red"> * </span>
-                                        <label class="float-right"><a href="javascript:void(0);" class="clearLink">Clear </a> | <a href="javascript:void(0);" class="removeLink">Remove </a></label>
+                                        <label class="float-right"><a href="javascript:void(0);" class="clearLink">Clear </a> </label>
                                         <input type="text" class="form-control" required name="link_url[]">
                                     </div>
                                 </div>

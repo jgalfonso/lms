@@ -1,9 +1,14 @@
+/vendor
+/db
+.env
+.DS_Store
 /node_modules
+/public/hot
 /public/storage
 /storage/*.key
 /vendor
-.env
 .env.backup
+.DS_Store
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

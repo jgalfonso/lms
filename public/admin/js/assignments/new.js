@@ -5,7 +5,7 @@ $(function () {
     });
 
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/lessons',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/assignments',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -20,10 +20,6 @@ $(function () {
             this.$save = $('#save');
             this.$reject = $('#reject');
             this.$cancel = $('#cancel');
-
-            this.$addLink = $('#addLink');
-            this.$removeLink = $('.removeLink');
-            this.$clearLink = $('.clearLink');
 
             this.$addAttach = $('#addAttach');
             this.$removeAttach = $('.removeAttach');
@@ -47,15 +43,6 @@ $(function () {
             this.$save.on('click', this.save);
             this.$reject.on('click', this.reject);
             this.$cancel.on('click', this.cancel);
-
-            // links
-            this.$addLink.on('click', this.addLink);
-            this.$clearLink.on('click', function() {
-                $(this).closest('div.links').find("input[type=text], textarea, input[type=file]").val("");
-            });
-            this.$removeLink.on('click', function() {
-                var parent = $(this).parent().parent().parent().parent().parent().remove();
-            });
 
             //attachment
             this.$addAttach.on('click', this.addAttach);
@@ -103,7 +90,7 @@ $(function () {
                         if (data.success == true) {
                             swal({
                                 title: "Success!",
-                                text: "Successfully created new lesson.",
+                                text: "Successfully created new assignment.",
                                 type: "success"
                             }, function () {
                                 window.location.href = App.baseUrl + "/new";
@@ -123,22 +110,6 @@ $(function () {
 
 
             });
-        },
-
-        /**
-         * Add additional div for links
-         */
-        addLink: function () {
-
-            var source = $('.link'),
-               clone = source.clone(true),
-               count = clone.length;
-
-            clone.removeClass('link');
-            clone.css('display', 'block');
-            $('<form />').append(clone)[0].reset();
-
-            clone.insertAfter("div.newLink:last");
         },
 
         /**
