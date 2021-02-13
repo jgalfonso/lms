@@ -66,4 +66,16 @@ class LessonsController extends Controller
 
         echo json_encode($lessons);
     }
+
+    /**
+     * Display all archive lessons
+     */
+    public function archives ()
+    {
+        $lessons = Lessons::getArchives();
+        $classes = Classes::getClasses();
+
+        return view('admin.academic.lessons.archives', compact('lessons', 'classes'));
+
+    }
 }
