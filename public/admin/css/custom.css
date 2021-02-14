@@ -11,10 +11,17 @@
     width: 100px;
 }
 
-.btn-edit {
+.btn-sm {
     width: auto;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.btn-new {
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 100px;
 }
 
 .btn-mark {
