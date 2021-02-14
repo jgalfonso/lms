@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\Admin\Classes;
+use App\Models\Admin\Courses;
+use App\Models\Admin\Quizzes;
+
 class QuizzesController extends Controller
 {
     /**
@@ -14,7 +18,29 @@ class QuizzesController extends Controller
      */
     public function new ()
     {
-        return view('admin.academic.quizzes.new');
+        $courses = Courses::getCourses();
+
+        return view('admin.academic.quizzes.new', compact('courses'));
+    }
+
+    /**
+         * Saving new quiz
+     */
+    public function store (Request $request)
+    {
+        $new = Quizzes::storeQuiz($request);
+
+        echo json_encode($new);
+    }
+
+    /**
+     * Getting classes using specific course_id
+     */
+    public function getClasses (Request $request)
+    {
+        $classes = Classes::getByCourse($request);
+
+        echo json_encode($classes);
     }
 
     /**
@@ -22,7 +48,10 @@ class QuizzesController extends Controller
      */
     public function recent ()
     {
-        return view('admin.academic.quizzes.recent');
+        $quizzes = Quizzes::getQuizzes();
+        $classes = Classes::getClasses();
+
+        return view('admin.academic.quizzes.recent', compact('quizzes', 'classes'));
     }
 
     /**
@@ -30,6 +59,29 @@ class QuizzesController extends Controller
      */
     public function archives ()
     {
-        return view('admin.academic.quizzes.archives');
+        $quizzes = Quizzes::getArchives();
+        $classes = Classes::getClasses();
+
+        return view('admin.academic.quizzes.archives', compact('quizzes', 'classes'));
+    }
+
+    /**
+     * Display quiz
+     */
+    public function view ($id)
+    {
+        $quiz = Quizzes::getById($id);
+
+        return view('admin.academic.quizzes.view', compact('quiz'));
+    }
+
+    /**
+     * Getting all quizzes filtered by class id
+     */
+    public function filter (Request $request)
+    {
+        $quizzes = Quizzes::filter($request)->get();
+
+        echo json_encode($quizzes);
     }
 }
