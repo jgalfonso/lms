@@ -112,6 +112,13 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
     //-------- SERVICES --------//
     Route::group(['name' => 'services.', 'prefix' => 'services', 'namespace' => 'Services'], function () {
 
+        //-------- ENROLLMENT --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('enrollment/new', 'EnrollmentController@new')->name('new-enrollment');
+            Route::get('enrollment/search', 'EnrollmentController@search')->name('search-enrollment');
+            Route::get('enrollment/classSummary', 'EnrollmentController@classSummary')->name('class-summary-enrollment');
+        });
+
         //-------- ASSESSMENT --------//
         Route::group(['middleware' => 'auth'], function () {
             Route::get('assessment/new', 'AssessmentController@new')->name('new-assessment');

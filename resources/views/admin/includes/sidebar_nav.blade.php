@@ -121,13 +121,19 @@
         <li><a href="#"><i class="icon-speech"></i><span>Feedback</span></a></li>
 
         <li class="header">Services</li>
-        <li>
+        <li class="{{ set_nav_status(['admin/services/enrollment*']) }}">
             <a href="#" class="has-arrow"><i class="icon-users  "></i><span>Enrollment</span></a>
 
             <ul>
-                <li><a  href="">Online Registration</a></li>
-                 <li><a  href="services-enrollment-enroll_student.html">Enroll Student</a></li>
-                <li><a  href="services-enrollment-class_summary.html">Class Summary</a></li>
+                <li class="{{ set_nav_status(['admin/services/enrollment/new']) }}">
+                    <a href="">Online Registration</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/services/enrollment/search']) }}">
+                    <a href="{{ route('search-enrollment') }}">Enroll Student</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/services/enrollment/class-summary']) }}">
+                    <a href="{{ route('class-summary-enrollment') }}">Class Summary</a>
+                </li>
             </ul>
         </li>
 
