@@ -12,7 +12,7 @@ use App\Models\Admin\Classes;
 class ClassActivationController extends Controller
 {
     /**
-     * Display recent assignment/s
+     * Display list of class activation
      */
     public function index ()
     {
