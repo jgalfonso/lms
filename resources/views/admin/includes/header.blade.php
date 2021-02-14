@@ -8,16 +8,16 @@
     <meta name="author" content="GetBootstrap, design by: puffintheme.com">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-    <link rel="icon" href="{{ URL::asset('assets/admin/images/favicon.ico') }}" type="image/x-icon">
+    
+    <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon">
 
     <!-- VENDOR CSS -->
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/animate-css/vivify.min.css') }}">  
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/animate-css/vivify.min.css') }}">  
 
     @yield('css')
 
     <!-- MAIN CSS -->
-    <link rel="stylesheet" href="{{ URL::asset('assets/css/site.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/site.min.css') }}">
 </head>

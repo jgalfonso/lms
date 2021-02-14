@@ -40,3 +40,32 @@
 .th-status {
     width: 10%;
 }
+
+.dataTable {
+    width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    float: right !important;
+}
+
+.dataTables_filter {
+    display: none;
+}
+
+.dataTables_paginate {
+    margin-top: 5px !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.word-wrap {
+    word-wrap: break-word !important; 
+    white-space: normal !important;
+}
+
+.sweet-alert button {
+    width: 100px;
+}

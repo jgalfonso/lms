@@ -164,8 +164,8 @@
         </li>
 
         <li class="header">Manage Users</li>
-        <li><a href="users-students.html"><i class="icon-users"></i><span>Students</span></a></li>
-        <li><a href="users-admin.html"><i class="icon-users"></i><span>Admin</span></a></li>
+        <li class="{{ set_nav_status(['admin/manage-users/students*']) }}"><a href="{{ route('students') }}"><i class="icon-users"></i><span>Students</span></a></li>
+        <li class="{{ set_nav_status(['admin/manage-users/faculty*']) }}"><a href="{{ route('faculty') }}"><i class="icon-users"></i><span>Faculty</span></a></li>
 
         <li class="header">Setup</li>
         <li class="{{ set_nav_status(['admin/setup/class*']) }}">

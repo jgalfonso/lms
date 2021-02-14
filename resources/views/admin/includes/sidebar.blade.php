@@ -7,7 +7,7 @@
     <div class="sidebar-scroll">
         <div class="user-account" style="text-align: center; margin: 20px 10px 0 10px;">
             <div class="user_div">
-                <img src="assets/images/avatar.jpg" class="user-photo" alt="Avatar" >
+                <img src="/admin/assets/images/avatar.jpg" class="user-photo" alt="Avatar" >
             </div>
             <div class="dropdown">
                 <span>Welcome,</span>

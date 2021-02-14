@@ -115,4 +115,24 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('class/archives', 'ClassController@archives')->name('archives-class');
         });
     });
+
+    //-------- USERS --------//
+    Route::group(['name' => 'manage-users.', 'prefix' => 'manage-users', 'namespace' => 'Users'], function () {
+
+        //-------- STUDENTS --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('students', 'StudentsController@index')->name('students');
+            Route::get('students/new', 'StudentsController@new')->name('students-new');
+            //-------- AJAX REQUEST FOR STUDENTS --------//
+            Route::post('students/store', 'StudentsController@store')->name('store-student');
+        });
+
+        //-------- ADMIN --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('faculty', 'FacultyController@index')->name('faculty');
+            Route::get('faculty/new', 'FacultyController@new')->name('faculty-new');
+            //-------- AJAX REQUEST FOR STUDENTS --------//
+            Route::post('faculty/store', 'FacultyController@store')->name('store-faculty');
+        });
+    });
 });
