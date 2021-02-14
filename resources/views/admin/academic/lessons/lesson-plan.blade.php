@@ -17,7 +17,7 @@
         @include('admin.includes.breadcrumb')
     </div>
 
-    <div class="col-md-6 col-sm-12 text-right">
+        <div class="col-md-6 col-sm-12 text-right">
             <a href="{{ route('new-lesson') }}" class="btn btn-sm btn-primary" title="" style="width: 100px">Add Lesson</a>
         </div>
 @endsection

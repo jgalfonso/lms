@@ -55,6 +55,7 @@ $(function () {
                 dataType: "json",
                 data: {
                     'class_id' : class_id,
+                    'archives' : 1,
                 },
                 success: function (data) {
                     table.clear().draw();

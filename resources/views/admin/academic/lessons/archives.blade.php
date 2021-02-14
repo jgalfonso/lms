@@ -104,5 +104,5 @@
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
 
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/lessons/plan.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/lessons/archive.js') }}"></script>
 @endsection

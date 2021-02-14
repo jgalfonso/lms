@@ -2,7 +2,7 @@
     <ul id="main-menu" class="metismenu">
         <li class="header">Main</li>
 
-        <li class="{{ set_nav_status(['admin/dashboard*']) }}">
+        <li class="{{ set_nav_status(['admin/main/dashboard*']) }}">
             <a href="{{ route('dashboard') }}"><i class="icon-speedometer"></i><span>Dashboard</span></a>
         </li>
 

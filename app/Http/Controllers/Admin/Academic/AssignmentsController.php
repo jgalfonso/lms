@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Models\Admin\Assignments;
+use App\Models\Admin\AssignmentAttachments;
 use App\Models\Admin\Classes;
 use App\Models\Admin\Courses;
 
@@ -76,5 +77,16 @@ class AssignmentsController extends Controller
         $lessons = Assignments::filter($request)->get();
 
         echo json_encode($lessons);
+    }
+
+    /**
+     * Display specific assignment/s
+     */
+    public function view (Request $request, $id)
+    {
+        $assignment  = Assignments::getById($id);
+        $attachments = AssignmentAttachments::getAttachments($id);
+
+        return view('admin.academic.assignments.view', compact('assignment', 'attachments'));
     }
 }

@@ -27,7 +27,14 @@ Route::get('admin', function (){
 
 Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
-	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    //-------- MAIN --------//
+    Route::group(['name' => 'main.', 'prefix' => 'main', 'namespace' => 'Main'], function () {
+
+        //-------- DASHBOARD --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        });
+    });
 
     //-------- ACADEMIC --------//
     Route::group(['name' => 'academic.', 'prefix' => 'academic', 'namespace' => 'Academic'], function () {
@@ -48,6 +55,7 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/new', 'AssignmentsController@new')->name('new-assignment');
             Route::get('assignments/recent', 'AssignmentsController@recent')->name('recent-assignment');
             Route::get('assignments/archives', 'AssignmentsController@archives')->name('archives-assignment');
+            Route::get('assignments/view/{id}', 'AssignmentsController@view')->name('view-assignment');
             //-------- AJAX REQUEST FOR ASSIGNMENTS --------//
             Route::post('assignments/store', 'AssignmentsController@store')->name('store-lesson');
             Route::post('assignments/getClasses', 'AssignmentsController@getClasses')->name('get-classes');
