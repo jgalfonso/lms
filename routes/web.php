@@ -104,6 +104,16 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
         });
     });
 
+    //-------- SERVICES --------//
+    Route::group(['name' => 'services.', 'prefix' => 'services', 'namespace' => 'Services'], function () {
+
+        //-------- ASSESSMENT --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('assessment/new', 'AssessmentController@new')->name('new-assessment');
+            Route::get('assessment/recent', 'AssessmentController@recent')->name('recent-assessment');
+        });
+    });
+
     //-------- SETUP --------//
     Route::group(['name' => 'setup.', 'prefix' => 'setup', 'namespace' => 'Setup'], function () {
 

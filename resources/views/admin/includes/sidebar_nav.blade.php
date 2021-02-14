@@ -145,12 +145,12 @@
             <a href="#"><i class="icon-clock"></i><span>Scheduling</span></a>
         </li>
 
-        <li>
+        <li class="{{ set_nav_status(['admin/services/assessment*']) }}">
             <a href="#" class="has-arrow"><i class="icon-magnifier  "></i><span>Assessment</span></a>
 
             <ul>
-                <li><a href="services-assessment-new.html">New Assessment</a></li>
-                <li><a href="services-assessment-recent.html">Recent Assessment</a></li>
+                <li class="{{ set_nav_status(['admin/services/assessment/new']) }}"><a href="{{ route('new-assessment') }}">New Assessment</a></li>
+                <li class="{{ set_nav_status(['admin/services/assessment/recent']) }}"><a href="{{ route('recent-assessment') }}">Recent Assessment</a></li>
             </ul>
         </li>
 
