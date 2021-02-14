@@ -28,6 +28,24 @@ class Assignments extends Model
     }
 
     /**
+     * Getting assignment by id
+     */
+    public static function getById($id = null)
+    {
+        $assignment = self::select(
+                        'assignments.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
+                    )
+                    ->leftJoin('classes', 'assignments.class_id', '=', 'classes.class_id')
+                    ->where('assignments.assignment_id', $id)
+                    ->where('assignments.status', 'Active')
+                    ->first();
+
+        return !empty($assignment) ? $assignment : null;
+    }
+
+    /**
      * Get all assignments
      * Filtered by class
      *

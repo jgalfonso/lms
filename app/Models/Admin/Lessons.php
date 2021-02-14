@@ -36,6 +36,7 @@ class Lessons extends Model
     public static function filter ($request)
     {
         $class_id = $request->class_id;
+        $archives = (isset($request->archives) && $request->archives == 1 ? 1 : null);
 
         $lessons = self::select(
                         'lessons.*',
@@ -45,6 +46,9 @@ class Lessons extends Model
                     ->leftJoin('classes', 'lessons.class_id', '=', 'classes.class_id')
                     ->when($class_id, function ($query) use ($class_id) {
                         return $query->where('lessons.class_id', $class_id);
+                    })
+                    ->when($archives, function ($query) use ($archives) {
+                        return $query->where('lessons.status', 'Inactive');
                     })
                     ->orderBy('lessons.lesson_id', 'desc');
 
