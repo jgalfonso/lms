@@ -32,6 +32,11 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
     //-------- ACADEMIC --------//
     Route::group(['name' => 'academic.', 'prefix' => 'academic', 'namespace' => 'Academic'], function () {
 
+        //-------- CLASS ACTIVATION --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('class-activation/activation', 'ClassActivationController@index')->name('class-activation');
+        });
+
         //-------- LESSONS --------//
         Route::group(['middleware' => 'auth'], function () {
             Route::get('lessons/new', 'LessonsController@new')->name('new-lesson');
@@ -59,6 +64,10 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('projects/new', 'ProjectsController@new')->name('new-project');
             Route::get('projects/recent', 'ProjectsController@recent')->name('recent-project');
             Route::get('projects/archives', 'ProjectsController@archives')->name('archives-project');
+            //-------- AJAX REQUEST FOR PROJECTS --------//
+            Route::post('projects/store', 'ProjectsController@store')->name('store-project');
+            Route::post('projects/getClasses', 'ProjectsController@getClasses')->name('get-classes');
+            Route::get('projects/filter', 'ProjectsController@filter')->name('filter-projects');
         });
     });
 });

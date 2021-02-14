@@ -19,8 +19,8 @@
         </li>
 
         <li class="header">Academic</li>
-        <li>
-            <a href="academic-class_activation.html"><i class="icon-user-following"></i><span>Class Activation</span></a>
+        <li class="{{ set_nav_status(['admin/academic/class-activation*']) }}">
+            <a href="{{ route('class-activation') }}"><i class="icon-user-following"></i><span>Class Activation</span></a>
         </li>
 
         <li class="{{ set_nav_status(['admin/academic/lessons*']) }}">
