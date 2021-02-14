@@ -217,7 +217,7 @@
 
                 <div class="action-btn" style="padding-bottom: 3%;">
                     <button type="button" class="btn btn-success" id="save" style="width: 100px">Save</button>
-                    <a href="announcements.html" class="btn btn-danger" style="width: 100px">Cancel</a>
+                    <a href="{{ route('lesson-plan') }}" class="btn btn-danger" title="" style="width: 100px">Cancel</a>
                 </div>
             </form>
         </div>

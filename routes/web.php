@@ -89,6 +89,11 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('quizzes/new', 'QuizzesController@new')->name('new-quiz');
             Route::get('quizzes/recent', 'QuizzesController@recent')->name('recent-quiz');
             Route::get('quizzes/archives', 'QuizzesController@archives')->name('archives-quiz');
+            Route::get('quizzes/view/{id}', 'QuizzesController@view')->name('view-quiz');
+            //-------- AJAX REQUEST FOR QUIZZES --------//
+            Route::post('quizzes/store', 'QuizzesController@store')->name('store-quiz');
+            Route::post('quizzes/getClasses', 'QuizzesController@getClasses')->name('get-classes');
+            Route::get('quizzes/filter', 'QuizzesController@filter')->name('filter-quizzes');
         });
 
         //-------- EXAMS --------//
