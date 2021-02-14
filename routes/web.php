@@ -101,6 +101,11 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('exams/new', 'ExamsController@new')->name('new-exam');
             Route::get('exams/recent', 'ExamsController@recent')->name('recent-exam');
             Route::get('exams/archives', 'ExamsController@archives')->name('archives-exam');
+            Route::get('exams/view/{id}', 'ExamsController@view')->name('view-exam');
+            //-------- AJAX REQUEST FOR EXAMS --------//
+            Route::post('exams/store', 'ExamsController@store')->name('store-exams');
+            Route::post('exams/getClasses', 'ExamsController@getClasses')->name('get-classes');
+            Route::get('exams/filter', 'ExamsController@filter')->name('filter-exams');
         });
     });
 
