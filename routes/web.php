@@ -98,4 +98,16 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('exams/archives', 'ExamsController@archives')->name('archives-exam');
         });
     });
+
+    //-------- SETUP --------//
+    Route::group(['name' => 'setup.', 'prefix' => 'setup', 'namespace' => 'Setup'], function () {
+
+        //-------- CLASS --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('class/index', 'ClassController@index')->name('class');
+            Route::get('class/new', 'ClassController@new')->name('new-class');
+            Route::get('class/edit', 'ClassController@edit')->name('edit-class');
+            Route::get('class/archives', 'ClassController@archives')->name('archives-class');
+        });
+    });
 });

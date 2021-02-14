@@ -168,7 +168,9 @@
         <li><a href="users-admin.html"><i class="icon-users"></i><span>Admin</span></a></li>
 
         <li class="header">Setup</li>
-        <li><a href="setup-class.html"><i class="icon-docs"></i><span>Class</span></a></li>
+        <li class="{{ set_nav_status(['admin/setup/class*']) }}">
+            <a href="{{ route('class') }}"><i class="icon-docs"></i><span>Class</span></a>
+        </li>
         <li><a href=""><i class="icon-docs"></i><span>Course</span></a></li>
         <li><a href=""><i class="icon-docs"></i><span>Roles</span></a></li>
     </ul>

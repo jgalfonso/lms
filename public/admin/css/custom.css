@@ -11,6 +11,12 @@
     width: 100px;
 }
 
+.btn-edit {
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .btn-mark {
     width: 140px;
 }
