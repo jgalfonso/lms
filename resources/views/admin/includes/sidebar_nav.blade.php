@@ -10,8 +10,8 @@
             <a href="index.html"><i class="icon-home"></i><span>Home</span></a>
         </li>
 
-        <li>
-            <a href="calendar.html"><i class="icon-calendar"></i><span>Calendar</span></a>
+        <li class="{{ set_nav_status(['admin/main/calendar*']) }}">
+            <a href="{{ route('calendar') }}"><i class="icon-calendar"></i><span>Calendar</span></a>
         </li>
 
         <li>

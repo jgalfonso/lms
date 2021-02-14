@@ -28,6 +28,23 @@ class Lessons extends Model
     }
 
     /**
+     * Getting lesson by id
+     */
+    public static function getById($id)
+    {
+        $lesson = self::select(
+                        'lessons.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
+                    )
+                    ->leftJoin('classes', 'lessons.class_id', '=', 'classes.class_id')
+                    ->where('lessons.lesson_id', $id)
+                    ->first();
+
+        return !empty($lesson) ? $lesson : null;
+    }
+
+    /**
      * Get all lessons
      * Filtered by class
      *

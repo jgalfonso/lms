@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-use App\Models\Admin\Lessons;
-use App\Models\Admin\Courses;
 use App\Models\Admin\Classes;
+use App\Models\Admin\Courses;
+use App\Models\Admin\Lessons;
+use App\Models\Admin\LessonAttachments;
+use App\Models\Admin\LessonLinks;
 
 class LessonsController extends Controller
 {
@@ -77,5 +79,17 @@ class LessonsController extends Controller
 
         return view('admin.academic.lessons.archives', compact('lessons', 'classes'));
 
+    }
+
+    /**
+     * Display specific lesson
+     */
+    public function view ($id)
+    {
+        $lesson      = Lessons::getById($id);
+        $links       = LessonLinks::getLinks($id);
+        $attachments = LessonAttachments::getAttachments($id);
+
+        return view('admin.academic.lessons.view', compact('lesson', 'links', 'attachments'));
     }
 }

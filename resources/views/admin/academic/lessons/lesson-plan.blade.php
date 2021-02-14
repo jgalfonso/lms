@@ -81,6 +81,7 @@
                                     <td>{{ $lesson->status }}</td>
                                     <td>
                                           <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></button>
+                                          <a href="{{ route('view-lesson', $lesson->lesson_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

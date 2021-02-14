@@ -19,7 +19,7 @@ class AssignmentAttachments extends Model
                         'assignment_attachments.*',
                     )
                     ->leftJoin('assignments', 'assignment_attachments.assignment_id', '=', 'assignments.assignment_id')
-                    ->where('assignments.assignment_id', $id)
+                    ->where('assignment_attachments.assignment_id', $id)
                     ->get();
 
         return !empty($attachments) ? $attachments : null;

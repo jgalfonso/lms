@@ -100,7 +100,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" name="start" value="{{ date('Y-m-d', strtotime($assignment->instructor_id)) }}" disabled>
+                                                <input type="text" class="form-control date" name="start" value="{{ date('Y-m-d', strtotime($assignment->start)) }}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" name="end" value="{{ date('Y-m-d', strtotime($assignment->instructor_id)) }}" disabled>
+                                                <input type="text" class="form-control date" name="end" value="{{ date('Y-m-d', strtotime($assignment->end)) }}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -171,6 +171,4 @@
     <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
-
-    <script src="{{ URL::asset('admin/js/assignments/new.js') }}"></script>
 @endsection

@@ -39,7 +39,6 @@ class Assignments extends Model
                     )
                     ->leftJoin('classes', 'assignments.class_id', '=', 'classes.class_id')
                     ->where('assignments.assignment_id', $id)
-                    ->where('assignments.status', 'Active')
                     ->first();
 
         return !empty($assignment) ? $assignment : null;
