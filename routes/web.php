@@ -112,6 +112,14 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
     //-------- SERVICES --------//
     Route::group(['name' => 'services.', 'prefix' => 'services', 'namespace' => 'Services'], function () {
 
+        //-------- BILLING --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('billing/newInvoice', 'BillingController@newInvoice')->name('new-invoice');
+            Route::get('billing/invoices', 'BillingController@invoices')->name('invoices');
+            Route::get('billing/newPayment', 'BillingController@newPayment')->name('new-payment');
+            Route::get('billing/payments', 'BillingController@payments')->name('payments');
+        });
+
         //-------- ASSESSMENT --------//
         Route::group(['middleware' => 'auth'], function () {
             Route::get('assessment/new', 'AssessmentController@new')->name('new-assessment');
