@@ -14,9 +14,6 @@ $(function () {
         },
 
         setElements: function () {
-            CKEDITOR.replace('ckeditor');
-            CKEDITOR.config.height = 300;
-
             this.$save = $('#save');
             this.$reject = $('#reject');
             this.$cancel = $('#cancel');
@@ -29,17 +26,6 @@ $(function () {
         },
 
         bindEvents: function () {
-            CKEDITOR.on('instanceReady', function () {
-                $('form textarea').attr('required', '');
-                $.each(CKEDITOR.instances, function (instance) {
-                    CKEDITOR.instances[instance].on("change", function (e) {
-                        for (instance in CKEDITOR.instances) {
-                            CKEDITOR.instances[instance].updateElement();
-                        }
-                    });
-                });
-            });
-
             this.$save.on('click', this.save);
             this.$reject.on('click', this.reject);
             this.$cancel.on('click', this.cancel);

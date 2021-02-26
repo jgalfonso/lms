@@ -3,9 +3,9 @@
 @section('title', 'Class')
 
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/parsleyjs/css/parsley.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/parsleyjs/css/parsley.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
 
     <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
@@ -37,7 +37,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Description</label><span class="required"> * </span>
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    <textarea class="form-control" rows="5" name="description"></textarea>
                                 </div>
                             </div>
 
@@ -62,6 +62,7 @@
                                     <div class="input-group">
                                         <select class="form-control" name="instructor_id" id="instructor">
                                             <option selected="">Choose...</option>
+                                            <option value="1">Sample Sir</option>
                                         </select>
                                     </div>
                                 </div>
@@ -70,14 +71,14 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Units</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="units">
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="form-group">
                                    <label>Google Meet - Link</label>
-                                   <input type="text" class="form-control" >
+                                   <input type="text" class="form-control" name="google_meet_link">
                                </div>
                             </div>
 
@@ -85,8 +86,11 @@
                                 <div class="form-group">
                                     <label>Type Schedules</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="type_schedule_id" id="type_schedule">
-                                            <option selected="">Choose...</option>
+                                        <select class="form-control" name="schedule_type_id" id="type_schedule">
+                                            <option value="">Choose...</option>
+                                            <?php foreach ($schedTypes as $schedType): ?>
+                                                <option value="{{ $schedType->schedule_type_id }}">{{ $schedType->name }}</option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -102,98 +106,105 @@
                     </div>
 
                     <div class="body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Day</label><span class="required"> * </span>
-                                         <select class="form-control">
-                                        <option selected="">Choose...</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label>Start</label><span class="required"> * </span>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="icon-clock"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
+                        <div class="col-lg-12 scheds">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Day</label><span class="required"> * </span>
+                                             <select class="form-control">
+                                            <option selected="">Choose...</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label>End</label><span class="required"> * </span>
-                                    <label class="float-right"><a href="">Clear</a></label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="icon-clock"></i></span>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Start</label><span class="required"> * </span>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="icon-clock"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
                                         </div>
-                                        <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
                                     </div>
                                 </div>
-                            </div>
 
-                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Day</label><span class="required"> * </span>
-                                         <select class="form-control">
-                                        <option selected="">Choose...</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label>Start</label><span class="required"> * </span>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="icon-clock"></i></span>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>End</label><span class="required"> * </span>
+                                        <label class="float-right"><a href="">Clear</a></label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="icon-clock"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
                                         </div>
-                                        <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label>End</label><span class="required"> * </span>
-                                    <label class="float-right"><a href="">Clear</a> | <a href="">Remove</a></label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="icon-clock"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
-                                    </div>
-                                </div>
-                            </div>
-
-                             <div class="col-lg-12">
-                                <div class="text-right">
-                                    <button id="addAttach" type="button" class="btn btn-default btn-more"> <i class="fa fa-plus"></i> Add More</button>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12 newSched sched scheds">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                   <div class="form-group">
+                                       <label>Day</label><span class="required"> * </span>
+                                            <select class="form-control">
+                                           <option selected="">Choose...</option>
+                                       </select>
+                                   </div>
+                               </div>
+
+                               <div class="col-lg-3">
+                                   <div class="form-group">
+                                       <label>Start</label><span class="required"> * </span>
+                                       <div class="input-group mb-3">
+                                           <div class="input-group-prepend">
+                                               <span class="input-group-text"><i class="icon-clock"></i></span>
+                                           </div>
+                                           <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
+                                       </div>
+                                   </div>
+                               </div>
+
+                               <div class="col-lg-3">
+                                   <div class="form-group">
+                                       <label>End</label><span class="required"> * </span>
+                                       <label class="float-right"><a href="">Clear</a> | <a href="">Remove</a></label>
+                                       <div class="input-group mb-3">
+                                           <div class="input-group-prepend">
+                                               <span class="input-group-text"><i class="icon-clock"></i></span>
+                                           </div>
+                                           <input type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
+                                       </div>
+                                   </div>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="text-right">
+                                <button id="addSched" type="button" class="btn btn-default btn-new btn-more"> <i class="fa fa-plus"></i> Add More</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-                <div class="action-btn" style="padding-bottom: 3%;">
-                    <button type="button" class="btn btn-success" id="save" style="width: 100px">Save</button>
-                    <a href="announcements.html" class="btn btn-danger" style="width: 100px">Cancel</a>
-                </div>
             </form>
+
+            <div class="action-btn" style="padding-bottom: 3%;">
+                <button type="button" class="btn btn-success" id="save" style="width: 100px">Save</button>
+                <a href="announcements.html" class="btn btn-danger" style="width: 100px">Cancel</a>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/projects/new.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/class/new.js') }}"></script>
 @endsection

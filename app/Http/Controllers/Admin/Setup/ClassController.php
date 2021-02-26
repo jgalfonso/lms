@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Admin\Classes;
 use App\Models\Admin\Courses;
+use App\Models\Admin\ScheduleTypes;
 
 class ClassController extends Controller
 {
@@ -31,8 +32,29 @@ class ClassController extends Controller
      */
     public function new ()
     {
-        $courses = Courses::getCourses();
+        $courses    = Courses::getCourses();
+        $schedTypes = ScheduleTypes::getSchedTypes();
 
-        return view('admin.setup.class.new', compact('courses'));
+        return view('admin.setup.class.new', compact('courses', 'schedTypes'));
+    }
+
+    /**
+     * Saving new class
+     */
+    public function store (Request $request)
+    {
+        $new = Classes::storeClass($request);
+
+        echo json_encode($new);
+    }
+
+    /**
+     * Getting classes using specific course_id
+     */
+    public function getClasses (Request $request)
+    {
+        $classes = Classes::getByCourse($request);
+
+        echo json_encode($classes);
     }
 }
