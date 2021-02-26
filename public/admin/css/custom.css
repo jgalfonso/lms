@@ -24,6 +24,10 @@
     min-width: 100px;
 }
 
+.btn-long {
+    width: 150px;
+}
+
 .btn-mark {
     width: 140px;
 }
@@ -69,7 +73,7 @@
 }
 
 .word-wrap {
-    word-wrap: break-word !important; 
+    word-wrap: break-word !important;
     white-space: normal !important;
 }
 

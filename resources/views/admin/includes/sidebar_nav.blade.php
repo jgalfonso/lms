@@ -164,12 +164,16 @@
             </ul>
         </li>
 
-        <li>
+        <li class="{{ set_nav_status(['admin/services/certification*']) }}">
             <a href="#" class="has-arrow"><i class="icon-printer"></i><span>Certification</span></a>
 
             <ul>
-                <li><a href="services-certificates-moderations.html">Moderations</a></li>
-                <li><a href="services-certificates-published.html">Published</a></li>
+                <li class="{{ set_nav_status(['admin/services/certification/moderations']) }}">
+                    <a href="{{ route('moderations') }}">Moderations</a>
+                </li>
+                <li class="{{ set_nav_status(['admin/services/certification/published']) }}">
+                    <a href="{{ route('published') }}">Published</a>
+                </li>
             </ul>
         </li>
 

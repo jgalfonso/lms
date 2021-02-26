@@ -136,6 +136,14 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assessment/new', 'AssessmentController@new')->name('new-assessment');
             Route::get('assessment/recent', 'AssessmentController@recent')->name('recent-assessment');
         });
+
+        //-------- CERTIFICATION --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('certification/moderations', 'CertificationController@moderations')->name('moderations');
+            Route::get('certification/process', 'CertificationController@process')->name('process');
+            Route::get('certification/published', 'CertificationController@published')->name('published');
+            Route::get('certification/view', 'CertificationController@view')->name('view');
+        });
     });
 
     //-------- SETUP --------//
