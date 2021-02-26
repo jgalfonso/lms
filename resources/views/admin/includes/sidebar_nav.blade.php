@@ -128,9 +128,7 @@
                 <li class="{{ set_nav_status(['admin/services/enrollment/new']) }}">
                     <a href="">Online Registration</a>
                 </li>
-                <li class="{{ set_nav_status(['admin/services/enrollment/search']) }}">
-                    <a href="{{ route('search-enrollment') }}">Enroll Student</a>
-                </li>
+                <li class="{{ set_nav_status(['admin/services/enrollment/enroll-student', 'admin/services/enrollment/new/*']) }}"><a href="{{ route('enrollment-enroll_student') }}">Enroll Student</a></li>
                 <li class="{{ set_nav_status(['admin/services/enrollment/class-summary']) }}">
                     <a href="{{ route('class-summary-enrollment') }}">Class Summary</a>
                 </li>
@@ -180,10 +178,12 @@
         <li class="{{ set_nav_status(['admin/manage-users/faculty*']) }}"><a href="{{ route('faculty') }}"><i class="icon-users"></i><span>Faculty</span></a></li>
 
         <li class="header">Setup</li>
-        <li class="{{ set_nav_status(['admin/setup/class*']) }}">
-            <a href="{{ route('class') }}"><i class="icon-docs"></i><span>Class</span></a>
+        <li class="{{ set_nav_status(['admin/setup/classes*']) }}">
+            <a href="{{ route('classes') }}"><i class="icon-docs"></i><span>Classes</span></a>
         </li>
-        <li><a href=""><i class="icon-docs"></i><span>Course</span></a></li>
+        <li class="{{ set_nav_status(['admin/setup/courses*']) }}">
+            <a href="{{ route('courses') }}"><i class="icon-docs"></i><span>Courses</span></a>
+        </li>
         <li><a href=""><i class="icon-docs"></i><span>Roles</span></a></li>
     </ul>
 </nav>

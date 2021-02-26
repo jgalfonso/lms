@@ -10,6 +10,13 @@ class EmploymentHistory extends Model
     protected $table = 'employment_history';
     protected $primaryKey = 'system_id';
 
+    public static function getByID($profileID)
+    {      
+        $employment_history = self::where('profile_id', $profileID)->get();
+
+        return $employment_history;
+    }
+
     public static function add($request)
     {   
 

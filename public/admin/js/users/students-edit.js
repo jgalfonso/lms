@@ -1,7 +1,7 @@
 $(function () {
     
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/manage-users/faculty',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/manage-users/students',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -90,7 +90,7 @@ $(function () {
 
             swal({
                 title: "",
-                text: "Are you sure you want to save this record?",
+                text: "Are you sure you want to update this record?",
                 type: "warning",
                 confirmButtonText: "Yes",
                 showCancelButton: true,
@@ -102,7 +102,7 @@ $(function () {
                 var formData = new FormData(form);
 
                 $.ajax({
-                    url: App.baseUrl + "/store",
+                    url: App.baseUrl + "/update",
                     type: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -112,10 +112,10 @@ $(function () {
                             
                             swal({
                                 title: "Success!",
-                                text: "1 row successfully submitted.",
+                                text: "1 row successfully updated.",
                                 type: "success",
                             }, function () {
-                                window.location.href = App.baseUrl; 
+                                window.location.href = App.baseUrl+'/view/'+data.id; 
                             });
                         } else {
 

@@ -115,7 +115,7 @@ $(function () {
                                 text: "1 row successfully submitted.",
                                 type: "success",
                             }, function () {
-                                window.location.href = App.baseUrl; 
+                                window.location.href = App.baseUrl+'/view/'+data.id; 
                             });
                         } else {
 

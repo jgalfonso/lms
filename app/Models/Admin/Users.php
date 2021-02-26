@@ -44,7 +44,7 @@ class Users extends Model
 
             DB::commit();
 
-            return ['success' => true];
+            return ['success' => true, 'id' => $profileID];
 
         } catch (\Exception $e) {
             

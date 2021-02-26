@@ -7,39 +7,37 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\Admin\Admissions;
 use App\Models\Admin\Classes;
+use App\Models\Admin\Profiles;
 
 class EnrollmentController extends Controller
 {
-    /**
-     * Create new enrollment
-     */
-    public function new ()
+    public function index ()
     {
-        $classes = Classes::getClasses();
-
-        return view('admin.services.enrollment.new', compact('classes'));
+        return view('admin.services.enrollment.index');
     }
 
-    /**
-     * Display recent enrollments
-     */
-    public function search ()
-    {
-        $classes = Classes::getClasses();
+    public function search(Request $request) 
+    {   
+        $data = Profiles::getByKey($request);
 
-        return view('admin.services.enrollment.search', compact('classes'));
-
+        echo json_encode($data);
     }
 
-    /**
-     * Display class summary
-     */
-    public function classSummary ()
+    public function new ($id)
     {
-        $classes = Classes::getClasses();
+        $profile = Profiles::getByID($id);
+        $classes = Classes::getByCourseID($profile->course_id);
 
-        return view('admin.services.enrollment.class-summary', compact('classes'));
+        return view('admin.services.enrollment.new', compact('profile', 'classes'));
+    }
 
+    public function store(Request $request) 
+    {   
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Admissions::add($request);
+
+        echo json_encode($data);
     }
 }

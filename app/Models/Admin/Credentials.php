@@ -10,6 +10,13 @@ class Credentials extends Model
     protected $table = 'credentials';
     protected $primaryKey = 'system_id';
 
+    public static function getByID($profileID)
+    {      
+        $credentials = self::where('profile_id', $profileID)->get();
+
+        return $credentials;
+    }
+
     public static function add($request)
     {   
 

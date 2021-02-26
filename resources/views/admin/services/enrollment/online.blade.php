@@ -1,6 +1,6 @@
 @extends('admin.template')
 
-@section('title', 'Services - Enrollment (Class Summary)')
+@section('title', 'Services - Enrollment (Online Registration)')
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
     <div class="col-md-6 col-sm-12">
-        <h1>Class Summary</h1>
+        <h1>Online Registration</h1>
 
         @include('admin.includes.breadcrumb')
     </div>

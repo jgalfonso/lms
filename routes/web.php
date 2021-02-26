@@ -115,8 +115,13 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
 
         //-------- ENROLLMENT --------//
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('enrollment/new', 'EnrollmentController@new')->name('new-enrollment');
-            Route::get('enrollment/search', 'EnrollmentController@search')->name('search-enrollment');
+            Route::get('enrollment', 'EnrollmentController@index')->name('enrollment-enroll_student');
+            Route::get('enrollment/enroll-student', 'EnrollmentController@index')->name('enrollment-enroll_student');
+            Route::get('enrollment/search', 'EnrollmentController@search')->name('enrollment-search');
+            Route::get('enrollment/new/{id}', 'EnrollmentController@new')->name('enrollment-new');
+
+            Route::post('enrollment/store', 'EnrollmentController@store')->name('store-enrollment');
+        });
 
         //-------- BILLING --------//
         Route::group(['middleware' => 'auth'], function () {
@@ -138,10 +143,26 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
 
         //-------- CLASS --------//
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('class/index', 'ClassController@index')->name('class');
-            Route::get('class/new', 'ClassController@new')->name('new-class');
-            Route::get('class/edit', 'ClassController@edit')->name('edit-class');
-            Route::get('class/archives', 'ClassController@archives')->name('archives-class');
+            Route::get('classes', 'ClassController@index')->name('classes');
+            Route::get('classes/new', 'ClassController@new')->name('classes-new');
+            Route::get('classes/view/{id}', 'ClassController@view')->name('classes-view');
+            Route::get('classes/edit/{id}', 'ClassController@edit')->name('classes-edit');
+
+            Route::post('classes/activate', 'ClassController@activate')->name('activate-class');
+            Route::post('classes/close', 'ClassController@close')->name('close-class');
+            Route::post('classes/store', 'ClassController@store')->name('store-class');
+            Route::post('classes/update', 'ClassController@update')->name('update-class');
+        });
+
+        //-------- COURSES --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('courses', 'CoursesController@index')->name('courses');
+            Route::get('courses/new', 'CoursesController@new')->name('courses-new');
+            Route::get('courses/view/{id}', 'CoursesController@view')->name('courses-view');
+            Route::get('courses/edit/{id}', 'CoursesController@edit')->name('courses-edit');
+
+            Route::post('courses/store', 'CoursesController@store')->name('store-course');
+            Route::post('courses/update', 'CoursesController@update')->name('update-course');
         });
     });
 
@@ -152,16 +173,22 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
         Route::group(['middleware' => 'auth'], function () {
             Route::get('students', 'StudentsController@index')->name('students');
             Route::get('students/new', 'StudentsController@new')->name('students-new');
+            Route::get('students/view/{id}', 'StudentsController@view')->name('students-view');
+            Route::get('students/edit/{id}', 'StudentsController@edit')->name('students-edit');
             //-------- AJAX REQUEST FOR STUDENTS --------//
             Route::post('students/store', 'StudentsController@store')->name('store-student');
+            Route::post('students/update', 'StudentsController@update')->name('update-student');
         });
 
         //-------- ADMIN --------//
         Route::group(['middleware' => 'auth'], function () {
             Route::get('faculty', 'FacultyController@index')->name('faculty');
             Route::get('faculty/new', 'FacultyController@new')->name('faculty-new');
+            Route::get('faculty/view/{id}', 'FacultyController@view')->name('faculty-view');
+            Route::get('faculty/edit/{id}', 'FacultyController@edit')->name('faculty-edit');
             //-------- AJAX REQUEST FOR STUDENTS --------//
             Route::post('faculty/store', 'FacultyController@store')->name('store-faculty');
+            Route::post('faculty/update', 'FacultyController@update')->name('student-faculty');
         });
     });
 });

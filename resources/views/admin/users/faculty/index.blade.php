@@ -4,7 +4,6 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -73,12 +72,12 @@
                                     @else
                                         <div class=@if($row->gender == 'Male') "avtar-pic w35 bg-blue" @else "avtar-pic w35 bg-pink" @endif data-toggle="tooltip" data-placement="top" title="" data-original-title="Avatar Name"><span>{{ substr($row->firstname, 0, 1).substr($row->lastname, 0, 1) }}</span></div></td>
                                     @endif 
-                                <td><a href="">{{ $row->firstname. ($row->middlename ? ' '.$row->middlename.' ' : ' '). $row->lastname }}</a><br />{{ $row->email }}</td>
+                                <td><a href="{{ route('faculty-view', $row->profile_id) }}">{{ $row->firstname. ($row->middlename ? ' '.$row->middlename.' ' : ' '). $row->lastname }}</a><br />{{ $row->email }}</td>
                                 <td>{{ $row->reference_no }}</td>
                                 <td>{{ $row->dob }}</td>
                                 <td>{{ $row->age }}</td>
                                 <td>{{ $row->gender }}</td>
-                                <td class="align-center"><a href="services-enrollment-view_student.html" class="btn btn-sm btn-default" title="Edit"><i class="fa fa-edit"></i></a></td>
+                                <td class="align-center"><a href="{{ route('faculty-edit', $row->profile_id) }}" class="btn btn-sm btn-default" title="Edit"><i class="fa fa-edit"></i></a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -91,5 +90,4 @@
 @section('script')
     <script src="{{ URL::asset('admin/assets/bundles/datatablescripts.bundle.js') }}"></script>
     <script src="{{ URL::asset('admin/js/users/faculty.js') }}"></script>
-</script>
 @endsection

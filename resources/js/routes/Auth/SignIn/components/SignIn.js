@@ -59,7 +59,9 @@ class SignIn extends Component {
             if (response.success) {
                 
                 localStorage["lmsappState"] = JSON.stringify(response); 
-                history.push({ pathname: '/admin/dashboard', state: { success: true, message: 'Signed in successfully.', variant: 'success' } });
+                
+                if (response.user_type_id == 1) history.push({ pathname: '/', state: { success: true, message: 'Signed in successfully.', variant: 'success' } });
+                else history.push({ pathname: '/admin/main/dashboard' });
             }
             else snackBar.show(this.props, response.message, 'error');
         });   

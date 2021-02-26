@@ -10,6 +10,13 @@ class EducationBackground extends Model
     protected $table = 'education_background';
     protected $primaryKey = 'system_id';
 
+    public static function getByID($profileID)
+    {      
+        $education_background = self::where('profile_id', $profileID)->get();
+
+        return $education_background;
+    }
+
     public static function add($request)
     {   
 

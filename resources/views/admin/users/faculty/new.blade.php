@@ -1,12 +1,11 @@
 @extends('admin.template')
 
-@section('title', 'Users - Students - New')
+@section('title', 'Users - Faculty (New)')
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/parsleyjs/css/parsley.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/sweetalert/sweetalert.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -76,7 +75,7 @@
                              <div class="col-lg-3">
                                 <div class="form-group">
                                     <label>Suffix</label>
-                                    <input name="suffix" type="text" class="form-control" >
+                                    <input name="suffix" type="text"  class="form-control" >
                                 </div>
                             </div>
 
@@ -87,9 +86,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
-                                        <input name="dob" type="text" data-date-autoclose="true" class="form-control dob" data-parsley-errors-container="#dob-errors" required>
+                                        <input name="dob" type="text" class="form-control" data-provide="datepicker" data-date-format="dd/mm/yyyy"  required>
                                     </div>
-                                    <div id="dob-errors" style="margin-top: -7px;"></div>
                                 </div>
                             </div>
 
@@ -163,14 +161,7 @@
                                     <label>Distiguishing Marks</label>
                                     <input name="marks" type="text" class="form-control" >
                                 </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Email</label><span style="color: red"> * </span>
-                                    <input name="email" type="email" class="form-control" required>
-                                </div>
-                            </div>
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -231,10 +222,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6">
-                                                
-                                            </div>
-
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label>Phone No. 1</label>
@@ -250,6 +237,10 @@
                                             </div>
 
                                             <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Email</label><span style="color: red"> * </span>
+                                                    <input name="email" type="email" class="form-control" required>
+                                                </div>
                                             </div>
 
                                             <div class="col-lg-12">
@@ -344,7 +335,7 @@
 
                                              <div class="col-lg-12">
                                                 <div class="text-right">
-                                                    <button id="add-education-background" type="button" class="btn btn-default"> <i class="fa fa-plus"></i> Add Education</button>
+                                                    <button id="add-education-background" type="button" class="btn btn-default btn-new"> <i class="fa fa-plus"></i> Add Education</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -604,6 +595,6 @@
     <script src="{{ URL::asset('admin/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/vendor/parsleyjs/js/parsley.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/assets/js/alert.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
     <script src="{{ URL::asset('admin/js/users/faculty-new.js') }}"></script>
 @endsection
