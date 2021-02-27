@@ -41,10 +41,10 @@ class AssignmentsController extends Controller
      */
     public function archives ()
     {
-        $archives = Assignments::getArchives();
+        $assignments = Assignments::getArchives();
         $classes = Classes::getClasses();
 
-        return view('admin.academic.assignments.archives', compact('archives', 'classes'));
+        return view('admin.academic.assignments.archives', compact('assignments', 'classes'));
     }
 
     /**
@@ -88,5 +88,16 @@ class AssignmentsController extends Controller
         $attachments = AssignmentAttachments::getAttachments($id);
 
         return view('admin.academic.assignments.view', compact('assignment', 'attachments'));
+    }
+
+    /**
+     * Edit assignment
+     */
+    public function edit (Request $request, $id)
+    {
+        $assignment  = Assignments::getById($id);
+        $attachments = AssignmentAttachments::getAttachments($id);
+
+        return view('admin.academic.assignments.edit', compact('assignment', 'attachments'));
     }
 }

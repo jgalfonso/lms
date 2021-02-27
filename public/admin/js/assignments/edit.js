@@ -75,7 +75,7 @@ $(function () {
                 showLoaderOnConfirm: true,
             }, function () {
 
-                var form = document.getElementById('new');
+                var form = document.getElementById('edit');
                 var formData = new FormData(form);
 
                 $.ajax({
@@ -89,10 +89,10 @@ $(function () {
                         if (data.success == true) {
                             swal({
                                 title: "Success!",
-                                text: "Successfully created new assignment.",
+                                text: "Successfully updated assignment.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/new";
+                                window.location.href = App.baseUrl + "/edit";
                             });
                         } else {
                             alert(data.success);
@@ -168,7 +168,7 @@ $(function () {
         },
 
         validate : function() {
-            if (!$('#new').parsley().validate() ) {
+            if (!$('#edit').parsley().validate() ) {
 
                 bootstrap_alert.warning('#alert', ' There are some error/s, please correct them bellow.');
 
