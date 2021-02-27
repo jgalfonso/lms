@@ -119,6 +119,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('enrollment/enroll-student', 'EnrollmentController@index')->name('enrollment-enroll_student');
             Route::get('enrollment/search', 'EnrollmentController@search')->name('enrollment-search');
             Route::get('enrollment/new/{id}', 'EnrollmentController@new')->name('enrollment-new');
+            Route::get('enrollment/class-summary-enrollment', 'EnrollmentController@classSummary')->name('class-summary-enrollment');
+            Route::get('enrollment/filter-class-summary', 'EnrollmentController@filterClassSummary')->name('filter-class-summary');
 
             Route::post('enrollment/store', 'EnrollmentController@store')->name('store-enrollment');
         });
