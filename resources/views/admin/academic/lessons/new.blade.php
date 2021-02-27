@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
 
+    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -32,7 +33,7 @@
 
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Title</label><span style="color: red"> * </span>
+                                    <label>Title</label><span class="required"> * </span>
                                     <input type="text" class="form-control" required name="title">
                                 </div>
                             </div>
@@ -40,7 +41,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Course</label><span style="color: red"> * </span>
+                                    <label>Course</label><span class="required"> * </span>
                                     <div class="input-group">
                                         <select class="form-control" name="course_id" id="course">
                                             <option selected>Choose...</option>
@@ -55,7 +56,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Class</label><span style="color: red"> * </span>
+                                    <label>Class</label><span class="required"> * </span>
                                     <div class="input-group">
                                         <select class="form-control" name="class_id" id="classes" disabled>
                                             <option selected="">Choose...</option>
@@ -115,14 +116,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Title</label><span style="color: red"> * </span>
+                                        <label>Title</label><span class="required"> * </span>
                                         <input type="text" class="form-control" required name="link_title[]">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>URL</label><span style="color: red"> * </span>
+                                        <label>URL</label><span class="required"> * </span>
                                         <label class="float-right"><a href="javascript:void(0);" class="clearLink">Clear </a> </label>
                                         <input type="text" class="form-control" required name="link_url[]">
                                     </div>
@@ -135,14 +136,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Title</label><span style="color: red"> * </span>
+                                        <label>Title</label><span class="required"> * </span>
                                         <input type="text" class="form-control" required name="link_title[]">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>URL</label><span style="color: red"> * </span>
+                                        <label>URL</label><span class="required"> * </span>
                                         <label class="float-right"><a href="javascript:void(0);" class="clearLink">Clear </a> | <a href="javascript:void(0);" class="removeLink">Remove </a></label>
                                         <input type="text" class="form-control" required name="link_url[]">
                                     </div>
@@ -168,14 +169,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Title</label><span style="color: red"> * </span>
+                                        <label>Title</label><span class="required"> * </span>
                                         <input type="text" class="form-control" required name="attach_title[]">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Filename</label><span style="color: red"> * </span>
+                                        <label>Filename</label><span class="required"> * </span>
                                         <label class="float-right"><a href="javascript:void(0);" class="clearAttach">Clear </a> </label>
                                         <div class="custom-file">
                                             <input type="file" class="form-control" id="inputGroupFile01" name="attach_file[]">
@@ -189,14 +190,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Title</label><span style="color: red"> * </span>
+                                        <label>Title</label><span class="required"> * </span>
                                         <input type="text" class="form-control" required name="attach_title[]">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Filename</label><span style="color: red"> * </span>
+                                        <label>Filename</label><span class="required"> * </span>
                                          <label class="float-right"><a href="javascript:void(0);" class="clearAttach">Clear </a> | <a href="javascript:void(0);" class="removeAttach">Remove </a></label>
                                         <div class="custom-file">
                                             <input type="file" class="form-control" id="inputGroupFile01" name="attach_file[]">
@@ -215,9 +216,9 @@
                     </div>
                 </div>
 
-                <div class="action-btn" style="padding-bottom: 3%;">
-                    <button type="button" class="btn btn-success" id="save" style="width: 100px">Save</button>
-                    <a href="{{ route('lesson-plan') }}" class="btn btn-danger" title="" style="width: 100px">Cancel</a>
+                <div class="action-btn">
+                    <button type="button" class="btn btn-success" id="save">Save</button>
+                    <a href="{{ route('lesson-plan') }}" class="btn btn-danger" title="">Cancel</a>
                 </div>
             </form>
         </div>
@@ -226,6 +227,7 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendor/parsleyjs/js/parsley.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
