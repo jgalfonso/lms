@@ -92,4 +92,16 @@ class LessonsController extends Controller
 
         return view('admin.academic.lessons.view', compact('lesson', 'links', 'attachments'));
     }
+
+    /**
+     * Edit lesson
+     */
+    public function edit ($id)
+    {
+        $lesson      = Lessons::getById($id);
+        $links       = LessonLinks::getLinks($id);
+        $attachments = LessonAttachments::getAttachments($id);
+
+        return view('admin.academic.lessons.edit', compact('lesson', 'links', 'attachments'));
+    }
 }

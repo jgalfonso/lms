@@ -55,6 +55,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('lessons/lesson-plan', 'LessonsController@lessonPlan')->name('lesson-plan');
             Route::get('lessons/archives', 'LessonsController@archives')->name('archives');
             Route::get('lessons/view/{id}', 'LessonsController@view')->name('view-lesson');
+            Route::get('lessons/edit/{id}', 'LessonsController@edit')->name('edit-lesson');
+
             //-------- AJAX REQUEST FOR LESSONS --------//
             Route::post('lessons/store', 'LessonsController@store')->name('store-lesson');
             Route::post('lessons/getClasses', 'LessonsController@getClasses')->name('get-classes');
