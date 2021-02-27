@@ -3,6 +3,8 @@
 @section('title', 'Assignments')
 
 @section('css')
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/parsleyjs/css/parsley.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
 
     <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
@@ -22,7 +24,7 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-lg-12">
-                    <form id="new" method="post" novalidate>
+                    <form id="edit" method="post" novalidate>
                         <div class="card">
                             <div class="header">
                                 <h2>Assignments</h2>
@@ -32,11 +34,11 @@
 
                                 <div class="form-group">
                                     <label>Title</label><span class="required"> * </span>
-                                    <input type="text" class="form-control" required name="title" value="{{ $assignment->title }}" disabled>
+                                    <input type="text" class="form-control" required name="title" value="{{ $assignment->title }}" >
                                 </div>
                                 <div class="form-group">
                                     <label>Instruction</label>
-                                    <textarea id="ckeditor" name="instruction" value="{{ $assignment->instruction }}" disabled></textarea>
+                                    <textarea id="ckeditor" name="instruction" value="{{ $assignment->instruction }}" ></textarea>
                                 </div>
 
                                 <div class="row">
@@ -44,7 +46,7 @@
                                         <div class="form-group">
                                             <label>Course</label><span class="required"> * </span>
                                             <div class="input-group">
-                                                <select class="form-control" name="course_id" id="course" disabled>
+                                                <select class="form-control" name="course_id" id="course" >
                                                     <option selected="">Choose...</option>
                                                 </select>
                                             </div>
@@ -55,7 +57,7 @@
                                         <div class="form-group">
                                             <label>Class</label><span class="required"> * </span>
                                             <div class="input-group">
-                                                <select class="form-control" name="class_id" id="classes" disabled>
+                                                <select class="form-control" name="class_id" id="classes" >
                                                     <option>Choose...</option>
                                                     <option selected value="{{ $assignment->class_id }}">{{ $assignment->class_name }}</option>
                                                 </select>
@@ -67,7 +69,7 @@
                                 <div class="form-group">
                                      <label>Instructor</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="instructor" disabled>
+                                        <select class="form-control" name="instructor" >
                                             <option>Choose...</option>
                                             <option selected value="{{ $assignment->instructor_id }}">Sample Sir</option>
                                         </select>
@@ -78,14 +80,14 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Points</label>
-                                            <input type="number" class="form-control" required name="points" value="{{ $assignment->points }}" disabled>
+                                            <input type="number" class="form-control" name="points" value="{{ $assignment->points }}" >
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Allowed Attempts</label><span class="required"> * </span>
-                                            <input type="number" class="form-control" required name="allowed_attempts" value="{{ $assignment->allowed_attempts }}" disabled>
+                                            <input type="number" class="form-control" required name="allowed_attempts" value="{{ $assignment->allowed_attempts }}" >
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +100,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" name="start" value="{{ date('Y-m-d', strtotime($assignment->start)) }}" disabled>
+                                                <input type="text" class="form-control date" name="start" value="{{ date('Y-m-d', strtotime($assignment->start)) }}" >
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +112,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" name="end" value="{{ date('Y-m-d', strtotime($assignment->end)) }}" disabled>
+                                                <input type="text" class="form-control date" name="end" value="{{ date('Y-m-d', strtotime($assignment->end)) }}" >
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +133,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Title</label><span class="required"> * </span>
-                                                        <input type="text" class="form-control" required value="{{ $attachment->title }}" disabled>
+                                                        <input type="text" class="form-control" required value="{{ $attachment->title }}" >
                                                     </div>
                                                 </div>
 
@@ -139,7 +141,7 @@
                                                     <div class="form-group">
                                                         <label>Filename</label><span class="required"> * </span>
                                                         <div class="custom-file">
-                                                            <input type="file" class="form-control value="{{ $attachment->filename }}" disabled>
+                                                            <input type="file" class="form-control value="{{ $attachment->filename }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -155,8 +157,8 @@
                     </form>
 
                     <div class="action-btn">
-                        <!-- <button type="button" class="btn btn-success" id="save" style="width: 100px">Save</button> -->
-                        <a href="{{ route('recent-assignment') }}" class="btn btn-secondary" title="">Back</a>
+                        <button type="button" class="btn btn-success" id="save">Save</button>
+                        <a href="{{ route('recent-assignment') }}" class="btn btn-danger">Cancel</a>
                     </div>
                 </div>
             </div>
@@ -166,8 +168,10 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendor/parsleyjs/js/parsley.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/assignments/new.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/assignments/edit.js') }}"></script>
 @endsection

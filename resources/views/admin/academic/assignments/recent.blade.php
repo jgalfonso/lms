@@ -4,6 +4,9 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
+
+    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -45,7 +48,7 @@
                     <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
                          <thead>
                             <tr>
-                                <th class="text-center" style="width: 1%;">
+                                <th class="text-center th-mark">
                                     <div class="fancy-checkbox">
                                         <label><input type="checkbox"><span></span></label>
                                     </div>
@@ -53,8 +56,8 @@
                                 <th>Title</th>
                                 <th >Class Code / Name</th>
                                 <th>Instructor</th>
-                                <th style="width: 10%; ">Status</th>
-                                <th style="width: 1%; " class="text-center"><i class="fa fa-level-down"></i></th>
+                                <th class="th-status">Status</th>
+                                <th class="text-center th-action"><i class="fa fa-level-down"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -72,17 +75,18 @@
                                     </td>
                                     <td>{{ $assignment->status }}</td>
                                     <td>
-                                          <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></button>
-                                          <a href="{{ route('view-assignment', $assignment->assignment_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
+                                        <a href="{{ route('edit-assignment', $assignment->assignment_id) }}" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
+                                        <a href="{{ route('view-assignment', $assignment->assignment_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-                <div class="row "  style="float: left; margin-top: -35px">
+                <div class="row action-mark">
                     <div class="col-md-12">
-                        <button class="btn btn-success" type="button">Mark as Active</button> <button class="btn btn-danger" type="button">Mark as Closed</button>
+                        <button class="btn btn-mark btn-success" type="button">Mark as Active</button>
+                        <button class="btn btn-mark btn-danger" type="button">Mark as Closed</button>
                     </div>
                 </div>
             </div>
@@ -92,5 +96,6 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/assignments/recent.js') }}"></script>
 @endsection
