@@ -12,7 +12,7 @@ use App\Models\Admin\InvoiceItems;
 use App\Models\Admin\Items;
 use App\Models\Admin\Profiles;
 
-class BillingController extends Controller
+class PaymentController extends Controller
 {
     public function index ()
     {
@@ -20,13 +20,13 @@ class BillingController extends Controller
         return view('admin.services.billing.index', compact('invoices'));
     }
 
-    public function new($id = null)
+    public function new($id)
     {
         $today = date('d-m-Y');
-        $customers = Profiles::getByUserTypeID(1);
-        $items = Items::getItems();
+        $invoice = Invoices::getByID($id);
+        $invoice_items = InvoiceItems::getInvoiceItems($id);
 
-        return view('admin.services.billing.new', compact('today', 'customers', 'items'));
+        return view('admin.services.billing.payment-new', compact('today', 'invoice', 'invoice_items'));
     }
 
     public function store(Request $request) 

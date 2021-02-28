@@ -135,19 +135,12 @@
             </ul>
         </li>
 
-       <li class="{{ set_nav_status(['admin/services/billing*']) }}">
+        <li class="{{ set_nav_status(['admin/services/billing*']) }}">
             <a href="#" class="has-arrow"><i class="icon-calculator  "></i><span>Billing</span></a>
-
             <ul>
-                <li class="{{ set_nav_status(['admin/services/billing/newInvoice']) }}">
-                    <a href="{{ route('new-invoice') }}">New Invoice</a>
-                    </li>
-                <li class="{{ set_nav_status(['admin/services/billing/invoices']) }}">
-                    <a href="{{ route('invoices') }}">Invoices</a>
-                </li>
-                <li class="{{ set_nav_status(['admin/services/billing/payments']) }}">
-                    <a href="{{ route('payments') }}">Payments</a>
-                </li>
+                <li class="{{ set_nav_status(['admin/services/billing/new', 'admin/services/billing/new/*']) }}"><a href="{{ route('billing-new_invoice') }}">New Invoice</a></li>
+                <li class="{{ set_nav_status(['admin/services/billing/invoices']) }}"><a href="{{ route('billing-invoices') }}">Invoices</a></li>
+                <li><a href="services-billing-payments.html">Payments</a></li>
             </ul>
         </li>
 

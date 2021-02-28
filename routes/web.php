@@ -130,10 +130,13 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
 
         //-------- BILLING --------//
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('billing/newInvoice', 'BillingController@newInvoice')->name('new-invoice');
-            Route::get('billing/invoices', 'BillingController@invoices')->name('invoices');
-            Route::get('billing/newPayment', 'BillingController@newPayment')->name('new-payment');
-            Route::get('billing/payments', 'BillingController@payments')->name('payments');
+            Route::get('billing/new-invoice', 'BillingController@new')->name('billing-new_invoice');
+            Route::get('billing/invoices', 'BillingController@index')->name('billing-invoices');
+            Route::get('billing/view/{id}', 'BillingController@view')->name('billing-view_invoice');
+
+            Route::post('billing/store', 'BillingController@store')->name('store-billing');
+
+            Route::get('billing/new-payment/{id}', 'PaymentController@new')->name('billing-new_payment');
         });
 
         //-------- ASSESSMENT --------//
