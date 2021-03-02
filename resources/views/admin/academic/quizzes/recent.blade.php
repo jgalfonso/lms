@@ -4,6 +4,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -15,7 +16,7 @@
 @endsection
 
 @section('content')
-<div id="alert"></div>
+    <div id="alert"></div>
     <div class="row clearfix">
         <div class="col-12">
             <div class="card">
@@ -25,7 +26,7 @@
                             <label>Filter by Class:</label>
                             <div class="input-group">
                                 <select class="form-control" id="classes">
-                                    <option selected="">Choose...</option>
+                                    <option value="">Choose...</option>
                                     <?php if (!empty($classes)): ?>
                                         <?php foreach ($classes as $class): ?>
                                             <option value="{{ $class->class_id }}">{{ $class->name }}</option>
@@ -43,18 +44,20 @@
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
-                         <thead>
+                        <thead>
                             <tr>
-                                <th class="text-center" style="width: 1%;">
+                                <th class="text-center th-mark">
                                     <div class="fancy-checkbox">
                                         <label><input type="checkbox"><span></span></label>
                                     </div>
                                 </th>
                                 <th>Title</th>
-                                <th>Availability</th>
-                                <th>Due Date</th>
-                                <th style="width: 10%; ">Time Limit</th>
-                                <th style="width: 1%; " class="text-center"><i class="fa fa-level-down"></i></th>
+                                <th >Class Code / Name</th>
+                                <th class="text-center">Availability</th>
+                                <th class="text-center">Due Date</th>
+                                <th class="text-center">Time Limit</th>
+                                <th class="text-center th-status">Status</th>
+                                <th class="text-center th-action"><i class="fa fa-level-down"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,22 +69,24 @@
                                         </div>
                                     </td>
                                     <td><a href="">{{ $quiz->title }}</a></td>
-                                     <td>01/01/2021</td>
-                                    <td>
-                                        01/01/2021
-                                    </td>
-                                    <td>1hr</td>
-                                    <td>
-                                          <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></button>
+                                    <td><b>{{ $quiz->class_code }}</b><br />{{ $quiz->class_name }}</td>
+                                    <td class="text-center">{{ date('d-m-Y', strtotime($quiz->start)) }}</td>
+                                    <td class="text-center">{{ date('d-m-Y', strtotime($quiz->end)) }}</td>
+                                    <td class="text-center">1hr</td>
+                                    <td class="text-center">{{ $quiz->status }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('edit-quiz', $quiz->quiz_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
+                                        <a href="{{ route('view-quiz', $quiz->quiz_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-                <div class="row "  style="float: left; margin-top: -35px">
+                <div class="row action-mark">
                     <div class="col-md-12">
-                        <button class="btn btn-success" type="button">Mark as Active</button> <button class="btn btn-danger" type="button">Mark as Closed</button>
+                        <button class="btn btn-success btn-mark" type="button">Mark as Active</button>
+                        <button class="btn btn-danger btn-mark" type="button">Mark as Closed</button>
                     </div>
                 </div>
             </div>

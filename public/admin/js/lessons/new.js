@@ -34,7 +34,6 @@ $(function () {
 
         bindEvents: function () {
             CKEDITOR.on('instanceReady', function () {
-                $('form textarea').attr('required', '');
                 $.each(CKEDITOR.instances, function (instance) {
                     CKEDITOR.instances[instance].on("change", function (e) {
                         for (instance in CKEDITOR.instances) {

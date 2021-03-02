@@ -73,8 +73,9 @@
                                         <div class="font-15">Debra Stewart</div>
                                     </td>
                                     <td>{{ $project->status }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></button>
+                                    <td class="text-center">
+                                        <a href="{{ route('edit-project', $project->project_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
+                                        <a href="{{ route('view-project', $project->project_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

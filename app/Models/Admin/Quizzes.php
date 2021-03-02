@@ -17,7 +17,10 @@ class Quizzes extends Model
     {
         $quizzes = self::select(
                         'quizzes.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
                     )
+                    ->leftJoin('classes', 'quizzes.class_id', '=', 'classes.class_id')
                     ->where('quizzes.status', 'Active')
                     ->get();
 
@@ -35,7 +38,7 @@ class Quizzes extends Model
                         'classes.name as class_name',
                     )
                     ->leftJoin('classes', 'quizzes.class_id', '=', 'classes.class_id')
-                    // ->where('quizzes.status', 'Active')
+                    ->where('quizzes.status', 'Active')
                     ->first();
 
         return !empty($quiz) ? $quiz : null;

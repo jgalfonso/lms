@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Models\Admin\Projects;
+use App\Models\Admin\ProjectAttachments;
 use App\Models\Admin\Classes;
 use App\Models\Admin\Courses;
 
@@ -81,5 +82,27 @@ class ProjectsController extends Controller
         $projects = Projects::filter($request)->get();
 
         echo json_encode($projects);
+    }
+
+    /**
+     * Display specific project
+     */
+    public function view ($id)
+    {
+        $project      = Projects::getById($id);
+        $attachments  = ProjectAttachments::getAttachments($id);
+
+        return view('admin.academic.projects.view', compact('project', 'attachments'));
+    }
+
+    /**
+     * Edit project
+     */
+    public function edit ($id)
+    {
+        $project      = Projects::getById($id);
+        $attachments  = ProjectAttachments::getAttachments($id);
+
+        return view('admin.academic.projects.edit', compact('project', 'attachments'));
     }
 }

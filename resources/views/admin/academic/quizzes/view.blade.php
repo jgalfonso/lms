@@ -3,8 +3,6 @@
 @section('title', 'Quizzes')
 
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/parsleyjs/css/parsley.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
@@ -40,7 +38,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Course</label><span style="color: red"> * </span>
+                                    <label>Course</label><span class="required"> * </span>
                                     <div class="input-group">
                                         <select class="form-control" name="course_id" id="course" disabled>
                                             <option selected>Choose...</option>
@@ -51,7 +49,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Class</label><span style="color: red"> * </span>
+                                            <label>Class</label><span class="required"> * </span>
                                             <div class="input-group">
                                                 <select class="form-control" name="class_id" id="classes" disabled>
                                                     <option>Choose...</option>
@@ -115,8 +113,7 @@
                     </div>
 
                     <div class="action-btn">
-                        <button type="button" class="btn btn-success" id="save">Save</button>
-                        <a href="{{ route('recent-quiz') }}" class="btn btn-danger" title="" style="width: 100px">Cancel</a>
+                        <a href="{{ route('recent-quiz') }}" class="btn btn-secondary" title="">Back</a>
                     </div>
                 </div>
             </div>
@@ -126,7 +123,6 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 

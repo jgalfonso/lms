@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-lg-12">
-                    <form id="new" method="post" novalidate>
+                    <form id="edit" method="post" novalidate>
                         <div class="card">
                             <div class="header">
                                 <h2>Projects</h2>
@@ -34,11 +34,11 @@
 
                                 <div class="form-group">
                                     <label>Title</label><span class="required"> * </span>
-                                    <input type="text" class="form-control" required name="title">
+                                    <input type="text" class="form-control" required name="title" value="{{ $project->title }}" >
                                 </div>
                                 <div class="form-group">
                                     <label>Instruction</label>
-                                    <textarea id="ckeditor" name="instruction"></textarea>
+                                    <textarea id="ckeditor" name="instruction" value="{{ $project->instruction }}" ></textarea>
                                 </div>
 
                                 <div class="row">
@@ -46,12 +46,8 @@
                                         <div class="form-group">
                                             <label>Course</label><span class="required"> * </span>
                                             <div class="input-group">
-                                                <select class="form-control" name="course_id" id="course" required>
-                                                    <option selected>Choose...</option>
-                                                    <?php foreach ($courses as $course): ?>
-                                                        <option value="{{ $course->course_id }}">{{ $course->name }}</option>
-                                                    <?php endforeach; ?>
-
+                                                <select class="form-control" name="course_id" id="course" >
+                                                    <option selected="">Choose...</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -61,8 +57,9 @@
                                         <div class="form-group">
                                             <label>Class</label><span class="required"> * </span>
                                             <div class="input-group">
-                                                <select class="form-control" name="class_id" id="classes" required disabled>
-                                                    <option selected="">Choose...</option>
+                                                <select class="form-control" name="class_id" id="classes" >
+                                                    <option>Choose...</option>
+                                                    <option selected value="{{ $project->class_id }}">{{ $project->class_name }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -72,9 +69,9 @@
                                 <div class="form-group">
                                      <label>Instructor</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="instructor" required>
-                                            <option selected="">Choose...</option>
-                                            <option value="1">Sample Sir</option>
+                                        <select class="form-control" name="instructor" >
+                                            <option>Choose...</option>
+                                            <option selected value="{{ $project->instructor_id }}">Sample Sir</option>
                                         </select>
                                     </div>
                                 </div>
@@ -83,14 +80,14 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Points</label>
-                                            <input type="number" class="form-control" name="points">
+                                            <input type="number" class="form-control" required name="points" value="{{ $project->points }}" >
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Allowed Attempts</label><span class="required"> * </span>
-                                            <input type="number" class="form-control" required name="allowed_attempts">
+                                            <input type="number" class="form-control" required name="allowed_attempts" value="{{ $project->allowed_attempts }}" >
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +100,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" name="start">
+                                                <input type="text" class="form-control date" name="start" value="{{ date('Y-m-d', strtotime($project->start)) }}" >
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +112,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" name="end">
+                                                <input type="text" class="form-control date" name="end" value="{{ date('Y-m-d', strtotime($project->end)) }}" >
                                             </div>
                                         </div>
                                     </div>
@@ -129,53 +126,32 @@
                             </div>
 
                             <div class="body">
-                                <div class="col-lg-12 attachs">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Title</label><span class="required"> * </span>
-                                                <input type="text" class="form-control" required name="attach_title[]">
-                                            </div>
-                                        </div>
+                                <?php if (count($attachments) != 0): ?>
+                                    <?php foreach ($attachments as $key => $attachment): ?>
+                                        <div class="col-lg-12 attachs">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Title</label><span class="required"> * </span>
+                                                        <input type="text" class="form-control" required value="{{ $attachment->title }}" >
+                                                    </div>
+                                                </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Filename</label><span class="required"> * </span>
-                                                <label class="float-right"><a href="javascript:void(0);" class="clearAttach">Clear </a> </label>
-                                                <div class="custom-file">
-                                                    <input type="file" class="form-control" id="inputGroupFile01" name="attach_file[]">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Filename</label><span class="required"> * </span>
+                                                        <div class="custom-file">
+                                                            <input type="file" class="form-control value="{{ $attachment->filename }}" >
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>No attachments available.</p>
+                                <?php endif; ?>
 
-                                <div class="col-lg-12 newAttach attach attachs">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Title</label><span class="required"> * </span>
-                                                <input type="text" class="form-control" required name="attach_title[]">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Filename</label><span class="required"> * </span>
-                                                <label class="float-right"><a href="javascript:void(0);" class="clearAttach">Clear </a> | <a href="javascript:void(0);" class="removeAttach">Remove </a></label>
-                                                <div class="custom-file">
-                                                    <input type="file" class="form-control" id="inputGroupFile01" name="attach_file[]">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="text-right">
-                                        <button id="addAttach" type="button" class="btn btn-default btn-new btn-more"> <i class="fa fa-plus"></i> Add More</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </form>
@@ -197,5 +173,5 @@
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/projects/new.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/projects/edit.js') }}"></script>
 @endsection

@@ -76,6 +76,16 @@ class QuizzesController extends Controller
     }
 
     /**
+     * Edit quiz
+     */
+    public function edit ($id)
+    {
+        $quiz = Quizzes::getById($id);
+
+        return view('admin.academic.quizzes.edit', compact('quiz'));
+    }
+
+    /**
      * Getting all quizzes filtered by class id
      */
     public function filter (Request $request)

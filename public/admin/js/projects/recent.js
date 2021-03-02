@@ -71,7 +71,8 @@ $(function () {
                                         '<br />'
                                         + row['class_name'];
 
-                            var action = '<a href="' + App.baseUrl + "user-group/edit/" + row['group_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
+                                        var action = '<a href="' + App.baseUrl + "/edit/" + row['project_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>' +
+                                                     '<a href="' + App.baseUrl + "/view/" + row['project_id'] +'" class="btn btn-sm btn-default" title="View"><i class="icon-eye"></i></a>';
 
                             table.row.add( {
                                     "checkbox"    : checkbox,

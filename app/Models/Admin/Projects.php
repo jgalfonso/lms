@@ -28,6 +28,23 @@ class Projects extends Model
     }
 
     /**
+     * Getting project by id
+     */
+    public static function getById($id = null)
+    {
+        $project = self::select(
+                        'projects.*',
+                        'classes.code as class_code',
+                        'classes.name as class_name',
+                    )
+                    ->leftJoin('classes', 'projects.class_id', '=', 'classes.class_id')
+                    ->where('projects.project_id', $id)
+                    ->first();
+
+        return !empty($project) ? $project : null;
+    }
+
+    /**
      * Get all projects
      * Filtered by class
      *

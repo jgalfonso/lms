@@ -26,7 +26,6 @@ $(function () {
 
         bindEvents: function () {
             CKEDITOR.on('instanceReady', function () {
-                $('form textarea').attr('required', '');
                 $.each(CKEDITOR.instances, function (instance) {
                     CKEDITOR.instances[instance].on("change", function (e) {
                         for (instance in CKEDITOR.instances) {
@@ -80,7 +79,7 @@ $(function () {
                                 text: "Successfully created new quiz.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/view/" + data.quiz_id;
+                                window.location.href = App.baseUrl + "/recent";
                             });
                         } else {
                             alert(data.success);

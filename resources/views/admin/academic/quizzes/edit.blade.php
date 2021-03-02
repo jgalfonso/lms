@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/parsleyjs/css/parsley.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+
     <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
@@ -29,25 +30,21 @@
                         </div>
 
                         <div class="body">
-                            <form id="new" method="post" novalidate>
+                            <form id="edit" method="post" novalidate>
                                 <div class="form-group">
                                     <label>Title</label><span class="required"> * </span>
-                                    <input type="text" class="form-control" required name="title">
+                                    <input type="text" class="form-control" required name="title" value="{{ $quiz->title }}" >
                                 </div>
                                 <div class="form-group">
                                     <label>Instruction</label>
-                                    <textarea id="ckeditor" name="instruction"></textarea>
+                                    <textarea id="ckeditor" name="instruction" value="{{ $quiz->title }}" ></textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Course</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="course_id" id="course" required>
+                                        <select class="form-control" name="course_id" id="course" >
                                             <option selected>Choose...</option>
-                                            <?php foreach ($courses as $course): ?>
-                                                <option value="{{ $course->course_id }}">{{ $course->name }}</option>
-                                            <?php endforeach; ?>
-
                                         </select>
                                     </div>
                                 </div>
@@ -57,8 +54,9 @@
                                         <div class="form-group">
                                             <label>Class</label><span class="required"> * </span>
                                             <div class="input-group">
-                                                <select class="form-control" name="class_id" id="classes" required disabled>
-                                                    <option selected="">Choose...</option>
+                                                <select class="form-control" name="class_id" id="classes" >
+                                                    <option>Choose...</option>
+                                                    <option selected value="{{ $quiz->class_id }}">{{ $quiz->class_name }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -67,7 +65,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Class No.</label><span class="required"> * </span>
-                                            <input type="text" class="form-control" required name="class_no">
+                                            <input type="text" class="form-control" required name="class_no"  value="" >
                                         </div>
                                     </div>
                                 </div>
@@ -76,14 +74,14 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Points</label>
-                                            <input type="number" class="form-control" name="points">
+                                            <input type="number" class="form-control" name="points"  value="{{ $quiz->length }}" >
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Allowed Attempts</label><span class="required"> * </span>
-                                            <input type="number" class="form-control" required name="allowed_attempts">
+                                            <input type="number" class="form-control" required name="allowed_attempts" value="{{ $quiz->allowed_attempts }}" >
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +94,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" placeholder="Ex: 30/07/2016" name="start">
+                                                <input type="text" class="form-control date" name="start" value="{{ date('Y-m-d', strtotime($quiz->start)) }}" >
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +106,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control date" placeholder="Ex: 30/07/2016" name="end">
+                                                <input type="text" class="form-control date" name="end" value="{{ date('Y-m-d', strtotime($quiz->end)) }}" >
                                             </div>
                                         </div>
                                     </div>
@@ -134,5 +132,5 @@
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/quizzes/new.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/quizzes/edit.js') }}"></script>
 @endsection

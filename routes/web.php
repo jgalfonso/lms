@@ -81,6 +81,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('projects/new', 'ProjectsController@new')->name('new-project');
             Route::get('projects/recent', 'ProjectsController@recent')->name('recent-project');
             Route::get('projects/archives', 'ProjectsController@archives')->name('archives-project');
+            Route::get('projects/view/{id}', 'ProjectsController@view')->name('view-project');
+            Route::get('projects/edit/{id}', 'ProjectsController@edit')->name('edit-project');
             //-------- AJAX REQUEST FOR PROJECTS --------//
             Route::post('projects/store', 'ProjectsController@store')->name('store-project');
             Route::post('projects/getClasses', 'ProjectsController@getClasses')->name('get-classes');
@@ -93,6 +95,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('quizzes/recent', 'QuizzesController@recent')->name('recent-quiz');
             Route::get('quizzes/archives', 'QuizzesController@archives')->name('archives-quiz');
             Route::get('quizzes/view/{id}', 'QuizzesController@view')->name('view-quiz');
+            Route::get('quizzes/edit/{id}', 'QuizzesController@edit')->name('edit-quiz');
+
             //-------- AJAX REQUEST FOR QUIZZES --------//
             Route::post('quizzes/store', 'QuizzesController@store')->name('store-quiz');
             Route::post('quizzes/getClasses', 'QuizzesController@getClasses')->name('get-classes');

@@ -5,7 +5,7 @@ $(function () {
     });
 
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/projects',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/quizzes',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -20,10 +20,6 @@ $(function () {
             this.$save = $('#save');
             this.$reject = $('#reject');
             this.$cancel = $('#cancel');
-
-            this.$addAttach = $('#addAttach');
-            this.$removeAttach = $('.removeAttach');
-            this.$clearAttach = $('.clearAttach');
 
             this.$courses = $('#course');
         },
@@ -43,20 +39,11 @@ $(function () {
             this.$reject.on('click', this.reject);
             this.$cancel.on('click', this.cancel);
 
-            //attachment
-            this.$addAttach.on('click', this.addAttach);
-            this.$clearAttach.on('click', function() {
-                $(this).closest('div.attachs').find("input[type=text], textarea, input[type=file]").val("");
-            });
-            this.$removeAttach.on('click', function() {
-                var parent = $(this).parent().parent().parent().parent().parent().remove();
-            });
-
             this.$courses.on('change', this.getClasses);
         },
 
         /**
-         * Submit form to save the project
+         * Submit form to save the quiz
          * validate first the form
          */
         save : function() {
@@ -75,7 +62,7 @@ $(function () {
                 showLoaderOnConfirm: true,
             }, function () {
 
-                var form = document.getElementById('new');
+                var form = document.getElementById('edit');
                 var formData = new FormData(form);
 
                 $.ajax({
@@ -89,10 +76,10 @@ $(function () {
                         if (data.success == true) {
                             swal({
                                 title: "Success!",
-                                text: "Successfully created new project.",
+                                text: "Successfully updated quiz.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/new";
+                                window.location.href = App.baseUrl + "/edit/" + data.quiz_id;
                             });
                         } else {
                             alert(data.success);
@@ -109,22 +96,6 @@ $(function () {
 
 
             });
-        },
-
-        /**
-         * Add additional div for attachments
-         */
-        addAttach: function () {
-
-            var source = $('.attach'),
-               clone = source.clone(true),
-               count = clone.length;
-
-            clone.removeClass('attach');
-            clone.css('display', 'block');
-            $('<form />').append(clone)[0].reset();
-
-            clone.insertAfter("div.newAttach:last");
         },
 
         getClasses : function() {
@@ -168,7 +139,7 @@ $(function () {
         },
 
         validate : function() {
-            if (!$('#new').parsley().validate() ) {
+            if (!$('#edit').parsley().validate() ) {
 
                 bootstrap_alert.warning('#alert', ' There are some error/s, please correct them bellow.');
 
@@ -182,11 +153,6 @@ $(function () {
         },
 
         cancel : function() {
-            if (App.$is_staff == 1) {
-                window.location.href = App.baseUrl + 'staffs';
-            } else {
-                window.location.href = App.baseUrl + 'users';
-            }
 
         }
     }
