@@ -10,12 +10,12 @@ class Classes extends Model
     protected $table = 'classes';
     protected $primaryKey = 'class_id';
     public $timestamps = false;
-    
+
     public static function getClasses()
     {
         $classes = self::select('classes.*', 'courses.name AS course', DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'))
             ->join('courses', 'courses.course_id', 'classes.course_id')
-            ->leftJoin('profiles', function($join) 
+            ->leftJoin('profiles', function($join)
                 {
                     $join->on('profiles.profile_id', 'classes.instructor_id');
                     $join->where('profiles.status', 'Active');
@@ -27,10 +27,15 @@ class Classes extends Model
     }
 
     public static function getByID($classID)
-    {      
-        $class = self::select('classes.*', 'courses.name AS course', DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'))
+    {
+        $class = self::select('classes.*',
+                    'courses.name AS course',
+                    'courses.course_id AS course_id',
+                    DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'),
+                    'schedule_types.name AS schedule')
             ->join('courses', 'courses.course_id', 'classes.course_id')
             ->join('profiles', 'profiles.profile_id', 'classes.instructor_id')
+            ->leftJoin('schedule_types', 'schedule_types.schedule_type_id', 'classes.schedule_type_id')
             ->where('classes.class_id', $classID)
             ->first();
 
@@ -41,7 +46,7 @@ class Classes extends Model
     {
         $classes = self::select('classes.*', 'courses.name AS course', DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'))
             ->join('courses', 'courses.course_id', 'classes.course_id')
-            ->leftJoin('profiles', function($join) 
+            ->leftJoin('profiles', function($join)
                 {
                     $join->on('profiles.profile_id', 'classes.instructor_id');
                     $join->where('profiles.status', 'Active');
@@ -61,7 +66,7 @@ class Classes extends Model
             $classes = json_decode($request->classIDS);
 
             foreach($classes as $class){
-                
+
                 $data = [
                     'lupd_by'   => $request->userID,
                     'dt_lupd'   => date('Y-m-d H:i:s'),
@@ -70,11 +75,11 @@ class Classes extends Model
 
                 self::where('class_id', $class->classID)->update($data);
             }
-        
+
             return ['success' => true];
 
         } catch (\Exception $e) {
-            
+
             return $e->getMessage();
         }
     }
@@ -86,7 +91,7 @@ class Classes extends Model
             $classes = json_decode($request->classIDS);
 
             foreach($classes as $class){
-                
+
                 $data = [
                     'lupd_by'   => $request->userID,
                     'dt_lupd'   => date('Y-m-d H:i:s'),
@@ -95,17 +100,17 @@ class Classes extends Model
 
                 self::where('class_id', $class->classID)->update($data);
             }
-        
+
             return ['success' => true];
 
         } catch (\Exception $e) {
-            
+
             return $e->getMessage();
         }
     }
 
     public static function add($request)
-    {      
+    {
         DB::beginTransaction();
 
         try {
@@ -133,14 +138,14 @@ class Classes extends Model
             return ['success' => true, 'id' => $id];
 
         } catch (\Exception $e) {
-            
+
             DB::rollback();
             return $e->getMessage();
         }
     }
 
     public static function edit($request)
-    {      
+    {
         DB::beginTransaction();
 
         try {
@@ -165,7 +170,7 @@ class Classes extends Model
             return ['success' => true, 'id' => $request->classID];
 
         } catch (\Exception $e) {
-            
+
             DB::rollback();
             return $e->getMessage();
         }

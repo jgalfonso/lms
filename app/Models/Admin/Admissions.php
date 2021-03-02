@@ -91,4 +91,24 @@ class Admissions extends Model
 
         return !empty($admins) ? $admins : null;
     }
+
+    /**
+     * Getting all admissions by class
+     */
+    public static function getByClass($request)
+    {
+        $admins = self::select(
+                        'admissions.*',
+                        'profiles.firstname',
+                        'profiles.lastname',
+                        'profiles.email',
+                        'profiles.registration_no',
+                    )
+                    ->leftJoin('profiles', 'admissions.profile_id', '=', 'profiles.profile_id')
+                    ->where('admissions.status', 'Active')
+                    ->where('admissions.class_id', $request->class_id)
+                    ->get();
+
+        return !empty($admins) ? $admins : null;
+    }
 }
