@@ -140,6 +140,10 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
         Route::group(['middleware' => 'auth'], function () {
             Route::get('assessment/new', 'AssessmentController@new')->name('new-assessment');
             Route::get('assessment/recent', 'AssessmentController@recent')->name('recent-assessment');
+            Route::get('assessment/view/{id}', 'AssessmentController@view')->name('view-assessment');
+            //-------- AJAX REQUEST FOR ASSESSMENT --------//
+            Route::get('assessment/getTrainees', 'AssessmentController@getTrainees')->name('get-trainees');
+            Route::post('assessment/save-assessment', 'AssessmentController@store')->name('save-assessment');
         });
 
         //-------- CERTIFICATION --------//
