@@ -46,7 +46,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
+                    <table id="dt" class="table dataTable">
                          <thead>
                             <tr>
                                 <th class="text-center th-mark">
@@ -69,14 +69,14 @@
                                             <label><input type="checkbox"><span></span></label>
                                         </div>
                                     </td>
-                                    <td><a href="">{{ $archive->title }}</a></td>
+                                    <td><a href="{{ route('view-project', $project->project_id) }}">{{ $archive->title }}</a></td>
                                     <td><b>{{ $archive->class_code }}</b><br />{{ $archive->class_name }}</td>
                                     <td>
                                         <div class="font-15">Debra Stewart</div>
                                     </td>
                                     <td>{{ $archive->status }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></button>
+                                    <td class="text-center">
+                                        <a href="{{ route('edit-project', $project->project_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -96,5 +96,5 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/projects/archives.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/projects/archives.js') }}"></script>
 @endsection

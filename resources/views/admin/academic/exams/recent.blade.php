@@ -4,6 +4,9 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
+
+    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -15,82 +18,87 @@
 @endsection
 
 @section('content')
-<div class="row clearfix">
-    <div class="col-12">
-        <div class="card">
-            <div class="body">
-                <div class="row">
-                    <div class="col-lg-6 col-md-4 col-sm-6">
-                        <label>Filter by Class:</label>
-                        <div class="input-group">
-                            <select class="form-control" id="classes">
-                                <option value="">Choose...</option>
-                                <?php if (!empty($classes)): ?>
-                                    <?php foreach ($classes as $class): ?>
-                                        <option value="{{ $class->class_id }}">{{ $class->name }}</option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
+    <div id="alert"></div>
+    <div class="row clearfix">
+        <div class="col-12">
+            <div class="card">
+                <div class="body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-4 col-sm-6">
+                            <label>Filter by Class:</label>
+                            <div class="input-group">
+                                <select class="form-control" id="classes">
+                                    <option value="">Choose...</option>
+                                    <?php if (!empty($classes)): ?>
+                                        <?php foreach ($classes as $class): ?>
+                                            <option value="{{ $class->class_id }}">{{ $class->name }}</option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-12">
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
-                     <thead>
-                        <tr>
-                            <th class="text-center" style="width: 1%;">
-                                <div class="fancy-checkbox">
-                                    <label><input type="checkbox"><span></span></label>
-                                </div>
-                            </th>
-                            <th>Title</th>
-                            <th>Availability</th>
-                            <th>Due Date</th>
-                            <th style="width: 10%; ">Time Limit</th>
-                            <th style="width: 1%; " class="text-center"><i class="fa fa-level-down"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($exams as $exam): ?>
+        <div class="col-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table id="dt" class="table dataTable">
+                        <thead>
                             <tr>
-                                <td class="text-center">
+                                <th class="text-center th-mark">
                                     <div class="fancy-checkbox">
                                         <label><input type="checkbox"><span></span></label>
                                     </div>
-                                </td>
-                                <td><a href="{{ route('view-exam', $exam->exam_id) }}">{{ $exam->title }}</a></td>
-                                 <td>01/01/2021</td>
-                                <td>
-                                    01/01/2021
-                                </td>
-                                <td>1hr</td>
-                                <td>
-                                      <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></button>
-                                      <a href="{{ route('view-exam', $exam->exam_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
-                                </td>
+                                </th>
+                                <th>Title</th>
+                                <th >Class Code / Name</th>
+                                <th>Availability</th>
+                                <th>Due Date</th>
+                                <th>Time Limit</th>
+                                <th class="th-status">Status</th>
+                                <th class="text-center th-action"><i class="fa fa-level-down"></i></th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row "  style="float: left; margin-top: -35px">
-                <div class="col-md-12">
-                    <button class="btn btn-success" type="button">Mark as Active</button> <button class="btn btn-danger" type="button">Mark as Closed</button>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($exams as $exam): ?>
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="fancy-checkbox">
+                                            <label><input type="checkbox"><span></span></label>
+                                        </div>
+                                    </td>
+                                    <td><a href="{{ route('view-exam', $exam->exam_id) }}">{{ $exam->title }}</a></td>
+                                    <td><b>{{ $exam->class_code }}</b><br />{{ $exam->class_name }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($exam->start)) }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($exam->end)) }}</td>
+                                    <td>1hr</td>
+                                    <td>{{ $exam->status }}</td>
+                                    <td>
+                                        <a href="{{ route('edit-exam', $exam->exam_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row action-mark">
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-mark" type="button">Mark as Active</button>
+                        <button class="btn btn-danger btn-mark" type="button">Mark as Closed</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendor/parsleyjs/js/parsley.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/exams/recent.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/exams/recent.js') }}"></script>
 @endsection

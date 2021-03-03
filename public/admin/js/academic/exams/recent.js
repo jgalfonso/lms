@@ -9,7 +9,9 @@ $(function () {
                 { data: "checkbox" },
                 { data: "title" },
                 { data: "name" },
-                { data: "instructor" },
+                { data: "availability" },
+                { data: "due_date" },
+                { data: "limit" },
                 { data: "status" },
                 { data: "action" },
             ],
@@ -17,7 +19,7 @@ $(function () {
             "aoColumnDefs":[
                 {
                     "bSortable": false,
-                    "aTargets": [0,4,5],
+                    "aTargets": [0,6,7],
                 }
             ],
             "order" : [],
@@ -30,7 +32,7 @@ $(function () {
         });
 
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/assignments',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/exams',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -55,7 +57,6 @@ $(function () {
                 dataType: "json",
                 data: {
                     'class_id' : class_id,
-                    'archives' : 1
                 },
                 success: function (data) {
                     table.clear().draw();
@@ -65,22 +66,30 @@ $(function () {
                         $.each(data, function (key, row) {
 
                             var checkbox = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="lesson" class="mark check" value="' + row['lesson_id'] + '" id="' + row['lesson_id'] + '">' +
+                                                '<input type="checkbox" name="project" class="mark check" value="' + row['project_id'] + '" id="' + row['project_id'] + '">' +
                                                 '<span></span>' +
                                             '</label>';
                             var name = '<b>' + row['class_code'] + '</b>' +
                                         '<br />'
                                         + row['class_name'];
 
-                            var action = '<a href="' + App.baseUrl + "user-group/edit/" + row['group_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
+                            var start_date = row.start.split(/[- :]/);
+                            var start = `${start_date[2]}-${start_date[1]}-${start_date[0]}`;
+
+                            var end_date = row.end.split(/[- :]/);
+                            var end = `${end_date[2]}-${end_date[1]}-${end_date[0]}`;
+
+                            var action = '<a href="' + App.baseUrl + "/edit/" + row['exam_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
 
                             table.row.add( {
-                                    "checkbox"    : checkbox,
-                                    "title"       : '<a href="#">' + row.title + '</a>',
-                                    "name"        : name,
-                                    "instructor"  : '<div class="font-15">Debra Stewart</div>',
-                                    "status"      : row['status'],
-                                    "action"      : action,
+                                "checkbox"      : checkbox,
+                                "title"         : '<a href="' + App.baseUrl + '/view/' + row.exam_id + '">' + row.title + '</a>',
+                                "name"          : name,
+                                "availability"  : start,
+                                "due_date"      : end,
+                                "limit"         : '1hr',
+                                "status"        : row.status,
+                                "action"        : action,
                             }).draw();
                         });
 

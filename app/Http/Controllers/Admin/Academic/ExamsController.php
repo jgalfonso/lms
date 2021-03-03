@@ -86,4 +86,15 @@ class ExamsController extends Controller
 
         return view('admin.academic.exams.view', compact('exam'));
     }
+
+    /**
+     * Edit exam
+     */
+    public function edit ($id)
+    {
+        $exam = Exams::getById($id);
+        $classes = Classes::getClasses();
+
+        return view('admin.academic.quizzes.edit', compact('exam', 'classes'));
+    }
 }

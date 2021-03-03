@@ -45,7 +45,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
+                    <table id="dt" class="table dataTable">
                          <thead>
                             <tr>
                                 <th class="text-center th-mark">
@@ -68,7 +68,7 @@
                                             <label><input type="checkbox"><span></span></label>
                                         </div>
                                     </td>
-                                    <td><a href="">{{ $assignment->title }}</a></td>
+                                    <td><a href="{{ route('view-assignment', $assignment->assignment_id) }}">{{ $assignment->title }}</a></td>
                                      <td><b>{{ $assignment->class_code }}</b><br />{{ $assignment->class_name }}</td>
                                     <td>
                                         <div class="font-15">Debra Stewart</div>
@@ -76,7 +76,6 @@
                                     <td>{{ $assignment->status }}</td>
                                     <td>
                                         <a href="{{ route('edit-assignment', $assignment->assignment_id) }}" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
-                                        <a href="{{ route('view-assignment', $assignment->assignment_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -97,5 +96,5 @@
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/assignments/archives.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/assignments/archives.js') }}"></script>
 @endsection

@@ -173,5 +173,5 @@
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/projects/edit.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/projects/edit.js') }}"></script>
 @endsection

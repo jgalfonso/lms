@@ -135,5 +135,5 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/class-activation/archive.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/class-activation/archive.js') }}"></script>
 @endsection
