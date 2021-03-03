@@ -44,7 +44,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
+                    <table id="dt" class="table dataTable">
                         <thead>
                             <tr>
                                 <th class="text-center th-mark">
@@ -67,7 +67,7 @@
                                             <label><input type="checkbox"><span></span></label>
                                         </div>
                                     </td>
-                                    <td><a href="">{{ $project->title }}</a></td>
+                                    <td><a href="{{ route('view-project', $project->project_id) }}">{{ $project->title }}</a></td>
                                     <td><b>{{ $project->class_code }}</b><br />{{ $project->class_name }}</td>
                                     <td>
                                         <div class="font-15">Debra Stewart</div>
@@ -75,7 +75,6 @@
                                     <td>{{ $project->status }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('edit-project', $project->project_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
-                                        <a href="{{ route('view-project', $project->project_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -95,5 +94,5 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/projects/recent.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/projects/recent.js') }}"></script>
 @endsection

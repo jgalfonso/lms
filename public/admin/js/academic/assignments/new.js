@@ -92,7 +92,7 @@ $(function () {
                                 text: "Successfully created new assignment.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/new";
+                                window.location.href = App.baseUrl+'/view/'+data.id; 
                             });
                         } else {
                             alert(data.success);

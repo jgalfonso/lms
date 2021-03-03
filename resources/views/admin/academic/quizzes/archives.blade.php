@@ -43,7 +43,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="dt">
+                    <table id="dt" class="table dataTable">
                         <thead>
                             <tr>
                                 <th class="text-center th-mark">
@@ -68,7 +68,7 @@
                                             <label><input type="checkbox"><span></span></label>
                                         </div>
                                     </td>
-                                    <td><a href="">{{ $quiz->title }}</a></td>
+                                    <td><a href="{{ route('view-quiz', $quiz->quiz_id) }}">{{ $quiz->title }}</a></td>
                                     <td><b>{{ $quiz->class_code }}</b><br />{{ $quiz->class_name }}</td>
                                     <td class="text-center">{{ date('d-m-Y', strtotime($quiz->start)) }}</td>
                                     <td class="text-center">{{ date('d-m-Y', strtotime($quiz->end)) }}</td>
@@ -76,7 +76,6 @@
                                     <td class="text-center">{{ $quiz->status }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('edit-quiz', $quiz->quiz_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
-                                        <a href="{{ route('view-quiz', $quiz->quiz_id) }}" class="btn btn-sm btn-default" title="" data-original-title="View"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -97,5 +96,5 @@
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/quizzes/archives.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/quizzes/archives.js') }}"></script>
 @endsection
