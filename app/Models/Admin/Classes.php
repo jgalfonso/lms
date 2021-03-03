@@ -41,6 +41,26 @@ class Classes extends Model
 
         return $class;
     }
+    
+    public static function getSummary($courseID)
+    {
+        $classes = self::select('classes.*', 'courses.name AS course', DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'), DB::raw('COUNT(admission_details.admission_id) AS enrollees'))
+            ->join('courses', 'courses.course_id', 'classes.course_id')
+            ->leftJoin('profiles', function($join) 
+                {
+                    $join->on('profiles.profile_id', 'classes.instructor_id');
+                    $join->where('profiles.status', 'Active');
+                })
+            ->join('admission_details', 'admission_details.class_id', 'classes.class_id')
+            ->where([
+                ['classes.course_id', $courseID],
+                ['classes.status', 'Active']
+            ])
+            ->groupBY('classes.class_id')
+            ->get();
+
+        return $classes;
+    }
 
     public static function getByCourseID($courseID)
     {
