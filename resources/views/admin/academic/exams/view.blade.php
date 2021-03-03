@@ -3,8 +3,6 @@
 @section('title', 'Exams')
 
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/parsleyjs/css/parsley.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 @endsection
 
@@ -115,8 +113,7 @@
                     </div>
 
                     <div class="action-btn">
-                        <button type="button" class="btn btn-success" id="save">Save</button>
-                        <a href="{{ route('recent-exam') }}" class="btn btn-secondary" title="" style="width: 100px">Back</a>
+                        <a href="{{ route('recent-exam') }}" class="btn btn-secondary" title="">Back</a>
                     </div>
                 </div>
             </div>
@@ -126,9 +123,7 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/exams/new.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/exams/new.js') }}"></script>
 @endsection

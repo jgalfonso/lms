@@ -52,7 +52,7 @@ class Exams extends Model
      */
     public static function filter ($request)
     {
-        $class_id = ($request->class_id != '' ? $request->class_id : null);
+        $class_id = $request->class_id;
         $archives = (isset($request->archives) && $request->archives == 1 ? 1 : null);
 
         $exams = self::select(

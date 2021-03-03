@@ -41,9 +41,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Course</label><span style="color: red"> * </span>
+                                    <label>Course</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="course_id" id="course">
+                                        <select class="form-control" name="course_id" id="course" required>
                                             <option selected>Choose...</option>
                                             <?php foreach ($courses as $course): ?>
                                                 <option value="{{ $course->course_id }}">{{ $course->name }}</option>
@@ -56,9 +56,9 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Class</label><span style="color: red"> * </span>
+                                            <label>Class</label><span class="required"> * </span>
                                             <div class="input-group">
-                                                <select class="form-control" name="class_id" id="classes" disabled>
+                                                <select class="form-control" name="class_id" id="classes" required disabled>
                                                     <option selected="">Choose...</option>
                                                 </select>
                                             </div>
@@ -120,7 +120,7 @@
 
                     <div class="action-btn">
                         <button type="button" class="btn btn-success" id="save">Save</button>
-                        <a href="{{ route('recent-exam') }}" class="btn btn-secondary" title="" style="width: 100px">Back</a>
+                        <a href="{{ route('recent-exam') }}" class="btn btn-danger" title="">Cancel</a>
                     </div>
                 </div>
             </div>
@@ -130,9 +130,10 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ URL::asset('assets/vendor/parsleyjs/js/parsley.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
 
-    <script src="{{ URL::asset('admin/js/exams/new.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/academic/exams/new.js') }}"></script>
 @endsection

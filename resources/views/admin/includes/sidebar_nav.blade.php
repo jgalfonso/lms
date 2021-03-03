@@ -110,7 +110,7 @@
                     <a href="{{ route('recent-exam') }}">Recent Exam/s</a>
                 </li>
                 <li><a  href="classess.html">Exam Taken & Evaluation</a></li>
-                <li class="{{ set_nav_status(['admin/academic/assignments/exams']) }}">
+                <li class="{{ set_nav_status(['admin/academic/exams/archives']) }}">
                     <a href="{{ route('archives-exam') }}">Archives</a>
                 </li>
             </ul>

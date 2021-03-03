@@ -92,7 +92,7 @@ $(function () {
                                 text: "Successfully updated assignment.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/edit";
+                                window.location.href = App.baseUrl+'/view/'+data.id; 
                             });
                         } else {
                             alert(data.success);

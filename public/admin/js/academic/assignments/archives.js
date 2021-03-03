@@ -8,9 +8,9 @@ $(function () {
             columns:[
                 { data: "checkbox" },
                 { data: "title" },
-                { data: "availability" },
-                { data: "due_date" },
-                { data: "limit" },
+                { data: "name" },
+                { data: "instructor" },
+                { data: "status" },
                 { data: "action" },
             ],
             searching: false,
@@ -30,7 +30,7 @@ $(function () {
         });
 
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/exams',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/assignments',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -55,6 +55,7 @@ $(function () {
                 dataType: "json",
                 data: {
                     'class_id' : class_id,
+                    'archives' : 1
                 },
                 success: function (data) {
                     table.clear().draw();
@@ -64,22 +65,22 @@ $(function () {
                         $.each(data, function (key, row) {
 
                             var checkbox = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="lesson" class="mark check" value="' + row['exam_id'] + '" id="' + row['exam_id'] + '">' +
+                                                '<input type="checkbox" name="lesson" class="mark check" value="' + row['lesson_id'] + '" id="' + row['lesson_id'] + '">' +
                                                 '<span></span>' +
                                             '</label>';
                             var name = '<b>' + row['class_code'] + '</b>' +
                                         '<br />'
                                         + row['class_name'];
 
-                            var action = '<a href="#" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
+                            var action = '<a href="' + App.baseUrl + "/edit/" + row['assignment_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
 
                             table.row.add( {
-                                    "checkbox"      : checkbox,
-                                    "title"         : '<a href="' + App.baseUrl + "/view/" + row['exam_id'] +'">' + row.title + '</a>',
-                                    "availability"  : '01/01/2021',
-                                    "due_date"      : '01/01/2021',
-                                    "limit"         : '1hr',
-                                    "action"        : action,
+                                    "checkbox"    : checkbox,
+                                    "title"       : '<a href="' + App.baseUrl + '/view/' + row.assignment_id + '">' + row.title + '</a>',
+                                    "name"        : name,
+                                    "instructor"  : '<div class="font-15">Debra Stewart</div>',
+                                    "status"      : row['status'],
+                                    "action"      : action,
                             }).draw();
                         });
 
