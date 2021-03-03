@@ -1,6 +1,6 @@
 @extends('admin.template')
 
-@section('title', 'Services - Billing (Invoices)')
+@section('title', 'Services - Billing (Payments)')
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
@@ -8,13 +8,13 @@
 
 @section('breadcrumb')
     <div class="col-md-6 col-sm-12">
-        <h1>Invoices</h1>
+        <h1>Payments</h1>
 
         @include('admin.includes.breadcrumb')
     </div>
 
     <div class="col-md-6 col-sm-12 text-right hidden-xs">
-        <a href="{{ url('admin/services/billing/invoices/new/') }}" class="btn btn-sm btn-primary" title="" style="width: 120px">New Invoice</a>
+        
     </div>
 @endsection
 
@@ -29,7 +29,7 @@
                             <div class="accordion-panel" style="display: none;">
                                 <div class="row" style="margin-top: 15px; ">
                                     <div class="col-lg-6 col-md-4 col-sm-6">
-                                        <label>Filter by Name / Invoice No:</label>
+                                        <label>Filter by Name / OR No:</label>
                                         <div class="input-group">
                                             <input id="key" type="text" class="form-control" placeholder="Search...">
                                         </div>
@@ -53,28 +53,26 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th style="width: 15%;">Invoice No.</th>
+                            <th style="width: 10%;">OR No.</th>
                             <th>Customer</th>
-                            <th style="width: 10%;">Invoice Date</th>
-                            <th style="width: 10%;">Paid On</th>
-                            <th style="width: 10%;">Amount</th>
-                            <th style="width: 10%;">Unpaid</th>
-                            <th style="width: 10%;">Status</th>
-                            <th style="width: 1%;"><i class="fa fa-level-down"></i></th>
+                            <th style="width: 10%;">Payment Date</th>
+                            <th style="width: 10%;">Amount Due</th>
+                            <th style="width: 10%;">Amount Paid</th>
+                            <th style="width: 10%;">Balance</th>
+                            <th style="width: 10%;">Invoice No.</th>
                         </tr>
                     </thead>
                     <tbody>
-                         @foreach ($invoices as $row)
+                         @foreach ($payments as $row)
                             <tr>
-                                <td>{{ $row->invoice_id }}</td>
-                                <td><a href="{{ route('invoices-view', $row->invoice_id) }}">{{ $row->invoice_no }}</a></td>
+                                <td>{{ $row->payment_id }}</td>
+                                <td><a href="{{ route('payments-view', $row->payment_id) }}">{{ $row->or_no }}</a></td>
                                 <td><b>{{ $row->control_no }}</b><br/><a href="{{ route('students-view', $row->customer_id) }}">{{ $row->lastname }} , {{ $row->firstname }} {{ $row->middlename }}</a></td>
-                                <td>{{ date('d/m/Y', strtotime($row->invoice_date)) }}</td>
-                                <td>@if($row->due_date) {{ date('d/m/Y', strtotime($row->due_date)) }} @endif</td>
-                                <td>{{ number_format($row->net, 2) }}</td>
-                                <td>@if($row->status == 'Pending') {{ number_format($row->unpaid, 2) }} @endif</td>
-                                <td>{{ $row->status }}</td>
-                                <td class="align-center"><a href="{{ route('payments-new', $row->invoice_id) }}" class="btn btn-sm btn-default" title="Make Payment"><i class="fa fa-credit-card"></i></a></td>
+                                <td>{{ date('d/m/Y', strtotime($row->payment_date)) }}</td>
+                                <td>{{ number_format($row->amount_due, 2) }}</td>
+                                <td>{{ number_format($row->amount_paid, 2) }}</td>
+                                <td>{{ number_format($row->balance, 2) }}</td>
+                                <td><a href="{{ route('invoices-view', $row->reference_id) }}">{{ $row->invoice_no }}</a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -86,5 +84,5 @@
 
 @section('script')
     <script src="{{ URL::asset('admin/assets/bundles/datatablescripts.bundle.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/services/billing/index.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/services/billing/payment-index.js') }}"></script>
 @endsection

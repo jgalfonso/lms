@@ -36,7 +36,7 @@
 
                 <div class="action-btn">
                     <button type="button" href="" class="btn btn-success save" style="width: 100px;">Save</button>
-                    <a href="/admin/setup/courses" class="btn btn-danger" style="width: 100px">Cancel</a>
+                    <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
                 </div>
             </div>
         </form>

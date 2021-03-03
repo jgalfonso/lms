@@ -7,32 +7,35 @@ $(function () {
         bDestroy: true,
         bLengthChange: false,
         columns:[
-            { data: 'admission_id', 'className': 'hidden' },
-            { data: 'checkbox', 'className': 'text-center' },
-            { data: 'code' },
-            { data: 'name' },
             { data: 'class' },
-            { data: 'course'},
+            { data: 'course' },
+            { data: 'enrolled', 'className': 'text-right' },
+            { data: 'schedule' },
+            { data: 'instructor' },
             { data: 'status' },
+            { data: 'action', 'className': 'text-center' }
         ],
         "aoColumnDefs":[
             {
-                "bSortable": false,
-                "aTargets": [1, 6]
+                "bSortable": false, 
+                "aTargets": [2, 6]
+            },
+            { 
+                "targets": [0, 1, 4], 
+                "searchable": true 
             }
         ],
         language: {
             paginate: {
-                next: '»',
-                previous: '«'
+                next: '»', 
+                previous: '«' 
             }
         },
-        aaSorting: [[2, 'asc']]
+        aaSorting: [[0, 'asc']]
     });
 
     var App = {
         baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/enrollment',
-        classUrl : window.location.protocol + '//' + window.location.host + '/admin/setup/classes/view/',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -41,69 +44,62 @@ $(function () {
         },
 
         setElements: function () {
-            this.$courses = $('#course_id');
+            this.$accordionThumb = $('.accordion-thumb');
+            this.$search = $('#search');
         },
 
         bindEvents: function () {
-            this.$courses.on('change', this.filter);
+            this.$accordionThumb.on('click', function() {
+                $(this).closest( "li" ).toggleClass("is-active").children(".accordion-panel").slideToggle("ease-out");
+            });
+
+            this.$search.on('click', this.search);
         },
 
-        filter : function() {
+        search : function() {
+             table
+                .search($('#key').val())
+                .draw();
+        },
 
-            var course_id = $('#course_id').find(":selected").val();
-
-            $.ajax({
-                url: App.baseUrl + '/filter-class-summary',
-                method: 'GET',
-                dataType: "json",
-                data: {
-                    course_id   : course_id,
-                    _token      : App.csrfToken
-                },
-                success: function(data) {
-                    if(data) {
-                        table.clear().draw();
-
-                        $.each(data, function(key, value) {
-
-                            var checkbox = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="admission" class="mark check" value="' + value['admission_id'] + '" id="' + value['admission_id'] + '">' +
-                                                '<span></span>' +
-                                            '</label>';
-
-                            var class_url = '<b>' + value.class_code + '</b><br/>' +
-                                        '<a href="' + App.classUrl + value.class_id + '">' + value.class_name + '</a>'
-
-                            table.row.add({
-                                    "admission_id"  : value.admission_id,
-                                    "checkbox"      : checkbox,
-                                    "code"          : value.code,
-                                    "name"          : value.firstname + ' ' + value.lastname,
-                                    "class"         : class_url,
-                                    "course"        : value.course_name,
-                                    "status"        : value.status,
-                                }).draw();
-                        });
-                    }
-                },
-                error : function(request, status, error) {
-                    console.log(error)
-                }
-            });
+        search1 : function() {
+            
         },
     }
 
     App.init();
-});
+}); 
 
-function formatDate1(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+function view(classID) {
+    
+    $.ajax({
+        url: window.location.protocol + '//' + window.location.host + '/admin/services/enrollment/get-enrolled',
+        method: 'GET',
+        dataType: "json",
+        data: { 
+            classID : classID, 
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(data) {
+            if(data) {
+                $(".modal table").find("tr:gt(0)").remove();
 
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
+                $.each(data, function(key, value) {
+                    
+                    $('.modal table tr:last').after('<tr>'+
+                            '<td>'+ value.lastname +', '+ value.firstname +' '+ (value.middlename ? value.middlename : '') +'</td>'+ 
+                            '<td>'+ value.control_no +'</td>'+ 
+                        '</tr>');
+                });
 
-    return [day, month, year].join('-');
+                $('#modal').modal('show');   
+    
+            }
+        },
+        error : function(request, status, error) {
+            console.log(error)
+        }
+    });
 }
+
+

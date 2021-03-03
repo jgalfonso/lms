@@ -29,7 +29,7 @@
         <form id="form" method="post" novalidate style="width: 100%;">
             <div class="col-lg-12">
                 <button type="button" class="btn btn-success enroll" style="width: 100px;">Enroll</button>
-                <a href="/admin/services/enrollment/enroll-student" class="btn btn-danger" style="width: 100px;">Cancel</a>
+                <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
             </div> 
 
             <div class="col-lg-12" style="margin-top: 15px;">
@@ -121,7 +121,7 @@
             <div class="col-lg-12">    
                 <div style="padding-bottom: 3%;">
                     <button type="button" href="" class="btn btn-success enroll" style="width: 100px;">Enroll</button>
-                    <a href="/admin/Services/enrollment/enroll-student" class="btn btn-danger" style="width: 100px;">Cancel</a>
+                    <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
                 </div>
             </div>
 

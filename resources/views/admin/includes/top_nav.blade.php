@@ -4,7 +4,7 @@
         <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
     </div>
 
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" style="display: none;">
         <li class="dropdown">
             <a href="javascript:void(0);" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                 <i class="icon-envelope"></i>

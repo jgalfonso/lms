@@ -15,9 +15,12 @@
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/animate-css/vivify.min.css') }}">  
+    <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/parsleyjs/css/parsley.css') }}">
 
     @yield('css')
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/css/site.min.css') }}">
+
+    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
 </head>

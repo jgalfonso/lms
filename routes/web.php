@@ -122,26 +122,34 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
 
         //-------- ENROLLMENT --------//
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('enrollment', 'EnrollmentController@index')->name('enrollment-enroll_student');
-            Route::get('enrollment/enroll-student', 'EnrollmentController@index')->name('enrollment-enroll_student');
-            Route::get('enrollment/search', 'EnrollmentController@search')->name('enrollment-search');
-            Route::get('enrollment/new/{id}', 'EnrollmentController@new')->name('enrollment-new');
-            Route::get('enrollment/class-summary-enrollment', 'EnrollmentController@classSummary')->name('class-summary-enrollment');
-            Route::get('enrollment/filter-class-summary', 'EnrollmentController@filterClassSummary')->name('filter-class-summary');
-
+            Route::get('enrollment', 'EnrollmentController@index')->name('enroll_student');
+            Route::get('enrollment/enroll-student', 'EnrollmentController@index')->name('enroll_student');
+            Route::get('enrollment/enroll-student/new/{id}', 'EnrollmentController@new')->name('enroll_student-new');
+            Route::get('enrollment/search', 'EnrollmentController@search')->name('enroll_student-search');
+            
             Route::post('enrollment/store', 'EnrollmentController@store')->name('store-enrollment');
+
+            Route::get('enrollment/class-summary', 'EnrollmentController@summary')->name('class_summary');
+            Route::get('enrollment/get-enrolled', 'EnrollmentController@getEnrolled')->name('get-enrolled');
         });
 
         //-------- BILLING --------//
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('billing/new-invoice', 'BillingController@new')->name('billing-new_invoice');
-            Route::get('billing/invoices', 'BillingController@index')->name('billing-invoices');
-            Route::get('billing/view/{id}', 'BillingController@view')->name('billing-view_invoice');
+            Route::get('billing/invoices/new', 'BillingController@new')->name('invoices-new-1');
+            Route::get('billing/invoices/new/{profile_id}/{admission_id}', 'BillingController@new')->name('invoices-new-2');
+            Route::get('billing/invoices', 'BillingController@index')->name('invoices');
+            Route::get('billing/invoices/view/{id}', 'BillingController@view')->name('invoices-view');
 
-            Route::post('billing/store', 'BillingController@store')->name('store-billing');
+            Route::post('billing/invoices/store', 'BillingController@store')->name('store-invoices');
 
-            Route::get('billing/new-payment/{id}', 'PaymentController@new')->name('billing-new_payment');
+
+            Route::get('billing/payments/new/{id}', 'PaymentController@new')->name('payments-new');
+            Route::get('billing/payments', 'PaymentController@index')->name('payments');
+            Route::get('billing/payments/view/{id}', 'PaymentController@view')->name('payments-view');
+
+            Route::post('billing/payments/store', 'PaymentController@store')->name('store-payments');
         });
+
 
         //-------- ASSESSMENT --------//
         Route::group(['middleware' => 'auth'], function () {

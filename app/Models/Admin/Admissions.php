@@ -5,47 +5,66 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Admin\AdmissionDetails;
+
 class Admissions extends Model
 {
     protected $table = 'admissions';
     protected $primaryKey = 'admission_id';
     public $timestamps = false;
 
-    public static function add($request)
+    public static function getPending($admissionID)
     {
+        $admissions = self::select('admissions.*', 'courses.name AS course', 'classes.code AS class_code', 'classes.name AS class_name')
+            ->join('courses', 'courses.course_id', 'admissions.course_id')
+            ->join('admission_details', 'admission_details.admission_id', 'admissions.admission_id')
+            ->join('classes', 'classes.class_id', 'admission_details.class_id')
+            ->where([
+                ['admissions.admission_id', $admissionID],
+                ['admissions.status',  'New']
+            ])
+            ->get();
+
+        return $admissions;
+    }
+
+    public static function add($request)
+    {      
         DB::beginTransaction();
 
         try {
 
-            $classes = json_decode($request->classIDS);
+            $data = [
+                'profile_id'        => $request->profileID,
+                'course_id'         => $request->courseID,
+                'date_enrolled'     => date('Y-m-d H:i:s'),
+                'created_by'        => $request->userID,
+                'dt_created'        => date('Y-m-d H:i:s'),
+                'status'            => 'New'
+            ];
 
-            foreach($classes as $class){
+            $id = self::insertGetId($data);
+            self::where('admission_id', $id)->update(['code' => sprintf('%010s', $id)]);
 
-                $data = [
-                    'profile_id'        => $request->profileID,
-                    'course_id'         => $request->courseID,
-                    'class_id'          => $class->classID,
-                    'date_enrolled'     => date('Y-m-d H:i:s'),
-                    'created_by'        => $request->userID,
-                    'dt_created'        => date('Y-m-d H:i:s'),
-                    'status'            => 'Active'
-                ];
-
-                $id = self::insertGetId($data);
-
-                self::where('admission_id', $id )->update(['code' => sprintf('%010s', $id)]);
+            foreach(json_decode($request->classIDS) as $class){
+                
+                $request->request->add(['admissionID' => $id]);
+                $request->request->add(['classID' => $class->classID]);
+                AdmissionDetails::add($request);
             }
 
             DB::commit();
 
-            return ['success' => true];
+            return ['success' => true, 'profile_id' => $request->profileID, 'admission_id' => $id];
 
         } catch (\Exception $e) {
-
+            
             DB::rollback();
             return $e->getMessage();
         }
     }
+
+
 
     /**
      * Getting all admissions

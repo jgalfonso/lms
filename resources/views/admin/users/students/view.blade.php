@@ -24,7 +24,7 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Actions</button>
 
                 <div class="dropdown-menu" x-placement="bottom-start">
-                    <a href="" class="btn btn-new btn-default dropdown-item" data-target="#compli" data-toggle="modal">Enroll Class</a>
+                    <a href="{{ route('enroll_student-new', $student->profile_id) }}" class="btn btn-new btn-default dropdown-item">Enroll Student</a>
                 </div>
             </div> 
 
@@ -73,7 +73,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6"></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Course</label>
+                                            <label class="block"><b>{{ $student->course }}</b></label>
+                                        </div>
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">

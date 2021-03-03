@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\Admin\Courses;
 use App\Models\Admin\Credentials;
 use App\Models\Admin\EducationBackground;
 use App\Models\Admin\EmploymentHistory;
@@ -32,7 +33,9 @@ class StudentsController extends Controller
 
     public function new()
     {
-        return view('admin.users.students.new');
+        $courses = Courses::getCourses();
+
+        return view('admin.users.students.new', compact('courses'));
     }
 
     public function store(Request $request) 
@@ -56,11 +59,12 @@ class StudentsController extends Controller
     public function edit($id)
     {
         $student = Profiles::getByID($id);
+        $courses = Courses::getCourses();
         $education_background = EducationBackground::getByID($id);
         $employment_history = EmploymentHistory::getByID($id);
         $credentials = Credentials::getByID($id);
 
-        return view('admin.users.students.edit', compact('student', 'education_background', 'employment_history', 'credentials'));
+        return view('admin.users.students.edit', compact('student', 'courses', 'education_background', 'employment_history', 'credentials'));
     }
 
     public function update(Request $request) 

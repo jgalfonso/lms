@@ -9,39 +9,41 @@ use Illuminate\Http\Request;
 
 use App\Models\Admin\Invoices;
 use App\Models\Admin\InvoiceItems;
-use App\Models\Admin\Items;
-use App\Models\Admin\Profiles;
+use App\Models\Admin\PaymentMethods;
+use App\Models\Admin\Payments;
 
 class PaymentController extends Controller
 {
     public function index ()
     {
-        $invoices = Invoices::getInvoices();
-        return view('admin.services.billing.index', compact('invoices'));
+        $payments = Payments::getPayments();
+        return view('admin.services.billing.payment-index', compact('payments'));
     }
 
     public function new($id)
     {
-        $today = date('d-m-Y');
+        $today = date('d/m/Y');
         $invoice = Invoices::getByID($id);
         $invoice_items = InvoiceItems::getInvoiceItems($id);
+        $payment_methods = PaymentMethods::getPaymentMethods();
 
-        return view('admin.services.billing.payment-new', compact('today', 'invoice', 'invoice_items'));
+        return view('admin.services.billing.payment-new', compact('today', 'invoice', 'invoice_items', 'payment_methods'));
     }
 
     public function store(Request $request) 
     {   
         $request->request->add(['userID' => Auth::id()]);
-        $data = Invoices::add($request);
+        $data = Payments::add($request);
 
         echo json_encode($data);
     }
 
     public function view($id)
     {
-        $invoice = Invoices::getByID($id);
-        $invoice_items = InvoiceItems::getInvoiceItems($id);
+        $payment = Payments::getByID($id);
+        $invoice = Invoices::getByID($payment->reference_id);
+        $invoice_items = InvoiceItems::getInvoiceItems($payment->reference_id);
 
-        return view('admin.services.billing.view', compact('invoice', 'invoice_items'));
+        return view('admin.services.billing.payment-view', compact('payment', 'invoice', 'invoice_items'));
     }
 }

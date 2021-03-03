@@ -7,20 +7,19 @@ $(function () {
         bDestroy: true,
         bLengthChange: false,
         columns:[
-            { data: 'invoice_id', 'className': 'hidden' },
-            { data: 'invoice_no' },
+            { data: 'payment_id', 'className': 'hidden' },
+            { data: 'or_no' },
             { data: 'customer' },
-            { data: 'invoice_date' },
-            { data: 'due_date' },
-            { data: 'amount', 'className': 'text-right' },
-            { data: 'unpaid', 'className': 'text-right' }, 
-            { data: 'status' },
-            { data: 'action', 'className': 'text-center' }
+            { data: 'payment_date' },
+            { data: 'amount_due', 'className': 'text-right' },
+            { data: 'amount_paid', 'className': 'text-right' },
+            { data: 'balance', 'className': 'text-right' },
+            { data: 'status' }
         ],
         "aoColumnDefs":[
             {
                 "bSortable": false, 
-                "aTargets": [1, 7]
+                "aTargets": [4, 5, 6]
             },
             { 
                 "targets": [1, 2], 

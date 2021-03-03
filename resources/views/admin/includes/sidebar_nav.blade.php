@@ -40,11 +40,11 @@
             </ul>
         </li>
 
-        <li>
+        <li style="display: none;">
             <a href="#"><i class="icon-volume-2"></i><span>Announcements</span></a>
         </li>
 
-        <li>
+        <li style="display: none;">
             <a href="#"><i class="icon-doc"></i><span>Attendance</span></a>
         </li>
 
@@ -123,28 +123,23 @@
         <li class="header">Services</li>
         <li class="{{ set_nav_status(['admin/services/enrollment*']) }}">
             <a href="#" class="has-arrow"><i class="icon-users  "></i><span>Enrollment</span></a>
-
             <ul>
-                <li class="{{ set_nav_status(['admin/services/enrollment/new']) }}">
-                    <a href="">Online Registration</a>
-                </li>
-                <li class="{{ set_nav_status(['admin/services/enrollment/enroll-student', 'admin/services/enrollment/new/*']) }}"><a href="{{ route('enrollment-enroll_student') }}">Enroll Student</a></li>
-                <li class="{{ set_nav_status(['admin/services/enrollment/class-summary']) }}">
-                    <a href="{{ route('class-summary-enrollment') }}">Class Summary</a>
-                </li>
+                <li style="display: none;"><a href="">Online Registration</a></li>
+                <li class="{{ set_nav_status(['admin/services/enrollment/enroll-student', 'admin/services/enrollment/enroll-student/new/*']) }}"><a href="{{ route('enroll_student') }}">Enroll Student</a></li>
+                <li class="{{ set_nav_status(['admin/services/enrollment/class-summary']) }}"><a href="{{ route('class_summary') }}">Class Summary</a></li>
             </ul>
         </li>
 
         <li class="{{ set_nav_status(['admin/services/billing*']) }}">
             <a href="#" class="has-arrow"><i class="icon-calculator  "></i><span>Billing</span></a>
             <ul>
-                <li class="{{ set_nav_status(['admin/services/billing/new', 'admin/services/billing/new/*']) }}"><a href="{{ route('billing-new_invoice') }}">New Invoice</a></li>
-                <li class="{{ set_nav_status(['admin/services/billing/invoices']) }}"><a href="{{ route('billing-invoices') }}">Invoices</a></li>
-                <li><a href="services-billing-payments.html">Payments</a></li>
+                <li class="{{ set_nav_status(['admin/services/billing/new', 'admin/services/billing/new/*']) }}"><a href="{{ route('invoices-new-1') }}">New Invoice</a></li>
+                <li class="{{ set_nav_status(['admin/services/billing/invoices']) }}"><a href="{{ route('invoices') }}">Invoices</a></li>
+                <li class="{{ set_nav_status(['admin/services/billing/payments']) }}"><a href="{{ route('payments') }}">Payments</a></li>
             </ul>
         </li>
 
-        <li>
+        <li style="display: none;">
             <a href="#"><i class="icon-clock"></i><span>Scheduling</span></a>
         </li>
 
@@ -181,6 +176,6 @@
         <li class="{{ set_nav_status(['admin/setup/courses*']) }}">
             <a href="{{ route('courses') }}"><i class="icon-docs"></i><span>Courses</span></a>
         </li>
-        <li><a href=""><i class="icon-docs"></i><span>Roles</span></a></li>
+        <li style="display: none;"><a href=""><i class="icon-docs"></i><span>Roles</span></a></li>
     </ul>
 </nav>

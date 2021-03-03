@@ -71,7 +71,7 @@ $(function () {
                                     "dob"           : formatDate1(value.dob),
                                     "age"           : value.age,
                                     "gender"        : value.gender,
-                                    "action"        : '<a href="/admin/services/enrollment/new/'+ value.profile_id +'" title="Enroll & Add Class" class="btn btn-sm btn-default"><i class="fa fa-file-o" aria-hidden="true"></i></a>'
+                                    "action"        : '<a href="/admin/services/enrollment/enroll-student/new/'+ value.profile_id +'" title="Enroll & Add Class" class="btn btn-sm btn-default"><i class="fa fa-file-o" aria-hidden="true"></i></a>'
                                 }).draw();
                         });
                     }

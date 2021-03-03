@@ -17,7 +17,7 @@ class Invoices extends Model
     {
         $invoices = self::select('invoices.*', 'profiles.control_no', 'profiles.lastname', 'profiles.firstname', 'profiles.middlename')
             ->join('profiles', 'profiles.profile_id', 'invoices.customer_id')
-            ->where('invoices.status', 'Active')
+            ->whereIn('invoices.status', ['New', 'Pending', 'Paid'])
             ->get();
 
         return $invoices;
@@ -27,10 +27,8 @@ class Invoices extends Model
     {      
         $invoice = self::select('invoices.*', 'profiles.control_no', 'profiles.lastname', 'profiles.firstname', 'profiles.middlename')
             ->join('profiles', 'profiles.profile_id', 'invoices.customer_id')
-            ->where([
-                ['invoices.invoice_id', $invoiceID],
-                ['invoices.status', 'Active']
-            ])
+            ->where('invoices.invoice_id', $invoiceID)
+            ->whereIn('invoices.status', ['New', 'Pending', 'Paid'])
             ->first();
 
         return $invoice;
@@ -43,20 +41,21 @@ class Invoices extends Model
         try {
 
              $data = [
-                'reference_type_id' => ($request->referenceTypeID) ? NULL : $request->referenceTypeID,  
-                'reference_id'      => ($request->referenceID) ? NULL : $request->referenceID,  
+                'reference_type_id' => ($request->referenceTypeID) ? $request->referenceTypeID : NULL,  
+                'reference_id'      => ($request->referenceID) ? $request->referenceID : NULL,  
                 'customer_id'       => $request->customerID,
                 'invoice_date'      => date('Y-m-d H:i:s', strtotime($request->invoiceDate)),
-                'due_date'          => ($request->dueDate) ? NULL : date('Y-m-d H:i:s', strtotime($request->dueDate)),
+                'due_date'          => ($request->dueDate) ? date('Y-m-d H:i:s', strtotime($request->dueDate)) : NULL,
                 'order_memo'        => $request->orderMemo,
                 'billing_to'        => $request->billTo,
                 'billing_address'   => $request->billingAddress,
-                'subtotal'          => $request->subTotal,
+                'subtotal'          => (float) str_replace(',', '', $request->subTotal),
                 'total_discount'    => $request->discount,
-                'net'               => $request->total,
+                'net'               => (float) str_replace(',', '', $request->total),
+                'unpaid'            => (float) str_replace(',', '', $request->total),
                 'created_by'        => $request->userID,
                 'dt_created'        => date('Y-m-d H:i:s'),
-                'status'            => 'Active'
+                'status'            => 'New'
             ];
 
             $id = self::insertGetId($data);
@@ -71,9 +70,9 @@ class Invoices extends Model
                     'invoiceID' => $id,
                     'itemID'    => $item->itemID,
                     'qty'       => $item->qty,
-                    'rate'      => $item->rate,
-                    'amount'    => $item->amount,
-                    'total'     => $item->amount
+                    'rate'      => (float) str_replace(',', '', $item->rate),
+                    'amount'    => (float) str_replace(',', '', $item->amount),
+                    'total'     => (float) str_replace(',', '', $item->amount)
                 ]);
 
                 InvoiceItems::add($request);

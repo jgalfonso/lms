@@ -1,6 +1,6 @@
 $(function () {
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/enrollment',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -74,7 +74,7 @@ $(function () {
                 formData.append('classIDS', JSON.stringify(App.getClassIDS()));
 
                 $.ajax({
-                    url: App.baseUrl + "/store",
+                    url: App.baseUrl + "enrollment/store",
                     type: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -87,7 +87,7 @@ $(function () {
                                 text: "1 row successfully submitted.",
                                 type: "success",
                             }, function () {
-                                window.location.href = App.baseUrl+'/enroll-student'; 
+                                window.location.href = App.baseUrl+'billing/invoices/new/'+data.admission_id+'/'+data.profile_id; 
                             });
                         } else {
 

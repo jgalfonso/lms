@@ -33,7 +33,8 @@ class Profiles extends Model
 
     public static function getByID($profileID)
     {      
-        $profile = self::select('profiles.*', DB::raw('TIMESTAMPDIFF(YEAR, profiles.dob, CURDATE()) age'), 'avatar.meta', 'avatar.filename')
+        $profile = self::select('profiles.*', DB::raw('TIMESTAMPDIFF(YEAR, profiles.dob, CURDATE()) age'), 'courses.name AS course', 'avatar.meta', 'avatar.filename')
+            ->join('courses', 'courses.course_id', 'profiles.course_id')
             ->leftJoin('avatar', function($join) 
                 {
                     $join->on('avatar.profile_id', 'profiles.profile_id');
@@ -101,6 +102,7 @@ class Profiles extends Model
             'ec_contact_no'     => $request->ecContact,
             'fb'                => $request->fb,
             'linkedin'          => $request->linkedin,
+            'course_id'         => ($request->course) ? $request->course : NULL,
             'created_by'        => $request->createdBy,
             'dt_created'        => date('Y-m-d H:i:s'),
             'status'            => 'Active'
@@ -143,6 +145,7 @@ class Profiles extends Model
                 'fb'                => $request->fb,
                 'linkedin'          => $request->linkedin,
                 'lupd_by'           => $request->updatedBy,
+                'course_id'         => ($request->course) ? $request->course : NULL,
                 'dt_lupd'           => date('Y-m-d H:i:s'),
                 'status'            => 'Active'
             ];

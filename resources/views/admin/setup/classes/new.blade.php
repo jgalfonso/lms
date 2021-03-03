@@ -29,7 +29,7 @@
         <form id="form" method="post" novalidate>
             <div class="col-lg-12">
                 <button type="button" class="btn btn-success save" style="width: 100px;">Save</button>
-                <a href="/admin/setup/classes" class="btn btn-danger" style="width: 100px">Cancel</a>
+                <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
             </div> 
 
             <div class="col-lg-12" style="margin-top: 15px;">
@@ -167,7 +167,7 @@
 
                 <div class="action-btn" style="padding-bottom: 3%;">
                     <button type="button" href="" class="btn btn-success save" style="width: 100px;">Save</button>
-                    <a href="/admin/setup/classes" class="btn btn-danger" style="width: 100px">Cancel</a>
+                    <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
                 </div>
             </div>
         </form>

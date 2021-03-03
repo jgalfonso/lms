@@ -1,6 +1,6 @@
 $(function () {
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/billing',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/billing/invoices/',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -30,8 +30,8 @@ $(function () {
                 $('#referenceNO').val(customer.split("~")[1]);
                 $('#billTo').val(App.$customer.find('option:selected').text());
             });
-            this.$invoiceDate.datepicker({ format: 'dd-mm-yyyy', todayHighlight: true });
-            this.$dueDate.datepicker({ format: 'dd-mm-yyyy', todayHighlight: true });
+            this.$invoiceDate.datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
+            this.$dueDate.datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
             this.$discount.on('change', function() {
                 setSummary();
             });
@@ -62,13 +62,13 @@ $(function () {
                 return; 
             } 
            
-            $('#dt tr:last').before('<tr>'+
+            $('#items tr:last').before('<tr>'+
                     '<td class="hidden">'+ App.$item.val().split("~")[0] +'</td>'+ 
                     '<td class="text-right">'+ $('#qty').val() +'</td>'+ 
                     '<td>'+ App.$item.find('option:selected').text() +'</td>'+ 
                     '<td>'+ App.$item.val().split("~")[1]  +'</td>'+ 
-                    '<td class="text-right">'+ $('#rate').val() +'</td>'+ 
-                    '<td class="text-right">'+ $('#amount').val() +'</td>'+ 
+                    '<td class="text-right">'+ mask($('#rate').val()) +'</td>'+ 
+                    '<td class="text-right">'+ mask($('#amount').val()) +'</td>'+ 
                     '<td class="align-center">'+
                         '<button onclick="hide(this);" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Delete"> <i class="icon-trash"></i> </button>'+
                     '</td>'+
@@ -106,7 +106,7 @@ $(function () {
                 formData.append('itemIDS', JSON.stringify(App.getItemIDS()));
 
                 $.ajax({
-                    url: App.baseUrl + "/store",
+                    url: App.baseUrl + "store",
                     type: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -119,7 +119,7 @@ $(function () {
                                 text: "1 row successfully submitted.",
                                 type: "success",
                             }, function () {
-                                window.location.href = App.baseUrl+'/view/'+data.id; 
+                                window.location.href = App.baseUrl+'view/'+data.id; 
                             });
                         } else {
 
@@ -144,7 +144,7 @@ $(function () {
                 return true; 
             } else {
                 
-                 if ($('#dt tr').length == 2) { 
+                 if ($('#items tr').length == 2) { 
 
                     bootstrap_alert.warning('#alert', 'Please add <b>item/items</b> to continue.'); 
                     $('html, body').animate({ scrollTop: ($('#alert').offset().top - 300)}, 500);
@@ -160,9 +160,9 @@ $(function () {
         getItemIDS : function() {
             var dt = [];
 
-            $('#dt tbody tr').each(function(index, row){
+            $('#items tbody tr').each(function(index, row){
                 
-                if($('#dt tr').length-2 != index) {
+                if($('#items tr').length-2 != index) {
                     var cols = $(row).children('td');
 
                     dt.push({
@@ -180,6 +180,8 @@ $(function () {
     }
 
     App.init();
+
+    setSummary();
 })
 
 function setSummary(){
@@ -187,18 +189,18 @@ function setSummary(){
     var discount = 0;
     var total = 0;
 
-    $('#dt tbody tr').each(function(row, tr){
+    $('#items tbody tr').each(function(row, tr){
         var cols = $(tr).children('td');
-        subTotal += Number($(cols[4]).text());
+        subTotal += Number($(cols[4]).text().replace(',', ''));
     });
 
     if ($('#discount').val()) discount = parseFloat($('#discount').val());
     
-    $('#subTotal').val(subTotal.toFixed(2)); 
-    $('#total').val((subTotal - discount).toFixed(2)); 
-    $('#summary-sub-total').text(subTotal.toFixed(2)); 
-    $('#summary-discount').text(discount.toFixed(2)); 
-    $('#summary-total').text((subTotal - discount).toFixed(2)); 
+    $('#subTotal').val(mask(subTotal.toFixed(2))); 
+    $('#total').val(mask((subTotal - discount).toFixed(2))); 
+    $('#summary-sub-total').text(mask(subTotal.toFixed(2))); 
+    $('#summary-discount').text(mask(discount.toFixed(2))); 
+    $('#summary-total').text(mask((subTotal - discount).toFixed(2))); 
 }
 
 function hide(e){
@@ -206,3 +208,10 @@ function hide(e){
        
     $(e).closest('tr').hide();
 }
+
+function mask(number) {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+

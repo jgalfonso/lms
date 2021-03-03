@@ -33,7 +33,7 @@
         <form id="form" method="post" novalidate style="width: 100%;">
             <div class="col-lg-12">
                 <button type="button" class="btn btn-success save" style="width: 100px;">Save</button>
-                <a href="/admin/services/enrollment/enroll-student" class="btn btn-danger" style="width: 100px;">Cancel</a>
+                <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
             </div> 
 
             <div class="col-lg-12" style="margin-top: 15px;">
@@ -59,11 +59,18 @@
                                         <div class="form-group">
                                             <label>Customer Name <span class="required">*</span></label>
                                             <select id="customer" name="customer" class="form-control" required>
-                                                <option value="" selected="">Choose...</option>
+                                            
+                                                @if(IS_NULL($profileID))
+                                                    
+                                                    <option value="" selected="">Choose...</option>
 
-                                                @foreach ($customers as $row)
-                                                    <option value="{{ $row->profile_id }}~{{ $row->control_no }}">{{ $row->lastname }}, {{ $row->firstname }} {{ $row->middlename }}</option>
-                                                @endforeach
+                                                    @foreach ($customers as $row)
+                                                        <option value="{{ $row->profile_id }}~{{ $row->control_no }}">{{ $row->lastname }}, {{ $row->firstname }} {{ $row->middlename }}</option>
+                                                    @endforeach
+                                                @else
+                                                    
+                                                     <option value="{{ $customer->profile_id }}" selected="">{{ $customer->lastname }}, {{ $customer->firstname }} {{ $customer->middlename }}</option>
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -71,7 +78,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Reference No.</label>
-                                            <input id="referenceNO" type="text" class="form-control" readonly style="background-color: #f9fafb;">
+                                            <input id="referenceNO" type="text" class="form-control" readonly value="@if(!IS_NULL($profileID)) {{ $customer->control_no }} @endif"  style="background-color: #f9fafb;">
                                         </div>
                                     </div>
 
@@ -181,6 +188,7 @@
                             <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#items">Items</a></li>
                             <li class="nav-item"><a class="nav-link tab" data-toggle="tab" href="#billing">Billing</a></li>
                             <li class="nav-item"><a class="nav-link tab" data-toggle="tab" href="#accounting">Accounting</a></li>
+                            <li class="nav-item"><a class="nav-link tab" data-toggle="tab" href="#records">Related Records</a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,7 +205,7 @@
                                     </div>
 
                                     <div class="table-responsive">
-                                        <table id="dt" class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
+                                        <table id="items" class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
                                             <thead>
                                                 <tr>
                                                     <th class="hidden"></th>
@@ -211,6 +219,23 @@
                                             </thead>
 
                                             <tbody>
+                                                @if(!IS_NULL($referenceID))
+
+                                                    @foreach ($items as $row)
+                                                        <tr>
+                                                            <td class="hidden">{{$row->item_id}}</td>
+                                                            <td class="text-right">{{count($admissions)}}</td>
+                                                            <td>{{$row->item_name}}</td>
+                                                            <td>{{$row->item_description}}</td>
+                                                            <td class="text-right">{{number_format($row->amount*count($admissions), 2, '.', '')}}</td>
+                                                            <td class="text-right">{{number_format($row->amount*count($admissions), 2, '.', '')}}</td>
+                                                            <td class="align-center">
+                                                                <button onclick="hide(this);" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Delete"> <i class="icon-trash"></i> </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+
                                                 <tr>
                                                     <td colspan="7">  
                                                         <button type="button" class="btn btn-default float-right"  data-toggle="modal" data-target="#modal">Add Item</button>
@@ -239,7 +264,7 @@
                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label>Bill To</label>
-                                                            <input id="billTo" name="billTo" type="text" class="form-control">
+                                                            <input id="billTo" name="billTo" type="text" class="form-control" value="@if(!IS_NULL($profileID)) {{ $customer->lastname }}, {{ $customer->firstname }} {{ $customer->middlename }} @endif">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -302,6 +327,37 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="tab-pane" id="records">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card" style="margin-top: 15px;">
+                                    <div class="header">
+                                        <h2>References <small>Lorem ipsum, or lipsum as it is sometimes known, <code>is dummy text</code>  used in laying out print, graphic or web designs.</small></h2>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="admissions" class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
+                                            <tbody>
+                                                @if(!IS_NULL($referenceID))
+
+                                                    @foreach ($admissions as $row)
+                                                        <tr>
+                                                            <td class="hidden">{{$row->admission_id}}</td>
+                                                            <td style="width: 30%;">Admission</td>
+                                                            <td style="width: 10%;">{{$row->code}}</td>
+                                                            <td><b>{{$row->class_code}}</b><br><a href="/admin/setup/classes/view/{{$row->class_id}}">{{$row->class_name}}</a></td>
+                                                            <td>{{$row->course}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -311,6 +367,8 @@
                     <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
                 </div>
             </div>
+
+            <input id="referenceID" name="referenceID" type="hidden" value="@if(!IS_NULL($referenceID)) {{ $referenceID }} @endif">  
         </form>
 
         <!-- Modal -->

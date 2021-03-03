@@ -59,7 +59,18 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6"></div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Course</label><span style="color: red"> * </span>
+                                    <select name="course" class="form-control" required>
+                                        <option value="" selected>Choose...</option>
+                                        
+                                        @foreach ($courses as $row)
+                                            <option @if($student->course_id == $row->course_id) selected @endif value="{{ $row->course_id }}">{{ $row->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-lg-3">
                                 <div class="form-group">
@@ -606,7 +617,7 @@
             <div class="col-lg-12">    
                 <div style="padding-bottom: 3%;">
                     <button type="button" href="" class="btn btn-success save" style="width: 100px;">Save</button>
-                    <a href="/admin/manage-users/students" class="btn btn-danger" style="width: 100px">Cancel</a>
+                    <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
                 </div>
             </div>
 
