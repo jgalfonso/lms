@@ -19,8 +19,14 @@ class Assignments extends Model
                         'assignments.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor')
                     )
                     ->leftJoin('classes', 'assignments.class_id', '=', 'classes.class_id')
+                    ->leftJoin('profiles', function($join)
+                        {
+                            $join->on('profiles.profile_id', 'assignments.instructor_id');
+                            $join->where('profiles.status', 'Active');
+                        })
                     ->where('assignments.status', 'Active')
                     ->get();
 
@@ -88,7 +94,7 @@ class Assignments extends Model
                 'title'             => $request->title,
                 'instruction'       => $request->instruction,
                 'class_id'          => $request->class_id,
-                'instructor_id'     => $request->instructor,
+                'instructor_id'     => $request->instructor_id,
                 'points'            => $request->points,
                 'allowed_attempts'  => $request->allowed_attempts,
                 'start'             => (!empty($request->start) ? date('Y-m-d H:i:s', strtotime($request->start)) : null),
@@ -151,9 +157,15 @@ class Assignments extends Model
                         'assignments.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor')
                     )
                     ->leftJoin('classes', 'assignments.class_id', '=', 'classes.class_id')
-                    ->where('assignments.status', 'Inactive')
+                    ->leftJoin('profiles', function($join)
+                        {
+                            $join->on('profiles.profile_id', 'assignments.instructor_id');
+                            $join->where('profiles.status', 'Active');
+                        })
+                    ->where('assignments.status', 'Closed')
                     ->get();
 
         return !empty($assignments) ? $assignments : null;

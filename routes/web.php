@@ -73,6 +73,7 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             //-------- AJAX REQUEST FOR ASSIGNMENTS --------//
             Route::post('assignments/store', 'AssignmentsController@store')->name('store-lesson');
             Route::post('assignments/getClasses', 'AssignmentsController@getClasses')->name('get-classes');
+            Route::post('assignments/getInstructors', 'AssignmentsController@getInstructors')->name('get-instructors');
             Route::get('assignments/filter', 'AssignmentsController@filter')->name('filter-lessons');
         });
 

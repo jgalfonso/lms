@@ -47,7 +47,7 @@
                                             <label>Course</label><span class="required"> * </span>
                                             <div class="input-group">
                                                 <select class="form-control" name="course_id" id="course">
-                                                    <option selected>Choose...</option>
+                                                    <option selected disabled>Choose...</option>
                                                     <?php foreach ($courses as $course): ?>
                                                         <option value="{{ $course->course_id }}">{{ $course->name }}</option>
                                                     <?php endforeach; ?>
@@ -62,7 +62,7 @@
                                             <label>Class</label><span class="required"> * </span>
                                             <div class="input-group">
                                                 <select class="form-control" name="class_id" id="classes" disabled>
-                                                    <option selected="">Choose...</option>
+                                                    <option selected="" disabled>Choose...</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -72,10 +72,8 @@
                                 <div class="form-group">
                                      <label>Instructor</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="instructor">
-                                            <option selected="">Choose...</option>
-                                            <option value="1">Sample Sir</option>
-                                        </select>
+                                        <input type="hidden" class="form-control" name="instructor_id" id="instructor_id">
+                                        <input type="text" class="form-control" name="instructor" id="instructors" disabled>
                                     </div>
                                 </div>
 

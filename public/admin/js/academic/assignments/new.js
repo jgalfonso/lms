@@ -26,6 +26,7 @@ $(function () {
             this.$clearAttach = $('.clearAttach');
 
             this.$courses = $('#course');
+            this.$classes = $('#classes');
         },
 
         bindEvents: function () {
@@ -53,6 +54,7 @@ $(function () {
             });
 
             this.$courses.on('change', this.getClasses);
+            this.$classes.on('change', this.getInstructors);
         },
 
         /**
@@ -92,7 +94,7 @@ $(function () {
                                 text: "Successfully created new assignment.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl+'/view/'+data.id; 
+                                window.location.href = App.baseUrl+'/view/'+data.id;
                             });
                         } else {
                             alert(data.success);
@@ -156,6 +158,41 @@ $(function () {
                         $.each(data, function(key, value){
                             $("#classes").append('<option value="'+ value.class_id +'">'+ value.name +'</option>')
                         });
+                    } else {
+                        alert(data.success);
+                    }
+
+                },
+                error : function(request, status, error) {
+                    alert(error);
+                },
+            });
+        },
+
+        getInstructors : function() {
+
+            var class_id = $('#classes').find(":selected").val();
+
+            if (class_id == 'Choose...') {
+                $('#instructors').attr('disabled', true);
+
+                return false;
+            }
+
+            $.ajax({
+                url: App.baseUrl + "/getInstructors",
+                type: 'POST',
+                data: {
+                    class_id : class_id
+                },
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+
+                    if (data != '') {
+                        $('#instructor_id').val(data.instructor_id)
+                        $('#instructors').val(data.instructor)
                     } else {
                         alert(data.success);
                     }
