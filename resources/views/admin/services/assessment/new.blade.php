@@ -115,10 +115,8 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th></th>
-                                    <th style="width: 15%;">Student No.</th>
+                                    <th style="width: 15%;">Control No.</th>
                                     <th>Name of Trainee</th>
-
                                     <th class="text-center" style="width: 15%">Passed</th>
                                     <th class="text-center" style="width: 15%">Failed</th>
                                     <th class="text-center" style="width: 15%">Incomplete</th>

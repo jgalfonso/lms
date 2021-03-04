@@ -12,7 +12,6 @@ $(function () {
         bDestroy: true,
         bLengthChange: false,
         columns:[
-            { data: 'admission_id', 'className' : 'hidden'},
             { data: 'profile_id', 'className' : 'hidden'},
             { data: 'student_no'},
             { data: 'name'},
@@ -23,7 +22,7 @@ $(function () {
         "aoColumnDefs":[
             {
                 "bSortable": false,
-                "aTargets": [4,5,6]
+                "aTargets": [3,4,5]
             }
         ],
         language: {
@@ -37,6 +36,7 @@ $(function () {
 
     var App = {
         baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/assessment',
+        url : window.location.protocol + '//' + window.location.host + '/admin/',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -77,16 +77,15 @@ $(function () {
                 method: 'GET',
                 dataType: "json",
                 data: {
-                    class_id    : class_id,
+                    classID    : class_id,
                     _token      : App.csrfToken
                 },
                 success: function(data) {
                     if(data) {
 
                         var class_info = data.class_data;
-
                         $('#class_code').html(': <b>' + class_info.code + '</b>');
-                        $('#class_name').html(': <a href="">' + class_info.name + '</a>');
+                        $('#class_name').html(': <a href="' + App.url + "/setup/classes/view/" + class_info.class_id + '">' + class_info.name + '</a>');
                         $('#course_name').html(': ' + class_info.course);
                         $('#instructor').html(': ' + class_info.instructor);
                         $('#schedule').html(': ' + (class_info.schedule == null ? '' : class_info.schedule));
@@ -101,17 +100,17 @@ $(function () {
 
                         $.each(data.trainees, function(key, value) {
                             var passed = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="assess' + value.admission_id + '" class="mark check passed" value="passed" id="' + value['admission_id'] + '">' +
+                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check passed" value="passed">' +
                                                 '<span></span>' +
                                             '</label>';
 
                             var failed = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="assess' + value.admission_id + '" class="mark check failed" value="failed" id="' + value['admission_id'] + '">' +
+                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check failed" value="failed">' +
                                                 '<span></span>' +
                                             '</label>';
 
                             var incomplete = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="assess' + value.admission_id + '" class="mark check incomplete" value="incomplete" id="' + value['admission_id'] + '">' +
+                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check incomplete" value="incomplete">' +
                                                 '<span></span>' +
                                             '</label>';
 
@@ -119,9 +118,8 @@ $(function () {
                                         '<br>' + value.email;
 
                             table.row.add({
-                                    "admission_id"  : value.admission_id,
                                     "profile_id"    : value.profile_id,
-                                    "student_no"    : value.registration_no,
+                                    "student_no"    : value.control_no,
                                     "name"          : name,
                                     "passed"        : passed,
                                     "failed"        : failed,
@@ -155,7 +153,6 @@ $(function () {
                 }
 
                 dt.push({
-                    "admission_id"  : $(cols[0]).text(),
                     "profile_id"    : $(cols[1]).text(),
                     "passed"        : passed,
                     "failed"        : failed,
@@ -229,7 +226,7 @@ $(function () {
                                 text: "1 row successfully submitted.",
                                 type: "success",
                             }, function () {
-                                window.location.href = App.baseUrl+'/view';
+                                window.location.href = App.baseUrl+'/view/' + data.id;
                             });
                         } else {
                             alert(data);

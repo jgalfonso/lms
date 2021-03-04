@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Models\Admin\Admissions;
+use App\Models\Admin\AdmissionDetails;
 use App\Models\Admin\Assessments;
 use App\Models\Admin\AssessmentDetails;
 use App\Models\Admin\Classes;
@@ -29,9 +30,10 @@ class AssessmentController extends Controller
      */
     public function recent ()
     {
-        $classes = Classes::getClasses();
+        $assessments = Assessments::getAssessments()->get();
+        $classes     = Classes::getClasses();
 
-        return view('admin.services.assessment.recent', compact('classes'));
+        return view('admin.services.assessment.recent', compact('assessments', 'classes'));
 
     }
 
@@ -40,8 +42,8 @@ class AssessmentController extends Controller
      */
     public function getTrainees(Request $request)
     {
-        $trainees   = Admissions::getByClass($request);
-        $class_data = Classes::getByID($request->class_id);
+        $trainees   = AdmissionDetails::getByClassID($request);
+        $class_data = Classes::getByID($request->classID);
 
         $data = [
             'trainees'      => $trainees,
@@ -67,7 +69,7 @@ class AssessmentController extends Controller
      */
     public function view ($id)
     {
-        $assessment = Assessments::getAssessment($id);
+        $assessment = Assessments::getAssessments($id)->first();
         $trainees   = AssessmentDetails::getTrainees($id);
 
         return view('admin.services.assessment.view', compact('assessment', 'trainees'));
