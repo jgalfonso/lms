@@ -79,7 +79,8 @@ $(function () {
                                 text: "Successfully created new quiz.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/recent";
+                                console.log(data);
+                                window.location.href = App.baseUrl+'/view/'+data.quiz_id;
                             });
                         } else {
                             alert(data.success);

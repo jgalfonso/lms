@@ -101,6 +101,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::post('quizzes/store', 'QuizzesController@store')->name('store-quiz');
             Route::post('quizzes/getClasses', 'QuizzesController@getClasses')->name('get-classes');
             Route::get('quizzes/filter', 'QuizzesController@filter')->name('filter-quizzes');
+            Route::post('quizzes/activate', 'QuizzesController@activate')->name('activate-quiz');
+            Route::post('quizzes/close', 'QuizzesController@close')->name('close-quiz');
         });
 
         //-------- EXAMS --------//
@@ -127,7 +129,7 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('enrollment/enroll-student', 'EnrollmentController@index')->name('enroll_student');
             Route::get('enrollment/enroll-student/new/{id}', 'EnrollmentController@new')->name('enroll_student-new');
             Route::get('enrollment/search', 'EnrollmentController@search')->name('enroll_student-search');
-            
+
             Route::post('enrollment/store', 'EnrollmentController@store')->name('store-enrollment');
 
             Route::get('enrollment/class-summary', 'EnrollmentController@summary')->name('class_summary');

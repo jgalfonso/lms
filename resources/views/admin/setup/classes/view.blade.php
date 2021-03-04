@@ -27,7 +27,7 @@
                     <a href="" id="mark-as-active" class="btn btn-new btn-default dropdown-item" data-target="#compli" data-toggle="modal">Mark as Active</a>
                     <a href="" id="mark-as-close" class="btn btn-new btn-default dropdown-item" data-target="#compli" data-toggle="modal">Mark as Closed</a>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-lg-12" style="margin-top: 15px;">
                 <div class="card">
@@ -104,7 +104,7 @@
 
                     <div class="body">
                         <div class="row">
-                            
+
                         </div>
                     </div>
                 </div>

@@ -44,7 +44,10 @@
                                     <label>Course</label><span class="required"> * </span>
                                     <div class="input-group">
                                         <select class="form-control" name="course_id" id="course" >
-                                            <option selected>Choose...</option>
+                                            <option selected value="{{ $quiz->course_id }}">{{ $quiz->course_name }}</option>
+                                            <?php foreach ($courses as $course): ?>
+                                                <option value="{{ $course->course_id }}">{{ $course->name }}</option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -65,7 +68,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Class No.</label><span class="required"> * </span>
-                                            <input type="text" class="form-control" required name="class_no"  value="" >
+                                            <input type="text" class="form-control" required name="class_code"  value="{{ $quiz->class_code }}" >
                                         </div>
                                     </div>
                                 </div>

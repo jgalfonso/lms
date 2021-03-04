@@ -36,6 +36,10 @@
     width: 130px;
 }
 
+.margin-15 {
+    margin-top: 15px;
+}
+
 .required {
     color: red;
 }

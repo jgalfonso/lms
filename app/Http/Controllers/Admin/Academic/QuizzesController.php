@@ -72,6 +72,8 @@ class QuizzesController extends Controller
     {
         $quiz = Quizzes::getById($id);
 
+        // dd($quiz);
+
         return view('admin.academic.quizzes.view', compact('quiz'));
     }
 
@@ -81,8 +83,12 @@ class QuizzesController extends Controller
     public function edit ($id)
     {
         $quiz = Quizzes::getById($id);
+        $courses = Courses::getCourses();
 
-        return view('admin.academic.quizzes.edit', compact('quiz'));
+        return view('admin.academic.quizzes.edit', compact(
+            'quiz',
+            'courses'
+        ));
     }
 
     /**
@@ -93,5 +99,21 @@ class QuizzesController extends Controller
         $quizzes = Quizzes::filter($request)->get();
 
         echo json_encode($quizzes);
+    }
+
+    public function activate(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Quizzes::activate($request);
+
+        echo json_encode($data);
+    }
+
+    public function close(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Quizzes::close($request);
+
+        echo json_encode($data);
     }
 }

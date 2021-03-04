@@ -22,16 +22,17 @@ class ClassController extends Controller
         return view('admin.setup.classes.index', compact('courses', 'classes'));
     }
 
-    public function activate(Request $request) 
-    {   
+    public function activate(Request $request)
+    {
+        dd($request);
         $request->request->add(['userID' => Auth::id()]);
         $data = Classes::activate($request);
 
         echo json_encode($data);
     }
 
-    public function close(Request $request) 
-    {   
+    public function close(Request $request)
+    {
         $request->request->add(['userID' => Auth::id()]);
         $data = Classes::close($request);
 
@@ -47,8 +48,8 @@ class ClassController extends Controller
         return view('admin.setup.classes.new', compact('courses', 'faculty', 'schedule_types'));
     }
 
-    public function store(Request $request) 
-    {   
+    public function store(Request $request)
+    {
         $request->request->add(['classTypeID' => 1, 'userID' => Auth::id()]);
         $data = Classes::add($request);
 
@@ -72,8 +73,8 @@ class ClassController extends Controller
         return view('admin.setup.classes.edit', compact('class', 'courses', 'faculty', 'schedule_types'));
     }
 
-    public function update(Request $request) 
-    {   
+    public function update(Request $request)
+    {
         $request->request->add(['classTypeID' => 1, 'userID' => Auth::id()]);
         $data = Classes::edit($request);
 

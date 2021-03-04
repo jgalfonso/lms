@@ -9,6 +9,7 @@ class Quizzes extends Model
 {
     protected $table = 'quizzes';
     protected $primaryKey = 'quiz_id';
+    public $timestamps = false;
 
     /**
      * Getting all quizzes
@@ -30,15 +31,18 @@ class Quizzes extends Model
     /**
      * Getting specific quiz
      */
-    public static function getById($id)
+    public static function getById($quizID)
     {
         $quiz = self::select(
                         'quizzes.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        'courses.course_id as course_id',
+                        'courses.name as course_name'
                     )
                     ->leftJoin('classes', 'quizzes.class_id', '=', 'classes.class_id')
-                    ->where('quizzes.status', 'Active')
+                    ->leftJoin('courses', 'classes.course_id', '=', 'courses.course_id')
+                    ->where('quizzes.quiz_id', $quizID)
                     ->first();
 
         return !empty($quiz) ? $quiz : null;
@@ -52,7 +56,7 @@ class Quizzes extends Model
      */
     public static function filter ($request)
     {
-        $class_id = $request->class_id;
+        $quiz_id = $request->class_id;
         $archives = (isset($request->archives) && $request->archives == 1 ? 1 : null);
 
         $quizzes = self::select(
@@ -61,11 +65,11 @@ class Quizzes extends Model
                         'classes.name as class_name',
                     )
                     ->leftJoin('classes', 'quizzes.class_id', '=', 'classes.class_id')
-                    ->when($class_id, function ($query) use ($class_id) {
-                        return $query->where('quizzes.class_id', $class_id);
+                    ->when($quiz_id, function ($query) use ($quiz_id) {
+                        return $query->where('quizzes.class_id', $quiz_id);
                     })
                     ->when($archives, function ($query) use ($archives) {
-                        return $query->where('quizzes.status', 'Inactive');
+                        return $query->where('quizzes.status', 'Closed');
                     })
                     ->orderBy('quizzes.quiz_id', 'desc');
 
@@ -125,9 +129,65 @@ class Quizzes extends Model
                         'classes.name as class_name',
                     )
                     ->leftJoin('classes', 'quizzes.class_id', '=', 'classes.class_id')
-                    ->where('quizzes.status', 'Inactive')
+                    ->where('quizzes.status', 'Closed')
                     ->get();
 
         return !empty($archives) ? $archives : null;
+    }
+
+    /**
+     * Activate quiz/quizzes
+     */
+    public static function activate($request)
+    {
+        try {
+
+            $quizzes = json_decode($request->quizIDS);
+
+            foreach($quizzes as $quiz){
+
+                $data = [
+                    'lupd_by'   => $request->userID,
+                    'dt_lupd'   => date('Y-m-d H:i:s'),
+                    'status'    => 'Active'
+                ];
+
+                self::where('quiz_id', $quiz->quizID)->update($data);
+            }
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * Close quiz/quizzes
+     */
+    public static function close($request)
+    {
+        try {
+
+            $quizzes = json_decode($request->quizIDS);
+
+            foreach($quizzes as $quiz){
+
+                $data = [
+                    'lupd_by'   => $request->userID,
+                    'dt_lupd'   => date('Y-m-d H:i:s'),
+                    'status'    => 'Closed'
+                ];
+
+                self::where('quiz_id', $quiz->quizID)->update($data);
+            }
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
     }
 }

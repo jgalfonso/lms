@@ -79,7 +79,7 @@ $(function () {
                                 text: "Successfully updated quiz.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/edit/" + data.quiz_id;
+                                window.location.href = App.baseUrl + "/view/" + data.quiz_id;
                             });
                         } else {
                             alert(data.success);

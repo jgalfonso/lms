@@ -14,38 +14,116 @@ $(function () {
         },
 
         setElements: function () {
-            CKEDITOR.replace('ckeditor');
-            CKEDITOR.config.height = 300;
-
-            this.$save = $('#save');
-            this.$reject = $('#reject');
-            this.$cancel = $('#cancel');
-
-            this.$courses = $('#course');
+            this.$markAsActive = $('#mark-as-active');
+            this.$markAsClose = $('#mark-as-close');
         },
 
         bindEvents: function () {
-            CKEDITOR.on('instanceReady', function () {
-                $('form textarea').attr('required', '');
-                $.each(CKEDITOR.instances, function (instance) {
-                    CKEDITOR.instances[instance].on("change", function (e) {
-                        for (instance in CKEDITOR.instances) {
-                            CKEDITOR.instances[instance].updateElement();
-                        }
-                    });
-                });
-            });
-
-            this.$save.on('click', this.save);
-            this.$reject.on('click', this.reject);
-            this.$cancel.on('click', this.cancel);
-
-            this.$courses.on('change', this.getClasses);
+            this.$markAsActive.on('click', this.markAsActive);
+            this.$markAsClose.on('click', this.markAsClose);
         },
 
-        cancel : function() {
+        markAsActive : function() {
+            swal({
+                title: "",
+                text: "Are you sure you want to activate this record?",
+                type: "warning",
+                confirmButtonText: "Yes",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
 
-        }
+                const formData = new FormData();
+                formData.append('quizIDS', JSON.stringify(App.getQuizID()));
+
+                $.ajax({
+                    url: App.baseUrl + "/activate",
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    headers: {'X-CSRF-TOKEN': App.csrfToken},
+                    success: function(data) {
+                        if (data.success == true) {
+
+                            swal({
+                                title: "Success!",
+                                text: "Quiz selected successfully activated.",
+                                type: "success",
+                            }, function () {
+                                window.location.href = App.baseUrl + '/recent';
+                            });
+                        } else {
+
+                            alert(data);
+                        }
+                    },
+                    error : function(request, status, error) {
+                        swal("Oops!", "Seems like there is an error. Please try again", "error");
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false
+                });
+            });
+        },
+
+        markAsClose : function() {
+            swal({
+                title: "",
+                text: "Are you sure you want to close this record?",
+                type: "warning",
+                confirmButtonText: "Yes",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
+
+
+                const formData = new FormData();
+                formData.append('quizIDS', JSON.stringify(App.getQuizID()));
+
+
+                $.ajax({
+                    url: App.baseUrl + "/close",
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    headers: {'X-CSRF-TOKEN': App.csrfToken},
+                    success: function(data) {
+                        if (data.success == true) {
+
+                            swal({
+                                title: "Success!",
+                                text: "Quiz selected successfully closed.",
+                                type: "success",
+                            }, function () {
+                                window.location.href = App.baseUrl + '/archives';
+                            });
+                        } else {
+
+                            alert(data);
+                        }
+                    },
+                    error : function(request, status, error) {
+                        swal("Oops!", "Seems like there is an error. Please try again", "error");
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false
+                });
+            });
+        },
+
+        getQuizID : function() {
+            var dt = [];
+
+            dt.push({
+                "quizID" : $('#quizID').val()
+            });
+
+            return dt;
+        },
     }
 
     App.init();
