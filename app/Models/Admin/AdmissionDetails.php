@@ -11,8 +11,8 @@ class AdmissionDetails extends Model
     protected $primaryKey = 'system_id';
 
     public static function getByClassID($request)
-    {      
-        $admissions = self::select('profiles.control_no', 'profiles.lastname', 'profiles.firstname', 'profiles.middlename')
+    {
+        $admissions = self::select('profiles.profile_id', 'profiles.control_no', 'profiles.lastname', 'profiles.firstname', 'profiles.middlename', 'profiles.email')
             ->join('admissions', 'admissions.admission_id', 'admission_details.admission_id')
             ->join('profiles', 'profiles.profile_id', 'admissions.profile_id')
             ->where('admission_details.class_id', $request->classID)
@@ -25,7 +25,7 @@ class AdmissionDetails extends Model
     }
 
     public static function add($request)
-    {      
+    {
         try {
 
             $data = [
@@ -39,7 +39,7 @@ class AdmissionDetails extends Model
             return true;
 
         } catch (\Exception $e) {
-            
+
             return $e->getMessage();
         }
     }

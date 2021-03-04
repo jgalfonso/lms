@@ -48,7 +48,10 @@ class Assessments extends Model
 
             DB::commit();
 
-            return ['success' => true];
+            return [
+                'success' => true,
+                'id' => $id
+            ];
 
         } catch (\Exception $e) {
 
@@ -60,7 +63,7 @@ class Assessments extends Model
     /**
      * Get assessment
      */
-    public static function getAssessment($id = null)
+    public static function getAssessments($id = null)
     {
         $data = self::select(
                         'assessments.*',
@@ -71,16 +74,19 @@ class Assessments extends Model
                         'assessor.middlename as assessor_middlename',
                         DB::raw('CONCAT(instructor.lastname, ", ", instructor.firstname, " ", instructor.middlename) AS instructor'),
                         'courses.name as course_name',
-                        'schedule_types.name AS schedule'
+                        'schedule_types.name AS schedule',
+                        DB::raw('COUNT(assessment_details.system_id) trainees'),
                     )
                     ->leftJoin('classes', 'assessments.class_id', '=', 'classes.class_id')
                     ->leftJoin('schedule_types', 'schedule_types.schedule_type_id', 'classes.schedule_type_id')
                     ->leftJoin('courses', 'assessments.course_id', '=', 'courses.course_id')
+                    ->leftJoin('assessment_details', 'assessments.assessment_id', '=', 'assessment_details.assessment_id')
                     ->leftJoin('profiles AS instructor', 'classes.instructor_id', '=', 'instructor.profile_id')
                     ->leftJoin('profiles AS assessor', 'assessments.assessor_id', '=', 'assessor.profile_id')
-                    ->where('assessments.assessment_id', $id)
-                    ->where('assessments.status', 'Active')
-                    ->first();
+                    ->when($id, function ($query) use ($id) {
+                        return $query->where('assessments.assessment_id', $id);
+                    })
+                    ->where('assessments.status', 'Active');
 
         return !empty($data) ? $data : null;
     }
