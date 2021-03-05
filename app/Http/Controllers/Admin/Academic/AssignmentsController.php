@@ -111,4 +111,26 @@ class AssignmentsController extends Controller
 
         return view('admin.academic.assignments.edit', compact('assignment', 'attachments'));
     }
+
+    /**
+     * Mark as Active
+     */
+    public function activate(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Assignments::activate($request);
+
+        echo json_encode($data);
+    }
+
+    /**
+     * Mark as Closed
+     */
+    public function close(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Assignments::close($request);
+
+        echo json_encode($data);
+    }
 }

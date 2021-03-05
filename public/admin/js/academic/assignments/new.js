@@ -94,7 +94,8 @@ $(function () {
                                 text: "Successfully created new assignment.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl+'/view/'+data.id;
+                                console.log(data);
+                                window.location.href = App.baseUrl+'/view/'+data.assignment_id;
                             });
                         } else {
                             alert(data.success);
@@ -219,12 +220,7 @@ $(function () {
         },
 
         cancel : function() {
-            if (App.$is_staff == 1) {
-                window.location.href = App.baseUrl + 'staffs';
-            } else {
-                window.location.href = App.baseUrl + 'users';
-            }
-
+            window.location.href = App.baseUrl;
         }
     }
 

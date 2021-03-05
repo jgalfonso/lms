@@ -85,7 +85,7 @@ $(function () {
                             var action = '<a href="' + App.baseUrl + "/edit/" + row['assignment_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
 
                             table.row.add( {
-                                "assignment_id"       : row.assignment_id,
+                                "assignment_id" : row.assignment_id,
                                 "checkbox"      : checkbox,
                                 "title"         : '<a href="' + App.baseUrl + '/view/' + row.assignment_id + '">' + row.title + '</a>',
                                 "name"          : name,
