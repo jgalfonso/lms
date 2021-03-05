@@ -38,7 +38,7 @@ class ExamsController extends Controller
      */
     public function getClasses (Request $request)
     {
-        $classes = Classes::getByCourse($request);
+        $classes = Classes::getByCourseID($request->course_id);
 
         echo json_encode($classes);
     }

@@ -94,7 +94,7 @@ $(function () {
                                 text: "Successfully created new project.",
                                 type: "success"
                             }, function () {
-                                window.location.href = App.baseUrl + "/view/" + data.id;
+                                window.location.href = App.baseUrl + "/new";
                             });
                         } else {
                             alert(data.success);

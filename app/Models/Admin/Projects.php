@@ -9,6 +9,7 @@ class Projects extends Model
 {
     protected $table = 'projects';
     protected $primaryKey = 'project_id';
+    public $timestamps = false;
 
     /**
      * Getting all projects
@@ -19,8 +20,10 @@ class Projects extends Model
                         'projects.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'),
                     )
                     ->leftJoin('classes', 'projects.class_id', '=', 'classes.class_id')
+                    ->leftJoin('profiles', 'projects.instructor_id', 'profiles.profile_id')
                     ->where('projects.status', 'Active')
                     ->get();
 
@@ -36,8 +39,12 @@ class Projects extends Model
                         'projects.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        'courses.name as course_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'),
                     )
                     ->leftJoin('classes', 'projects.class_id', '=', 'classes.class_id')
+                    ->leftJoin('courses', 'classes.course_id', '=', 'courses.course_id')
+                    ->leftJoin('profiles', 'projects.instructor_id', 'profiles.profile_id')
                     ->where('projects.project_id', $id)
                     ->first();
 
@@ -59,13 +66,15 @@ class Projects extends Model
                         'projects.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'),
                     )
                     ->leftJoin('classes', 'projects.class_id', '=', 'classes.class_id')
+                    ->leftJoin('profiles', 'projects.instructor_id', 'profiles.profile_id')
                     ->when($class_id, function ($query) use ($class_id) {
                         return $query->where('projects.class_id', $class_id);
                     })
                     ->when($archives, function ($query) use ($archives) {
-                        return $query->where('projects.status', 'Inactive');
+                        return $query->where('projects.status', 'Closed');
                     })
                     ->orderBy('projects.project_id', 'desc');
 
@@ -88,7 +97,7 @@ class Projects extends Model
                 'title'             => $request->title,
                 'instruction'       => $request->instruction,
                 'class_id'          => $request->class_id,
-                'instructor_id'     => $request->instructor,
+                'instructor_id'     => $request->instructor_id,
                 'points'            => $request->points,
                 'allowed_attempts'  => $request->allowed_attempts,
                 'start'             => (!empty($request->start) ? date('Y-m-d H:i:s', strtotime($request->start)) : null),
@@ -124,7 +133,7 @@ class Projects extends Model
                         'title'         => $request->attach_title[$key],
                         'filename'      => $filename,
                         'path'          => '/projects/' . $request->course_id . '/' . $request->class_id . '/' . $assignID . '/',
-                        'created_by'    => 1,
+                        'created_by'    => $request->userID,
                         'dt_created'    => date('Y-m-d H:i:s'),
                     ];
 
@@ -134,7 +143,10 @@ class Projects extends Model
 
             DB::commit();
 
-            return ['success' => true];
+            return [
+                'success' => true,
+                'id'      => $assignID
+            ];
 
         } catch (\Exception $e) {
             return ['success' => $e->getMessage()];
@@ -151,11 +163,69 @@ class Projects extends Model
                         'projects.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'),
                     )
                     ->leftJoin('classes', 'projects.class_id', '=', 'classes.class_id')
-                    ->where('projects.status', 'Inactive')
+                    ->leftJoin('profiles', 'projects.instructor_id', 'profiles.profile_id')
+                    ->where('projects.status', 'Closed')
                     ->get();
 
         return !empty($projects) ? $projects : null;
+    }
+
+    /**
+     * Activate projects
+     */
+    public static function activate($request)
+    {
+        try {
+
+            $projects = json_decode($request->projectIDs);
+
+            foreach($projects as $proj){
+
+                $data = [
+                    'lupd_by'   => $request->userID,
+                    'dt_lupd'   => date('Y-m-d H:i:s'),
+                    'status'    => 'Active'
+                ];
+
+                self::where('project_id', $proj->projectID)->update($data);
+            }
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * Close projects
+     */
+    public static function close($request)
+    {
+        try {
+
+            $projects = json_decode($request->projectIDs);
+
+            foreach($projects as $proj){
+
+                $data = [
+                    'lupd_by'   => $request->userID,
+                    'dt_lupd'   => date('Y-m-d H:i:s'),
+                    'status'    => 'Closed'
+                ];
+
+                self::where('project_id', $proj->projectID)->update($data);
+            }
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
     }
 }

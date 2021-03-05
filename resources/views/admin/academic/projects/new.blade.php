@@ -72,10 +72,8 @@
                                 <div class="form-group">
                                      <label>Instructor</label><span class="required"> * </span>
                                     <div class="input-group">
-                                        <select class="form-control" name="instructor" required>
-                                            <option selected="">Choose...</option>
-                                            <option value="1">Sample Sir</option>
-                                        </select>
+                                        <input type="hidden" name="instructor_id" id="instructor_id" value="">
+                                        <input type="text" name="instructor" id="instructor" class="form-control" value="" disabled>
                                     </div>
                                 </div>
 

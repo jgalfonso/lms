@@ -196,17 +196,4 @@ class Classes extends Model
         }
     }
 
-
-    /**
-     * Getting all classes by course
-     */
-    public static function getByCourse($request = null)
-    {
-        $classes = self::where('course_id', $request->course_id)
-                    ->where('status', 'Active')
-                    ->get();
-
-        return !empty($classes) ? $classes : null;
-    }
-
 }
