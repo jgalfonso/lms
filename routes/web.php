@@ -71,10 +71,12 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/view/{id}', 'AssignmentsController@view')->name('view-assignment');
             Route::get('assignments/edit/{id}', 'AssignmentsController@edit')->name('edit-assignment');
             //-------- AJAX REQUEST FOR ASSIGNMENTS --------//
-            Route::post('assignments/store', 'AssignmentsController@store')->name('store-lesson');
+            Route::post('assignments/store', 'AssignmentsController@store')->name('store-assignment');
             Route::post('assignments/getClasses', 'AssignmentsController@getClasses')->name('get-classes');
             Route::post('assignments/getInstructors', 'AssignmentsController@getInstructors')->name('get-instructors');
-            Route::get('assignments/filter', 'AssignmentsController@filter')->name('filter-lessons');
+            Route::get('assignments/filter', 'AssignmentsController@filter')->name('filter-assignments');
+            Route::post('assignments/activate', 'AssignmentsController@activate')->name('activate-assignment');
+            Route::post('assignments/close', 'AssignmentsController@close')->name('close-assignment');
         });
 
         //-------- PROJECTS --------//

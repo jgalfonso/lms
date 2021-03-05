@@ -180,7 +180,7 @@
 
                     <div class="action-btn">
                         <button type="button" class="btn btn-success" id="save">Save</button>
-                        <a href="{{ route('new-assignment') }}" class="btn btn-danger">Cancel</a>
+                        <a href="{{ route('recent-assignment') }}" class="btn btn-danger">Cancel</a>
                     </div>
                 </div>
             </div>

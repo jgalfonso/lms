@@ -9,6 +9,7 @@ class Assignments extends Model
 {
     protected $table = 'assignments';
     protected $primaryKey = 'assignment_id';
+    public $timestamps = false;
 
     /**
      * Getting all assignments
@@ -36,15 +37,24 @@ class Assignments extends Model
     /**
      * Getting assignment by id
      */
-    public static function getById($id = null)
+    public static function getById($assignmentID = null)
     {
         $assignment = self::select(
                         'assignments.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        'courses.course_id as course_id',
+                        'courses.name as course_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor')
                     )
                     ->leftJoin('classes', 'assignments.class_id', '=', 'classes.class_id')
-                    ->where('assignments.assignment_id', $id)
+                    ->leftJoin('courses', 'classes.course_id', '=', 'courses.course_id')
+                    ->leftJoin('profiles', function($join)
+                        {
+                            $join->on('profiles.profile_id', 'assignments.instructor_id');
+                            $join->where('profiles.status', 'Active');
+                        })
+                    ->where('assignments.assignment_id', $assignmentID)
                     ->first();
 
         return !empty($assignment) ? $assignment : null;
@@ -105,7 +115,7 @@ class Assignments extends Model
             ];
 
             $save = self::insert($data);
-            $assignID = DB::getPdo()->lastInsertId();
+            $assignmentID = DB::getPdo()->lastInsertId();
 
             /**
              * Saving attachment of new assignment
@@ -114,7 +124,7 @@ class Assignments extends Model
 
                 foreach ($request->file('attach_file') as $key => $value) {
 
-                    $path = public_path() .'/assignments/' . $request->course_id . '/' . $request->class_id . '/' . $assignID . '/';
+                    $path = public_path() .'/assignments/' . $request->course_id . '/' . $request->class_id . '/' . $assignmentID . '/';
 
                     if (!file_exists($path)) {
                         mkdir($path,0777,TRUE);
@@ -126,10 +136,10 @@ class Assignments extends Model
                     $file->move($path, $filename);
 
                     $attach = [
-                        'assignment_id' => $assignID,
+                        'assignment_id' => $assignmentID,
                         'title'         => $request->attach_title[$key],
                         'filename'      => $filename,
-                        'path'          => '/assignments/' . $request->course_id . '/' . $request->class_id . '/' . $assignID . '/',
+                        'path'          => '/assignments/' . $request->course_id . '/' . $request->class_id . '/' . $assignmentID . '/',
                         'created_by'    => 1,
                         'dt_created'    => date('Y-m-d H:i:s'),
                     ];
@@ -140,7 +150,10 @@ class Assignments extends Model
 
             DB::commit();
 
-            return ['success' => true];
+            return [
+                'success' => true,
+                'assignment_id' => $assignmentID
+            ];
 
         } catch (\Exception $e) {
             return ['success' => $e->getMessage()];
@@ -169,5 +182,61 @@ class Assignments extends Model
                     ->get();
 
         return !empty($assignments) ? $assignments : null;
+    }
+
+    /**
+     * Activate assignment/assignments
+     */
+    public static function activate($request)
+    {
+        try {
+
+            $assignments = json_decode($request->assignmentIDS);
+
+            foreach($assignments as $assignment){
+
+                $data = [
+                    'lupd_by'   => $request->userID,
+                    'dt_lupd'   => date('Y-m-d H:i:s'),
+                    'status'    => 'Active'
+                ];
+
+                self::where('assignment_id', $assignment->assignmentID)->update($data);
+            }
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * Close assignment/assignments
+     */
+    public static function close($request)
+    {
+        try {
+
+            $assignments = json_decode($request->assignmentIDS);
+
+            foreach($assignments as $assignment){
+
+                $data = [
+                    'lupd_by'   => $request->userID,
+                    'dt_lupd'   => date('Y-m-d H:i:s'),
+                    'status'    => 'Closed'
+                ];
+
+                self::where('assignment_id', $assignment->assignmentID)->update($data);
+            }
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
     }
 }
