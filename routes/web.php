@@ -87,6 +87,9 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::post('projects/store', 'ProjectsController@store')->name('store-project');
             Route::post('projects/getClasses', 'ProjectsController@getClasses')->name('get-classes');
             Route::get('projects/filter', 'ProjectsController@filter')->name('filter-projects');
+            Route::post('projects/getInstructor', 'ProjectsController@getInstructor')->name('get-instructor');
+            Route::post('projects/activate', 'ProjectsController@activate')->name('activate-projects');
+            Route::post('projects/close', 'ProjectsController@close')->name('close-projects');
         });
 
         //-------- QUIZZES --------//

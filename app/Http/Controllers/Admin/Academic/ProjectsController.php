@@ -57,6 +57,7 @@ class ProjectsController extends Controller
      */
     public function store (Request $request)
     {
+        $request->request->add(['userID' => Auth::id()]);
         $new = Projects::storeProject($request);
 
         echo json_encode($new);
@@ -67,7 +68,7 @@ class ProjectsController extends Controller
      */
     public function getClasses (Request $request)
     {
-        $classes = Classes::getByCourse($request);
+        $classes = Classes::getByCourseID($request->course_id);
 
         echo json_encode($classes);
     }
@@ -104,5 +105,37 @@ class ProjectsController extends Controller
         $attachments  = ProjectAttachments::getAttachments($id);
 
         return view('admin.academic.projects.edit', compact('project', 'attachments'));
+    }
+
+    /**
+     * Getting instructor using class id
+     */
+    public function getInstructor (Request $request)
+    {
+        $classes = Classes::getByID($request->class_id);
+
+        echo json_encode($classes);
+    }
+
+    /**
+     * Mark projects active
+     */
+    public function activate(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Projects::activate($request);
+
+        echo json_encode($data);
+    }
+
+    /**
+     * Mark projects close
+     */
+    public function close(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = Projects::close($request);
+
+        echo json_encode($data);
     }
 }
