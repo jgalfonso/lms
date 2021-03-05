@@ -167,10 +167,11 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
 
         //-------- CERTIFICATION --------//
         Route::group(['middleware' => 'auth'], function () {
-            Route::get('certification/moderations', 'CertificationController@moderations')->name('moderations');
-            Route::get('certification/process', 'CertificationController@process')->name('process');
-            Route::get('certification/published', 'CertificationController@published')->name('published');
-            Route::get('certification/view', 'CertificationController@view')->name('view');
+            Route::get('certifications/moderations', 'CertificationController@moderations')->name('certifications-moderations');
+            Route::get('certifications/moderations/{id}', 'CertificationController@moderate')->name('certifications-moderate');
+            Route::get('certifications/get-entries', 'CertificationController@getEntries')->name('get-entries');
+
+            Route::post('certifications/store', 'CertificationController@store')->name('store-moderations');
         });
     });
 

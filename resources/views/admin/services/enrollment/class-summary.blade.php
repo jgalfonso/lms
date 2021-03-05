@@ -20,7 +20,7 @@
     </div>
 
     <div class="col-md-6 col-sm-12 text-right hidden-xs">
-
+        
     </div>
 @endsection
 
@@ -34,74 +34,18 @@
                             <h3 class="accordion-thumb"><span>Filter</span></h3>
                             <div class="accordion-panel" style="display: none;">
                                 <div class="row" style="margin-top: 15px; ">
-                                    <div class="col-lg-6">
-                                        <label>Name / Class No.</label>
-                                        <input type="text" id="class_no" class="form-control" name="title">
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <label>Status</label>
-                                        <select class="form-control" id="status">
-                                            <option value="" selected>Select...</option>
-                                            <option value="">Active</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row" style="margin-top: 15px; ">
-                                    <div class="col-lg-6">
-                                        <label>Name / Student No.</label>
-                                        <input type="text" id="student_no" class="form-control" name="title">
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label>Schedule</label>
-                                        <div class="input-group mb-1">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                            </div>
-                                            <input type="text" id="from" data-date-autoclose="true" class="form-control date" name="date_closed" >
+                                    <div class="col-lg-6 col-md-4 col-sm-6">
+                                        <label>Filter by Class / Course / Instructor:</label>
+                                        <div class="input-group">
+                                            <input id="key" type="text" class="form-control" placeholder="Search...">
                                         </div>
-                                         <span class="help-block">Start Date</span>
                                     </div>
-
-                                    <div class="col-lg-3">
+                                    
+                                    <div class="col-lg-6 col-md-4 col-sm-6 text-right">
                                         <label>&nbsp;</label>
-                                        <div class="input-group mb-1">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                            </div>
-                                            <input type="text" id="to" data-date-autoclose="true" class="form-control date" name="date_closed" >
-                                        </div>
-                                         <span class="help-block">End Date</span>
+                                        <button id="search" type="button" class="btn btn-sm btn-info btn-block" style="width: 100px">Search</button>
                                     </div>
                                 </div>
-
-                                <div class="row" style="margin-top: 15px; ">
-                                    <div class="col-lg-6">
-                                        <label>Course</label>
-                                        <select class="form-control" id="course">
-                                            <option value="" selected>Select...</option>
-                                            <?php foreach ($courses as $course): ?>
-                                                <option value="{{ $course->course_id }}">{{ $course->name }}</option>
-                                            <?php endforeach; ?>
-
-
-                                        </select>
-
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Instructor</label>
-                                        <input type="text" id="instructor" class="form-control" name="title">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-4 col-sm-6 text-right">
-                                         <label>&nbsp;</label>
-                                         <button type="button" name="button" id="search" class="btn btn-info btn-block" title="Search" style="width: 100px">Search</button>
-                                    </div>
-                                </div>
-
                             </div>
                         </li>
                     </ul>
@@ -170,7 +114,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        
                                     </tbody>
                                 </table>
                             </div>

@@ -130,7 +130,7 @@
             </ul>
         </li>
 
-        <li class="{{ set_nav_status(['admin/services/billing*']) }}">
+         <li class="{{ set_nav_status(['admin/services/billing*']) }}">
             <a href="#" class="has-arrow"><i class="icon-calculator  "></i><span>Billing</span></a>
             <ul>
                 <li class="{{ set_nav_status(['admin/services/billing/new', 'admin/services/billing/new/*']) }}"><a href="{{ route('invoices-new-1') }}">New Invoice</a></li>
@@ -152,15 +152,15 @@
             </ul>
         </li>
 
-        <li class="{{ set_nav_status(['admin/services/certification*']) }}">
+        <li class="{{ set_nav_status(['admin/services/certifications*']) }}">
             <a href="#" class="has-arrow"><i class="icon-printer"></i><span>Certification</span></a>
 
             <ul>
-                <li class="{{ set_nav_status(['admin/services/certification/moderations']) }}">
-                    <a href="{{ route('moderations') }}">Moderations</a>
+                <li class="{{ set_nav_status(['admin/services/certifications/moderations']) }}">
+                    <a href="{{ route('certifications-moderations') }}">Moderations</a>
                 </li>
-                <li class="{{ set_nav_status(['admin/services/certification/published']) }}">
-                    <a href="{{ route('published') }}">Published</a>
+                <li class="{{ set_nav_status(['admin/services/certifications/published']) }}">
+                    <a href="{{ route('certifications-moderations') }}">Published</a>
                 </li>
             </ul>
         </li>

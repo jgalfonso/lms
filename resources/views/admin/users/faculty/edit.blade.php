@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/parsleyjs/css/parsley.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/sweetalert/sweetalert.css') }}">
+
+    <style type="text/css">
+        .parsley-errors-list {
+            width: 100%;
+        }
+    </style>
 @endsection
 
 @section('breadcrumb')
@@ -610,7 +616,7 @@
                 </div>
             </div>
 
-             <input name="profileID" type="hidden" value="{{ $faculty->profile_id }}">  
+            <input name="profileID" type="hidden" value="{{ $faculty->profile_id }}">  
         </form>
     </div>
 @endsection
