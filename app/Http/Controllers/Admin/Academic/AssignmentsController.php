@@ -21,8 +21,9 @@ class AssignmentsController extends Controller
     public function new ()
     {
         $courses = Courses::getCourses();
+        $classes = Classes::getClasses();
 
-        return view('admin.academic.assignments.new', compact('courses'));
+        return view('admin.academic.assignments.new', compact('courses', 'classes'));
     }
 
     /**
@@ -65,6 +66,16 @@ class AssignmentsController extends Controller
         $classes = Classes::getByCourse($request);
 
         echo json_encode($classes);
+    }
+
+    /**
+     * Getting instructos based on specific class_id
+     */
+    public function getInstructors (Request $request)
+    {
+        $instructors = Classes::getByID($request->class_id);
+
+        echo json_encode($instructors);
     }
 
     /**

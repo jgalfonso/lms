@@ -18,7 +18,7 @@
 @endsection
 
 @section('content')
-<div id="alert"></div>
+    <div id="alert"></div>
     <div class="row clearfix">
         <div class="col-12">
             <div class="card">
@@ -46,12 +46,13 @@
             <div class="card">
                 <div class="table-responsive">
                     <table id="dt" class="table dataTable">
-                         <thead>
+                        <thead>
                             <tr>
+                                <th></th>
                                 <th class="text-center th-mark">
-                                    <div class="fancy-checkbox">
-                                        <label><input type="checkbox"><span></span></label>
-                                    </div>
+                                    <label class="fancy-checkbox">
+                                        <input type="checkbox" class="select-all"><span class="th-mark"></span>
+                                    </label>
                                 </th>
                                 <th>Title</th>
                                 <th >Class Code / Name</th>
@@ -63,19 +64,18 @@
                         <tbody>
                             <?php foreach ($assignments as $assignment): ?>
                                 <tr>
-                                    <td class="text-center">
-                                        <div class="fancy-checkbox">
-                                            <label><input type="checkbox"><span></span></label>
-                                        </div>
+                                    <td>{{ $assignment->assignment_id }}</td>
+                                    <td class="text-center th-mark">
+                                        <label class="fancy-checkbox">
+                                            <input type="checkbox" class="checkbox"><span class="th-mark"></span>
+                                        </label>
                                     </td>
                                     <td><a href="{{ route('view-assignment', $assignment->assignment_id) }}">{{ $assignment->title }}</a></td>
-                                     <td><b>{{ $assignment->class_code }}</b><br />{{ $assignment->class_name }}</td>
-                                    <td>
-                                        <div class="font-15">Debra Stewart</div>
-                                    </td>
+                                    <td><b>{{ $assignment->class_code }}</b><br />{{ $assignment->class_name }}</td>
+                                    <td>{{ $assignment->instructor }}</td>
                                     <td>{{ $assignment->status }}</td>
-                                    <td>
-                                        <a href="{{ route('edit-assignment', $assignment->assignment_id) }}" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
+                                    <td class="text-center">
+                                        <a href="{{ route('edit-assignment', $assignment->assignment_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -84,8 +84,8 @@
                 </div>
                 <div class="row action-mark">
                     <div class="col-md-12">
-                        <button class="btn btn-mark btn-success" type="button">Mark as Active</button>
-                        <button class="btn btn-mark btn-danger" type="button">Mark as Closed</button>
+                        <button id="mark-as-active" class="btn btn-success btn-mark" type="button">Mark as Active</button>
+                        <button id="mark-as-close" class="btn btn-danger btn-mark" type="button">Mark as Closed</button>
                     </div>
                 </div>
             </div>
@@ -96,5 +96,7 @@
 @section('script')
     <script src="{{ URL::asset('assets/bundles/datatablescripts.bundle.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/alert.js') }}"></script>
+
     <script src="{{ URL::asset('admin/js/academic/assignments/archives.js') }}"></script>
 @endsection
