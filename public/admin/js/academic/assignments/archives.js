@@ -32,6 +32,8 @@ $(function () {
 
     var App = {
         baseUrl : window.location.protocol + '//' + window.location.host + '/admin/academic/assignments',
+        facultyURL : window.location.protocol + '//' + window.location.host + '/admin/manage-users/faculty',
+        classesURL : window.location.protocol + '//' + window.location.host + '/admin/setup/classes',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -79,9 +81,10 @@ $(function () {
                                                 '<input type="checkbox" name="assignment" class="mark check" value="' + row['assignment_id'] + '" id="' + row['assignment_id'] + '">' +
                                                 '<span></span>' +
                                             '</label>';
+
                             var name = '<b>' + row['class_code'] + '</b>' +
                                         '<br />'
-                                        + row['class_name'];
+                                        + '<a href="' + App.classesURL + '/view/' + row['class_id'] + '">' + row['class_name'] + '</a>';
 
                             var action = '<a href="' + App.baseUrl + "/edit/" + row['assignment_id'] +'" class="btn btn-sm btn-default" title="Edit"><i class="icon-pencil"></i></a>';
 
@@ -90,7 +93,7 @@ $(function () {
                                 "checkbox"      : checkbox,
                                 "title"         : '<a href="' + App.baseUrl + '/view/' + row.assignment_id + '">' + row.title + '</a>',
                                 "name"          : name,
-                                "instructor"    : 'start',
+                                "instructor"    : '<a href="' + App.facultyURL + '/view/' + row.instructor_id + '">' + row.instructor + '</a>',
                                 "status"        : row.status,
                                 "action"        : action,
                             }).draw();

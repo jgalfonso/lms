@@ -70,6 +70,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/archives', 'AssignmentsController@archives')->name('archives-assignment');
             Route::get('assignments/view/{id}', 'AssignmentsController@view')->name('view-assignment');
             Route::get('assignments/edit/{id}', 'AssignmentsController@edit')->name('edit-assignment');
+            Route::get('assignments/evaluation', 'AssignmentsController@evaluation')->name('evaluation-assignment');
+            Route::get('assignments/submitted-attachments/{id}', 'AssignmentsController@submittedAttachments')->name('submitted-attachments');
             //-------- AJAX REQUEST FOR ASSIGNMENTS --------//
             Route::post('assignments/store', 'AssignmentsController@store')->name('store-assignment');
             Route::post('assignments/getClasses', 'AssignmentsController@getClasses')->name('get-classes');
@@ -77,6 +79,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/filter', 'AssignmentsController@filter')->name('filter-assignments');
             Route::post('assignments/activate', 'AssignmentsController@activate')->name('activate-assignment');
             Route::post('assignments/close', 'AssignmentsController@close')->name('close-assignment');
+            Route::post('assignments/complete', 'AssignmentsController@complete')->name('complete-assignment');
+            Route::get('assignments/filterSubmitted', 'AssignmentsController@filterSubmitted')->name('filter-submitted');
         });
 
         //-------- PROJECTS --------//

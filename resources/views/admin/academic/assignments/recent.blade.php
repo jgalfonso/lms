@@ -71,8 +71,11 @@
                                         </label>
                                     </td>
                                     <td><a href="{{ route('view-assignment', $assignment->assignment_id) }}">{{ $assignment->title }}</a></td>
-                                    <td><b>{{ $assignment->class_code }}</b><br />{{ $assignment->class_name }}</td>
-                                    <td>{{ $assignment->instructor }}</td>
+                                    <td>
+                                        <b>{{ $assignment->class_code }}</b><br />
+                                        <a href="{{ route('classes-view', $assignment->class_id) }}">{{ $assignment->class_name }}</a>
+                                    </td>
+                                    <td><a href="{{ route('faculty-view', $assignment->instructor_id) }}">{{ $assignment->instructor }}</a></td>
                                     <td>{{ $assignment->status }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('edit-assignment', $assignment->assignment_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>

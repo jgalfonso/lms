@@ -11,6 +11,10 @@
     width: 100px;
 }
 
+.btn-complete {
+    width: 165px;
+}
+
 .btn-sm {
     width: auto;
     padding-left: 15px;

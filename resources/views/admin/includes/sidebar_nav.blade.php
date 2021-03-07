@@ -58,7 +58,9 @@
                 <li class="{{ set_nav_status(['admin/academic/assignments/recent']) }}">
                     <a href="{{ route('recent-assignment') }}">Recent Assignment/s</a>
                 </li>
-                <li><a  href="classess.html">Assignment Submitted & Evaluation</a></li>
+                <li class="{{ set_nav_status(['admin/academic/assignments/evaluation']) }}">
+                    <a href="{{ route('evaluation-assignment') }}">Assignment Submitted & Evaluation</a>
+                </li>
                 <li class="{{ set_nav_status(['admin/academic/assignments/archives']) }}">
                     <a href="{{ route('archives-assignment') }}">Archives</a>
                 </li>

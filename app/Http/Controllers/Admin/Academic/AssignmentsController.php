@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Admin\Assignments;
 use App\Models\Admin\AssignmentAttachments;
+use App\Models\Admin\AssignmentParticipants;
 use App\Models\Admin\Classes;
 use App\Models\Admin\Courses;
 
@@ -35,6 +36,34 @@ class AssignmentsController extends Controller
         $classes = Classes::getClasses();
 
         return view('admin.academic.assignments.recent', compact('assignments', 'classes'));
+    }
+
+    /**
+     * Display assignment/s to be avaluated
+     */
+    public function evaluation ()
+    {
+        $participants = AssignmentParticipants::getParticipants();
+        $classes      = Classes::getClasses();
+        $courses      = Courses::getCourses();
+
+        return view('admin.academic.assignments.evaluation', compact(
+            'participants',
+            'classes',
+            'courses'
+        ));
+    }
+
+    /**
+     * Display submitted assignment / attachment
+     */
+    public function submittedAttachments (Request $request, $id)
+    {
+        $participant  = AssignmentParticipants::getByID($id);
+
+        return view('admin.academic.assignments.submitted-attachments', compact(
+            'participant'
+        ));
     }
 
     /**
@@ -79,7 +108,7 @@ class AssignmentsController extends Controller
     }
 
     /**
-     * Display lessons filtered by class id
+     * Display assignments filtered by class id
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -132,5 +161,28 @@ class AssignmentsController extends Controller
         $data = Assignments::close($request);
 
         echo json_encode($data);
+    }
+
+    /**
+     * Mark as Complete
+     */
+    public function complete(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $data = AssignmentParticipants::complete($request);
+
+        echo json_encode($data);
+    }
+
+    /**
+     * Display submitted assignments filtered by class id
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function filterSubmitted(Request $request)
+    {
+        $participants = AssignmentParticipants::filter($request)->get();
+
+        echo json_encode($participants);
     }
 }

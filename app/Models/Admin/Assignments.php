@@ -75,13 +75,19 @@ class Assignments extends Model
                         'assignments.*',
                         'classes.code as class_code',
                         'classes.name as class_name',
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor')
                     )
                     ->leftJoin('classes', 'assignments.class_id', '=', 'classes.class_id')
+                    ->leftJoin('profiles', function($join)
+                        {
+                            $join->on('profiles.profile_id', 'assignments.instructor_id');
+                            $join->where('profiles.status', 'Active');
+                        })
                     ->when($class_id, function ($query) use ($class_id) {
                         return $query->where('assignments.class_id', $class_id);
                     })
                     ->when($archives, function ($query) use ($archives) {
-                        return $query->where('assignments.status', 'Inactive');
+                        return $query->where('assignments.status', 'Closed');
                     })
                     ->orderBy('assignments.assignment_id', 'desc');
 
