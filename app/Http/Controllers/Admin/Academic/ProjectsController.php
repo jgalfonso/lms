@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-use App\Models\Admin\Projects;
-use App\Models\Admin\ProjectAttachments;
 use App\Models\Admin\Classes;
 use App\Models\Admin\Courses;
+use App\Models\Admin\Projects;
+use App\Models\Admin\ProjectAttachments;
+use App\Models\Admin\ProjectParticipants;
 
 class ProjectsController extends Controller
 {
@@ -137,5 +138,60 @@ class ProjectsController extends Controller
         $data = Projects::close($request);
 
         echo json_encode($data);
+    }
+
+    /**
+     * Display projects/s to be avaluated
+     */
+    public function evaluation ()
+    {
+        $participants = ProjectParticipants::getParticipants();
+        $classes      = Classes::getClasses();
+        $courses      = Courses::getCourses();
+
+        return view('admin.academic.projects.evaluation', compact(
+            'participants',
+            'classes',
+            'courses'
+        ));
+    }
+
+    /**
+     * Display submitted projects / attachment
+     */
+    public function submittedAttachments (Request $request, $id)
+    {
+        $participant  = ProjectParticipants::getByID($id);
+        $attachments  = ProjectAttachments::getAttachments($participant->project_id);
+
+        return view('admin.academic.projects.submitted-attachments', compact(
+            'participant',
+            'attachments'
+        ));
+    }
+
+    /**
+     * Display project participants filtered by class id and keyword
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function filterSubmitted(Request $request)
+    {
+        $participants = ProjectParticipants::filter($request)->get();
+
+        echo json_encode($participants);
+    }
+
+    /**
+     * Mark project participant as completed
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function complete(Request $request)
+    {
+        $request->request->add(['userID' => Auth::id()]);
+        $complete = ProjectParticipants::complete($request);
+
+        echo json_encode($complete);
     }
 }

@@ -79,7 +79,8 @@ $(function () {
                 dataType: "json",
                 data: {
                     classID    : class_id,
-                    _token      : App.csrfToken
+                    status     : 'Active',
+                    _token     : App.csrfToken
                 },
                 success: function(data) {
                     if(data) {

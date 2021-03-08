@@ -77,7 +77,9 @@
                 <li class="{{ set_nav_status(['admin/academic/projects/recent']) }}">
                     <a href="{{ route('recent-project') }}">Recent Project/s</a>
                 </li>
-                <li><a  href="classess.html">Project Submitted & Evaluation</a></li>
+                <li class="{{ set_nav_status(['admin/academic/projects/evaluation']) }}">
+                    <a href="{{ route('evaluation-project') }}">Project Submitted & Evaluation</a>
+                </li>
                 <li class="{{ set_nav_status(['admin/academic/projects/archives']) }}">
                     <a href="{{ route('archives-project') }}">Archives</a>
                 </li>

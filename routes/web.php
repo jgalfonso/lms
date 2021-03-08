@@ -90,6 +90,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('projects/archives', 'ProjectsController@archives')->name('archives-project');
             Route::get('projects/view/{id}', 'ProjectsController@view')->name('view-project');
             Route::get('projects/edit/{id}', 'ProjectsController@edit')->name('edit-project');
+            Route::get('projects/evaluation', 'ProjectsController@evaluation')->name('evaluation-project');
+            Route::get('projects/submitted-attachments/{id}', 'ProjectsController@submittedAttachments')->name('submitted-attachments');
             //-------- AJAX REQUEST FOR PROJECTS --------//
             Route::post('projects/store', 'ProjectsController@store')->name('store-project');
             Route::post('projects/getClasses', 'ProjectsController@getClasses')->name('get-classes');
@@ -97,6 +99,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::post('projects/getInstructor', 'ProjectsController@getInstructor')->name('get-instructor');
             Route::post('projects/activate', 'ProjectsController@activate')->name('activate-projects');
             Route::post('projects/close', 'ProjectsController@close')->name('close-projects');
+            Route::post('projects/complete', 'ProjectsController@complete')->name('complete-project');
+            Route::get('projects/filterSubmitted', 'ProjectsController@filterSubmitted')->name('filter-submitted');
         });
 
         //-------- QUIZZES --------//

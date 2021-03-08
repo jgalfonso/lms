@@ -24,7 +24,7 @@ class Projects extends Model
                     )
                     ->leftJoin('classes', 'projects.class_id', '=', 'classes.class_id')
                     ->leftJoin('profiles', 'projects.instructor_id', 'profiles.profile_id')
-                    ->where('projects.status', 'Active')
+                    ->where('projects.status', 'New')
                     ->get();
 
         return !empty($projects) ? $projects : null;
@@ -104,7 +104,7 @@ class Projects extends Model
                 'end'               => (!empty($request->end) ? date('Y-m-d H:i:s', strtotime($request->end)) : null),
                 'created_by'        => 1,
                 'dt_created'        => date('Y-m-d H:i:s'),
-                'status'            => 'Active',
+                'status'            => 'New',
             ];
 
             $save = self::insert($data);
