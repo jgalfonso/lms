@@ -55,7 +55,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0" id="myTable">
+                   <table id="myTable" class="table dataTable">
                         <thead>
                             <tr>
                                 <th>Class Code / Name</th>

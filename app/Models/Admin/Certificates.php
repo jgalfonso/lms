@@ -17,10 +17,11 @@ class Certificates extends Model
      public static function getSummary()
     {
         $summary = self::select(
-                DB::raw('COUNT(DISTINCT CASE WHEN status = "New" THEN assessment_id END) new'),
-                DB::raw('COUNT(DISTINCT CASE WHEN status = "For QA" THEN assessment_id END) qa'),
-                DB::raw('COUNT(DISTINCT CASE WHEN status = "For Approval" THEN assessment_id END) approval'),
-                DB::raw('COUNT(DISTINCT CASE WHEN status = "Active" THEN assessment_id END) active')
+                DB::raw('COUNT(CASE WHEN status = "New" THEN certificate_id END) new'),
+                DB::raw('COUNT(CASE WHEN status = "For QA" THEN certificate_id END) qa'),
+                DB::raw('COUNT(CASE WHEN status = "For Approval" THEN certificate_id END) approval'),
+                DB::raw('COUNT(CASE WHEN status = "Rejected" THEN certificate_id END) rejected'),
+                DB::raw('COUNT(CASE WHEN status = "Active" THEN certificate_id END) active')
             )
             ->first();
 
@@ -28,39 +29,40 @@ class Certificates extends Model
     }
 
     public static function getEntries($status)
-    {
-        $entries = self::select('certificates.assessment_id', 'classes.code AS class_code', 'classes.name AS class_name', 'courses.name AS course', DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS assessor"), 'assessments.date_assessed', DB::raw('COUNT(certificates.profile_id) AS enrollees'))
+    {   
+        $entries = self::select('certificates.*', 'classes.code AS class_code', 'classes.name AS class_name', 'courses.name AS course', 'profiles.control_no', DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS trainee"), 'assessments.date_assessed')
             ->join('courses', 'courses.course_id', 'certificates.course_id')
             ->join('classes', 'classes.class_id', 'certificates.class_id')
             ->join('assessments', 'assessments.assessment_id', 'certificates.assessment_id')
-            ->join('profiles', 'profiles.profile_id', 'assessments.assessor_id')
-            ->where('certificates.status', ucfirst($status))
-            ->groupBy('assessment_id', 'class_code', 'class_name', 'course', 'assessor', 'date_assessed')
+            ->join('profiles', 'profiles.profile_id', 'certificates.profile_id')
+            ->where('certificates.status',$status)
             ->get();
 
         return $entries;
     }
 
-    public static function getByID($id)
+    public static function getByStatus($status)
     {
-        $entry = Assessments::select('assessments.*', 'classes.code AS class_code', 'classes.name AS class_name', 'courses.name AS course', DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS assessor"))
-            ->join('courses', 'courses.course_id', 'assessments.course_id')
-            ->join('classes', 'classes.class_id', 'assessments.class_id')
-            ->join('profiles', 'profiles.profile_id', 'assessments.assessor_id')
-            ->where('assessments.assessment_id', $id)
-            ->first();
-
-        return $entry;
-    }
-
-    public static function getCertificatesByAssessmentID($id)
-    {
-        $certificates = self::select('certificates.*', 'profiles.control_no',  DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS name"), 'profiles.email')
+        $certificates = self::select('certificates.*', 'classes.code AS class_code', 'classes.name AS class_name', 'courses.name AS course', 'profiles.control_no', DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS trainee"))
+            ->join('courses', 'courses.course_id', 'certificates.course_id')
+            ->join('classes', 'classes.class_id', 'certificates.class_id')
             ->join('profiles', 'profiles.profile_id', 'certificates.profile_id')
-            ->where('certificates.assessment_id', $id)
+            ->where('certificates.status', $status)
             ->get();
 
         return $certificates;
+    }
+
+    public static function getByID($id)
+    {
+        $certificate = self::select('certificates.*', 'classes.code AS class_code', 'classes.name AS class_name', 'courses.name AS course', 'profiles.control_no', DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS trainee"))
+            ->join('courses', 'courses.course_id', 'certificates.course_id')
+            ->join('classes', 'classes.class_id', 'certificates.class_id')
+            ->join('profiles', 'profiles.profile_id', 'certificates.profile_id')
+            ->where('certificates.certificate_id', $id)
+            ->first();
+
+        return $certificate;
     }
 
     public static function moderate($request)

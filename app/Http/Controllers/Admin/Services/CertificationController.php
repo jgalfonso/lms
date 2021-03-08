@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\Admin\Assessments;
 use App\Models\Admin\Certificates;
 use App\Models\Admin\Moderations;
 
 class CertificationController extends Controller
 {
-    public function moderations ()
+    public function moderations()
     {
 
         $summary = Certificates::getSummary();
@@ -27,15 +28,22 @@ class CertificationController extends Controller
 
         echo json_encode($data);
     }
+
+    public function getByStatus(Request $request)
+    {
+        $data = Certificates::getByStatus($request->status);
+
+        echo json_encode($data);
+    }
     
     public function moderate($id)
     {
         $today = date('d/m/Y');
-        $entry = Certificates::getByID($id);
-        $certifications = Certificates::getCertificatesByAssessmentID($id);
+        $certificate = Certificates::getByID($id);
+        $assessment = Assessments::getByID($certificate->assessment_id);
         $moderations = Moderations::getModerations($id);
 
-        return view('admin.services.certification.moderate', compact('today', 'entry', 'certifications', 'moderations'));
+        return view('admin.services.certification.moderate', compact('today', 'certificate', 'assessment', 'moderations'));
     }
 
     public function store(Request $request) 
@@ -46,20 +54,18 @@ class CertificationController extends Controller
         echo json_encode($data);
     }
 
-
-    /**
-     * Display published certificates
-     */
-    public function published ()
+    public function view($id)
     {
-        return view('admin.services.certification.published');
+        $certificate = Certificates::getByID($id);
+        $moderations = Moderations::getModerations($certificate->assessment_id);
+
+        return view('admin.services.certification.view', compact('certificate', 'moderations'));
     }
 
-    /**
-     * Display view of certificate
-     */
-    public function view ()
+    public function published ()
     {
-        return view('admin.services.certification.view');
+        $certificates = Certificates::getByStatus('Published');
+
+        return view('admin.services.certification.published', compact('certificates'));
     }
 }

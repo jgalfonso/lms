@@ -57,4 +57,13 @@ class BillingController extends Controller
 
         return view('admin.services.billing.view', compact('invoice', 'invoice_items', 'admissions'));
     }
+
+    public function forms($id)
+    {
+        $invoice = Invoices::getByID($id);
+        $invoice_items = InvoiceItems::getInvoiceItems($id);
+        $admissions = Admissions::getPending($invoice->reference_id);
+
+        return view('admin.forms.invoice', compact('invoice', 'invoice_items', 'admissions'));
+    }
 }

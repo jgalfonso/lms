@@ -5,6 +5,7 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Admin\AdmissionDetails;
 use App\Models\Admin\Invoices;
 
 class Payments extends Model
@@ -69,8 +70,11 @@ class Payments extends Model
                     'unpaid'    => (float) str_replace(',', '', $request->amountDue) - $request->amountPaid,
                     'lupd_by'   => $request->userID,
                     'dt_lupd'   => date('Y-m-d H:i:s'),
-                    'status'    => ((float) str_replace(',', '', $request->amountDue) - $request->amountPaid == 0) ? 'Paid' : 'Pending'
+                    'status'    => ((float) str_replace(',', '', $request->amountDue) - $request->amountPaid == 0) ? 'Paid' : 'Partial'
                 ]);
+
+                AdmissionDetails::whereIn('admission_id', [DB::raw('SELECT reference_id FROM invoices WHERE invoice_id ='.$request->referenceID.' AND unpaid=0')])
+                    ->update(['status' => 'Active']);
             }
 
             DB::commit();

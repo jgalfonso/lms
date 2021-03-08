@@ -52,7 +52,8 @@ class EnrollmentController extends Controller
     }
 
     public function getEnrolled(Request $request)
-    {
+    {   
+        $request->request->add(['status' => ['New', 'Active', 'Assessed']]);
         $data = AdmissionDetails::getByClassID($request);
 
         echo json_encode($data);

@@ -13,6 +13,18 @@ class Assessments extends Model
     protected $primaryKey = 'assessment_id';
     public $timestamps = false;
 
+    public static function getByID($id)
+    {
+        $assessment = self::select('assessments.*', 'classes.code AS class_code', 'classes.name AS class_name', 'courses.name AS course', DB::raw("CONCAT(profiles.lastname, ', ', profiles.firstname, ' ', IFNULL(profiles.middlename, '')) AS assessor"))
+            ->join('courses', 'courses.course_id', 'assessments.course_id')
+            ->join('classes', 'classes.class_id', 'assessments.class_id')
+            ->join('profiles', 'profiles.profile_id', 'assessments.assessor_id')
+            ->where('assessments.assessment_id', $id)
+            ->first();
+
+        return $assessment;
+    }
+
     /**
      * Store new assessment
      */
@@ -40,7 +52,7 @@ class Assessments extends Model
 
             $trainees = json_decode($request->traineesData);
 
-            $saveTrainees = AssessmentDetails::add($trainees, $id);
+            $saveTrainees = AssessmentDetails::add($request->course_id, $request->class_id, $trainees, $id);
 
             if (!$saveTrainees) {
                 return $saveTrainees;
@@ -66,28 +78,31 @@ class Assessments extends Model
     public static function getAssessments($id = null)
     {
         $data = self::select(
-                        'assessments.*',
-                        'classes.code as class_code',
-                        'classes.name as class_name',
-                        'assessor.firstname as assessor_firstname',
-                        'assessor.lastname as assessor_lastname',
-                        'assessor.middlename as assessor_middlename',
-                        DB::raw('CONCAT(instructor.lastname, ", ", instructor.firstname, " ", instructor.middlename) AS instructor'),
-                        'courses.name as course_name',
-                        'schedule_types.name AS schedule',
-                        DB::raw('COUNT(assessment_details.system_id) trainees'),
-                    )
-                    ->leftJoin('classes', 'assessments.class_id', '=', 'classes.class_id')
-                    ->leftJoin('schedule_types', 'schedule_types.schedule_type_id', 'classes.schedule_type_id')
-                    ->leftJoin('courses', 'assessments.course_id', '=', 'courses.course_id')
-                    ->leftJoin('assessment_details', 'assessments.assessment_id', '=', 'assessment_details.assessment_id')
-                    ->leftJoin('profiles AS instructor', 'classes.instructor_id', '=', 'instructor.profile_id')
-                    ->leftJoin('profiles AS assessor', 'assessments.assessor_id', '=', 'assessor.profile_id')
-                    ->when($id, function ($query) use ($id) {
-                        return $query->where('assessments.assessment_id', $id);
-                    })
-                    ->where('assessments.status', 'Active');
+                'assessments.*',
+                'classes.code as class_code',
+                'classes.name as class_name',
+                'classes.start',
+                'classes.end',
+                'assessor.firstname as assessor_firstname',
+                'assessor.lastname as assessor_lastname',
+                'assessor.middlename as assessor_middlename',
+                DB::raw('CONCAT(instructor.lastname, ", ", instructor.firstname, " ", instructor.middlename) AS instructor'),
+                'courses.name as course_name',
+                'schedule_types.name AS schedule',
+                DB::raw('COUNT(assessment_details.system_id) trainees'),
+            )
+            ->join('classes', 'assessments.class_id', '=', 'classes.class_id')
+            ->leftJoin('schedule_types', 'schedule_types.schedule_type_id', 'classes.schedule_type_id')
+            ->join('courses', 'assessments.course_id', '=', 'courses.course_id')
+            ->join('assessment_details', 'assessments.assessment_id', '=', 'assessment_details.assessment_id')
+            ->join('profiles AS instructor', 'classes.instructor_id', '=', 'instructor.profile_id')
+            ->join('profiles AS assessor', 'assessments.assessor_id', '=', 'assessor.profile_id')
+            ->when($id, function ($query) use ($id) {
+                return $query->where('assessments.assessment_id', $id);
+            })
+            ->where('assessments.status', 'Active')
+            ->groupBy('assessments.assessment_id');
 
-        return !empty($data) ? $data : null;
+        return $data;
     }
 }

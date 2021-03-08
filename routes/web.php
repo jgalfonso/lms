@@ -153,6 +153,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('billing/invoices', 'BillingController@index')->name('invoices');
             Route::get('billing/invoices/view/{id}', 'BillingController@view')->name('invoices-view');
 
+            Route::get('billing/invoices/forms/{id}', 'BillingController@forms')->name('invoices-forms');
+
             Route::post('billing/invoices/store', 'BillingController@store')->name('store-invoices');
 
 
@@ -178,7 +180,10 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
         Route::group(['middleware' => 'auth'], function () {
             Route::get('certifications/moderations', 'CertificationController@moderations')->name('certifications-moderations');
             Route::get('certifications/moderations/{id}', 'CertificationController@moderate')->name('certifications-moderate');
+            Route::get('certifications/view/{id}', 'CertificationController@view')->name('certifications-view');
+            Route::get('certifications/published', 'CertificationController@published')->name('certifications-published');
             Route::get('certifications/get-entries', 'CertificationController@getEntries')->name('get-entries');
+            Route::get('certifications/get-bystatus', 'CertificationController@getByStatus')->name('get-bystatus');
 
             Route::post('certifications/store', 'CertificationController@store')->name('store-moderations');
         });

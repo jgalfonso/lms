@@ -283,6 +283,7 @@
             </div>
 
             <input id="invoiceID" name="invoiceID"  type="hidden" value="{{ $invoice->invoice_id }}">  
+            <input name="admissionID" type="hidden" value="{{ $invoice->reference_id }}">  
             <input name="customerID" type="hidden" value="{{ $invoice->customer_id }}">  
         </form>
     </div>

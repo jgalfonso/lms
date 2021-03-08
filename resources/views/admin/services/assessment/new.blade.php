@@ -95,7 +95,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
-                                        <input id="assess_date" name="assessment_date" data-date-autoclose="true" class="form-control date" data-date-format="dd-mm-yyyy" required data-parsley-required data-parsley-trigger-after-failure="change" data-parsley-errors-container="#error-invoice-date">
+                                        <input id="assess_date" name="assessment_date" data-date-autoclose="true" class="form-control date" data-date-format="dd/mm/yyyy" required data-parsley-required data-parsley-trigger-after-failure="change" data-parsley-errors-container="#error-invoice-date" value="{{ $today }}">
                                     </div>
                                     <p id="error-invoice-date"></p>
                                 </div>
@@ -114,6 +114,7 @@
                         <table id="trainees" class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th></th>
                                     <th style="width: 15%;">Control No.</th>
                                     <th>Name of Trainee</th>

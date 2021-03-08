@@ -89,6 +89,7 @@ function view(classID) {
                     $('.modal table tr:last').after('<tr>'+
                             '<td>'+ value.lastname +', '+ value.firstname +' '+ (value.middlename ? value.middlename : '') +'</td>'+ 
                             '<td>'+ value.control_no +'</td>'+ 
+                            '<td>'+ value.status +'</td>'+ 
                         '</tr>');
                 });
 

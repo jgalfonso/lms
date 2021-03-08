@@ -17,11 +17,15 @@ class Admissions extends Model
     {
         $admissions = self::select('admissions.*', 'courses.name AS course', 'classes.code AS class_code', 'classes.name AS class_name')
             ->join('courses', 'courses.course_id', 'admissions.course_id')
-            ->join('admission_details', 'admission_details.admission_id', 'admissions.admission_id')
+            ->join('admission_details', function($join) 
+                {
+                    $join->on('admission_details.admission_id', 'admissions.admission_id');
+                    $join->whereIn('admission_details.status', ['New', 'Active', 'Assessed']);
+                })
             ->join('classes', 'classes.class_id', 'admission_details.class_id')
             ->where([
                 ['admissions.admission_id', $admissionID],
-                ['admissions.status',  'New']
+                ['admissions.status',  'Active']
             ])
             ->get();
 
@@ -40,7 +44,7 @@ class Admissions extends Model
                 'date_enrolled'     => date('Y-m-d H:i:s'),
                 'created_by'        => $request->userID,
                 'dt_created'        => date('Y-m-d H:i:s'),
-                'status'            => 'New'
+                'status'            => 'Active'
             ];
 
             $id = self::insertGetId($data);

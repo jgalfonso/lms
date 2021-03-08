@@ -17,7 +17,7 @@ class Invoices extends Model
     {
         $invoices = self::select('invoices.*', 'profiles.control_no', 'profiles.lastname', 'profiles.firstname', 'profiles.middlename')
             ->join('profiles', 'profiles.profile_id', 'invoices.customer_id')
-            ->whereIn('invoices.status', ['New', 'Pending', 'Paid'])
+            ->whereIn('invoices.status', ['New', 'Partial', 'Paid'])
             ->get();
 
         return $invoices;
@@ -28,7 +28,7 @@ class Invoices extends Model
         $invoice = self::select('invoices.*', 'profiles.control_no', 'profiles.lastname', 'profiles.firstname', 'profiles.middlename')
             ->join('profiles', 'profiles.profile_id', 'invoices.customer_id')
             ->where('invoices.invoice_id', $invoiceID)
-            ->whereIn('invoices.status', ['New', 'Pending', 'Paid'])
+            ->whereIn('invoices.status', ['New', 'Partial', 'Paid'])
             ->first();
 
         return $invoice;

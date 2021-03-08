@@ -47,7 +47,7 @@
                             <th></th>
                             <th style="width: 1%;"></th>
                             <th>Name</th>
-                            <th style="width: 10%;">Faculty No.</th>
+                            <th style="width: 10%;">Student No.</th>
                             <th style="width: 10%;">Dob</th>
                             <th style="width: 10%;">Age</th>
                             <th style="width: 10%;">Gender</th>

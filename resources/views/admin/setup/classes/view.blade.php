@@ -33,6 +33,12 @@
                 <div class="card">
                     <div class="body">
                         <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Code</label>
+                                    <label class="block"><b>{{ $class->code }}</b></label>
+                                </div>
+                            </div>
 
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -76,10 +82,20 @@
                                </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" style="display: none;">
                                 <div class="form-group">
                                     <label>Type Schedules</label>
                                     <label class="block"><b>{{ $class->code }}</b></label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6" style="display: none;">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Schedule</label>
+                                    <label class="block">@if($class->start) {{ date('d/m/Y', strtotime($class->start)) }} - @endif @if($class->end) {{ date('d/m/Y', strtotime($class->end)) }} @endif</label>
                                 </div>
                             </div>
 
@@ -96,7 +112,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" style="display: none;">
                     <div class="header">
                         <h2>Schedules</h2>
                         <small>Lorem ipsum, or lipsum as it is sometimes known, <code>is dummy text</code>  used in laying out print, graphic or web designs.</small>

@@ -28,11 +28,7 @@ class Classes extends Model
 
     public static function getByID($classID)
     {
-        $class = self::select('classes.*',
-                    'courses.name AS course',
-                    'courses.course_id AS course_id',
-                    DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'),
-                    'schedule_types.name AS schedule')
+        $class = self::select('classes.*', 'courses.name AS course', DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS instructor'))
             ->join('courses', 'courses.course_id', 'classes.course_id')
             ->join('profiles', 'profiles.profile_id', 'classes.instructor_id')
             ->leftJoin('schedule_types', 'schedule_types.schedule_type_id', 'classes.schedule_type_id')
@@ -144,6 +140,8 @@ class Classes extends Model
                 'units'             => $request->units,
                 'google_meet_link'  => $request->googleMeetLink,
                 'schedule_type_id'  => $request->scheduleTypeID,
+                'start'             => ($request->dueDate) ? date('Y-m-d H:i:s', strtotime($request->start)) : NULL,
+                'end'               => ($request->end) ? date('Y-m-d H:i:s', strtotime($request->end)) : NULL,
                 'created_by'        => $request->userID,
                 'dt_created'        => date('Y-m-d H:i:s'),
                 'status'            => 'Active'
@@ -179,6 +177,8 @@ class Classes extends Model
                 'units'             => $request->units,
                 'google_meet_link'  => $request->googleMeetLink,
                 'schedule_type_id'  => $request->scheduleTypeID,
+                'start'             => ($request->start) ? date('Y-m-d', strtotime($request->start)) : NULL,
+                'end'               => ($request->end) ? date('Y-m-d', strtotime($request->end)) : NULL,
                 'lupd_by'           => $request->userID,
                 'dt_lupd'           => date('Y-m-d H:i:s')
             ];
@@ -194,6 +194,19 @@ class Classes extends Model
             DB::rollback();
             return $e->getMessage();
         }
+    }
+
+
+    /**
+     * Getting all classes by course
+     */
+    public static function getByCourse($request = null)
+    {
+        $classes = self::where('course_id', $request->course_id)
+                    ->where('status', 'Active')
+                    ->get();
+
+        return !empty($classes) ? $classes : null;
     }
 
 }

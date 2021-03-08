@@ -7,23 +7,20 @@ $(function () {
         bDestroy: true,
         bLengthChange: false,
         columns:[
-            { data: 'invoice_id', 'className': 'hidden' },
-            { data: 'invoice_no' },
-            { data: 'customer' },
-            { data: 'invoice_date' },
-            { data: 'due_date' },
-            { data: 'amount', 'className': 'text-right' },
-            { data: 'unpaid', 'className': 'text-right' }, 
-            { data: 'status' },
+            { data: 'authentication_code' },
+            { data: 'certificate_no' },
+            { data: 'trainee' },
+            { data: 'released_by' },
+            { data: 'dt_released' },
             { data: 'action', 'className': 'text-center' }
         ],
         "aoColumnDefs":[
             {
                 "bSortable": false, 
-                "aTargets": [5, 6, 8]
+                "aTargets": [5],
             },
             { 
-                "targets": [1, 2], 
+                "targets": [0, 1, 2], 
                 "searchable": true 
             }
         ],
@@ -33,11 +30,12 @@ $(function () {
                 previous: '«' 
             }
         },
-        aaSorting: [[1, 'asc']]
+        aaSorting: [[0, 'desc']]
     });
 
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/enrollment',
+        host: window.location.protocol + '//' + window.location.host + '/',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/certifications/',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -59,10 +57,10 @@ $(function () {
         },
 
         search : function() {
-             table
-                .search($('#key').val())
+            table
+                .search($('#keyword').val())
                 .draw();
-        },
+        }
     }
 
     App.init();

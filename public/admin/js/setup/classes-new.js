@@ -10,13 +10,16 @@ $(function () {
         },
 
         setElements: function () {
+            this.$date = $('.date');
             this.$time12 = $('.schedules');
+
             this.$add = $('#add');
             this.$remove = $('.remove');
             this.$save = $('.save');
         },
 
         bindEvents: function () {
+            this.$date.datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
             this.$time12.find('.time12').inputmask('hh:mm t', { placeholder: '__:__ _m', alias: 'time12', hourFormat: '12' });
 
             this.$add.on('click', this.add);

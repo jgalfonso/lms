@@ -131,7 +131,7 @@
 
         <!-- Modal -->
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document" style="max-width: 900px;">
+            <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Class</h5>
@@ -157,7 +157,7 @@
                                             <th>Class</th>
                                             <th>Course</th>
                                             <th>Instructor</th>
-                                            <th>Schedule</th>
+                                            <th style="width: 20%;">Schedule</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -172,7 +172,7 @@
                                                 <td><b>{{ $row->code }}</b><br/><a href="/admin/setup/classes/view/{{ $row->class_id }}">{{ $row->name }}</a></td>
                                                 <td>{{ $row->course }}</td>
                                                 <td>{{ $row->instructor }}</td>
-                                                <td></td>
+                                                <td>@if($row->start) {{ date('d/m/Y', strtotime($row->start)) }} @endif - @if($row->end) {{ date('d/m/Y', strtotime($row->end)) }} @endif</td>
                                             </tr>
                                         @endforeach                                       
                                     </tbody>

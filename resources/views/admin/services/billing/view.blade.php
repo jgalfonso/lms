@@ -20,11 +20,15 @@
 
         <form id="form" method="post" novalidate style="width: 100%;">
             <div class="col-lg-12">
-                <a href="" class="btn btn-success" style="width: 100px;">Edit</a>
+                <a href="" class="btn btn-success" style="width: 100px; display: none;">Edit</a>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Actions</button>
 
                 <div class="dropdown-menu" x-placement="bottom-start">
-                    <a href="{{ route('payments-new', $invoice->invoice_id) }}" id="mark-as-active" class="btn btn-new btn-default dropdown-item">Make Payment</a>
+                    @if($invoice->status=='Paid')
+                        <a class="btn btn-new btn-default dropdown-item" style="color: #cbcdd0; cursor: not-allowed;">Make Payment</a>
+                    @else    
+                        <a href="{{ route('payments-new', $invoice->invoice_id) }}" id="mark-as-active" class="btn btn-new btn-default dropdown-item">Make Payment</a>
+                    @endif
                     <a href="" id="print" class="btn btn-new btn-default dropdown-item" data-target="#compli" data-toggle="modal">Print</a>
                 </div>
             </div> 
@@ -79,6 +83,13 @@
                                     </div>
 
                                     <div class="col-lg-6"></div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <label class="block">{{ $invoice->status }}</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -313,9 +324,12 @@
                 </div>
             </div>
         </form>
+
+        <input id="invoiceID" name="invoiceID" type="hidden" value="{{ $invoice->invoice_id }}">  
     </div>
 @endsection
 
 @section('script')
-    
+    <script src="{{ URL::asset('admin/js/jquery.printPage.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/services/billing/view.js') }}"></script>
 @endsection

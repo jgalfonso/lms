@@ -73,7 +73,7 @@
                                 <td><b>{{ $row->code }}</b><br/><a href="{{ route('classes-view', $row->class_id) }}">{{ $row->name }}</a></td>
                                 <td>{{ $row->course }}</td>
                                 <td class="text-right"><a onclick="view({{ $row->class_id }});" style="cursor: pointer; color: #007bff;">{{ $row->enrollees }}</a></td>
-                                <td></td>
+                                <td>@if($row->start) {{ date('d/m/Y', strtotime($row->start)) }} @endif - @if($row->end) {{ date('d/m/Y', strtotime($row->end)) }} @endif</td>
                                 <td>{{ $row->instructor }}</td>
                                 <td>{{ $row->status }}</td>
                                 <td class="align-center">
@@ -94,7 +94,7 @@
 
         <!-- Modal -->
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Enrolled</h5>
@@ -110,7 +110,8 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th style="width: 30%;">Student No.</th>
+                                            <th style="width: 15%;">Student No.</th>
+                                            <th style="width: 15%;">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>

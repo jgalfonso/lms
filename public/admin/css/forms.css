@@ -1,0 +1,43 @@
+@media all {
+	.page-break { display: none; }
+}
+
+@media print {
+	body {-webkit-print-color-adjust: exact;}
+
+	.page-break { display: block; page-break-before: always; }
+}
+
+* { font: 14px/1.4 Helvetica, Sans-Serif; margin: 0; padding: 0; }
+.page-wrap { width: 800px; margin: 0 auto; }
+
+table { border-collapse: collapse; }
+table td, table th { border: 1px solid black; padding: 5px; }
+
+.header { height: 15px; width: 100%; margin: 5px 0; background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-decoration: uppercase; letter-spacing: 20px; padding: 8px 0px; }
+
+.identity { width: 50%; float: left; }
+
+.logo { text-align: right; float: right; position: relative; margin-top: 0px; border: 0; max-width: 50%; max-height: 100px; overflow: hidden; }
+
+.customer { overflow: hidden; float: left; width: 50%;  }
+
+.customer-title { font-size: 20px; font-weight: bold; }
+
+.meta { margin-top: 1px; width: 300px; float: right; }
+.meta td { text-align: right;  }
+.meta td.meta-head { text-align: left; background: #eee; }
+
+.items { width: 100%; margin: 30px 0 0 0; border: 1px solid black; }
+.items th { background: #eee; }
+.items tr.item-row td { border: 0; vertical-align: top; }
+.items td.total-line { border-right: 0; text-align: right; }
+.items td.total-value { border-left: 0; padding: 10px; text-align: right; }
+.items td.balance, td.total { background: #eee; }
+.items td.blank { border: 0; }
+
+.align-right { text-align: right; }
+.bold { font-weight: bold; }
+
+.terms { text-align: center; margin: 20px 0 0 0; }
+	.terms h5 { text-transform: uppercase; font: 13px Helvetica, Sans-Serif; letter-spacing: 10px; border-bottom: 1px solid black; padding: 0 0 8px 0; margin: 0 0 8px 0; }

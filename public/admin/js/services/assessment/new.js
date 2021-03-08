@@ -1,6 +1,6 @@
 $(function () {
     $('.date').datepicker({
-        format: 'dd-mm-yyyy',
+        format: 'dd/mm/yyyy',
         todayHighlight: true
     });
 
@@ -12,6 +12,7 @@ $(function () {
         bDestroy: true,
         bLengthChange: false,
         columns:[
+            { data: 'admission_id', 'className' : 'hidden'},
             { data: 'profile_id', 'className' : 'hidden'},
             { data: 'student_no'},
             { data: 'name'},
@@ -22,7 +23,7 @@ $(function () {
         "aoColumnDefs":[
             {
                 "bSortable": false,
-                "aTargets": [3,4,5]
+                "aTargets": [4,5,6]
             }
         ],
         language: {
@@ -88,7 +89,7 @@ $(function () {
                         $('#class_name').html(': <a href="' + App.url + "/setup/classes/view/" + class_info.class_id + '">' + class_info.name + '</a>');
                         $('#course_name').html(': ' + class_info.course);
                         $('#instructor').html(': ' + class_info.instructor);
-                        $('#schedule').html(': ' + (class_info.schedule == null ? '' : class_info.schedule));
+                        $('#schedule').html(': ' + (class_info.start == null ? '' : formatDate(class_info.start)) + ' - ' + (class_info.end == null ? '' : formatDate(class_info.end)));
                         $('#no_trainees').html(': ' + data.no_trainees);
                         $('#class_status').html(': ' + class_info.status);
                         $('.inputDiv').append(
@@ -118,6 +119,7 @@ $(function () {
                                         '<br>' + value.email;
 
                             table.row.add({
+                                    "admission_id"  : value.admission_id,
                                     "profile_id"    : value.profile_id,
                                     "student_no"    : value.control_no,
                                     "name"          : name,
@@ -153,6 +155,7 @@ $(function () {
                 }
 
                 dt.push({
+                    "admission_id"  : $(cols[0]).text(),
                     "profile_id"    : $(cols[1]).text(),
                     "passed"        : passed,
                     "failed"        : failed,
@@ -278,4 +281,16 @@ function hide(e){
     var cols = $(e).closest('tr').children("td");
 
     $(e).closest('tr').hide();
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [month, day, year].join('/');
 }

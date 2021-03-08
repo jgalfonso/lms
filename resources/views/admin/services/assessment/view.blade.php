@@ -48,7 +48,7 @@
                             </tr>
                             <tr>
                                 <td>Schedule</td>
-                                <td id="schedule">: {{ $assessment->schedule }}</td>
+                                <td id="schedule">: @if($assessment->start) {{ date('d/m/Y', strtotime($assessment->start)) }} - @endif @if($assessment->end) {{ date('d/m/Y', strtotime($assessment->end)) }} @endif</td>
                             </tr>
                             <tr>
                                 <td>No. of Trainees</td>
@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <td>Status</td>
-                                <td id="class_status">: {{ $assessment->schedule }}</td>
+                                <td id="class_status">: {{ $assessment->status }}</td>
                             </tr>
                         </table>
                     </div>
@@ -81,7 +81,7 @@
 
                            <tr>
                                <td>Assesssment Date</td>
-                               <td>: {{ date('d M Y', strtotime($assessment->date_assessed)) }}</td>
+                               <td>: {{ date('d/m/Y', strtotime($assessment->date_assessed)) }}</td>
                            </tr>
                            <tr>
                                <td>Passed</td>

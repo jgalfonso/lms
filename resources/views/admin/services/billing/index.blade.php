@@ -72,9 +72,15 @@
                                 <td>{{ date('d/m/Y', strtotime($row->invoice_date)) }}</td>
                                 <td>@if($row->due_date) {{ date('d/m/Y', strtotime($row->due_date)) }} @endif</td>
                                 <td>{{ number_format($row->net, 2) }}</td>
-                                <td>@if($row->status == 'Pending') {{ number_format($row->unpaid, 2) }} @endif</td>
+                                <td>@if($row->status == 'Partial') {{ number_format($row->unpaid, 2) }} @endif</td>
                                 <td>{{ $row->status }}</td>
-                                <td class="align-center"><a href="{{ route('payments-new', $row->invoice_id) }}" class="btn btn-sm btn-default" title="Make Payment"><i class="fa fa-credit-card"></i></a></td>
+                                <td class="align-center">
+                                    @if($row->status == 'Paid') 
+                                        <a class="btn btn-sm btn-default" style="color: #cbcdd0; cursor: not-allowed;"><i class="fa fa-credit-card"></i></a>
+                                    @else
+                                        <a href="{{ route('payments-new', $row->invoice_id) }}" class="btn btn-sm btn-default" title="Make Payment"><i class="fa fa-credit-card"></i></a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

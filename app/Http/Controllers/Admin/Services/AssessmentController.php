@@ -20,9 +20,10 @@ class AssessmentController extends Controller
      */
     public function new ()
     {
+        $today = date('d/m/Y');
         $classes = Classes::getClasses();
 
-        return view('admin.services.assessment.new', compact('classes'));
+        return view('admin.services.assessment.new', compact('today', 'classes'));
     }
 
     /**
@@ -42,6 +43,7 @@ class AssessmentController extends Controller
      */
     public function getTrainees(Request $request)
     {
+        $request->request->add(['status' => ['Active']]);
         $trainees   = AdmissionDetails::getByClassID($request);
         $class_data = Classes::getByID($request->classID);
 

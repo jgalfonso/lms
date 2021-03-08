@@ -91,10 +91,10 @@
                                </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" style="display: none;">
                                 <div class="form-group">
                                     <label>Type Schedules</label><span class="required"> * </span>
-                                    <select name="scheduleTypeID" class="form-control" required>
+                                    <select name="scheduleTypeID" class="form-control">
                                         <option value="" selected="">Choose...</option>
 
                                         @foreach ($schedule_types as $row)
@@ -103,11 +103,35 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label>Schedules - (Start)</label> 
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                        <input id="start" name="start" type="text" class="form-control date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label>(End)</label> 
+                                    <div class="input-group mb-3"   >
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                        <input id="end" name="end" type="text" class="form-control date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" style="display: none;">
                     <div class="header">
                         <h2>Schedules</h2>
                         <small>Lorem ipsum, or lipsum as it is sometimes known, <code>is dummy text</code>  used in laying out print, graphic or web designs.</small>
@@ -118,7 +142,7 @@
                              <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Day</label><span class="required"> * </span>
-                                    <select name="day[]" class="form-control" required>
+                                    <select name="day[]" class="form-control">
                                         <option value="" selected="">Choose...</option>
                                         <option value="1">Sunday</option>
                                         <option value="2">Monday</option>
@@ -138,7 +162,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon-clock"></i></span>
                                         </div>
-                                        <input name="start[]" type="text" class="form-control time12" placeholder="Ex: 11:59 PM" required>
+                                        <input name="start1[]" type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +175,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon-clock"></i></span>
                                         </div>
-                                        <input name="end[]" type="text" class="form-control time12" placeholder="Ex: 11:59 PM" required>
+                                        <input name="end1[]" type="text" class="form-control time12" placeholder="Ex: 11:59 PM">
                                     </div>
                                 </div>
                             </div>
