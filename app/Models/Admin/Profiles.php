@@ -70,8 +70,47 @@ class Profiles extends Model
         return $profiles;
     }
 
+    public static function getByCourseID()
+    {
+        $profiles = self::select(
+                'profiles.profile_id',
+                'profiles.user_id',
+                'courses.name AS course',
+                DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname) AS trainee'),
+            )
+            ->join('courses', 'courses.course_id', 'profiles.course_id')
+            ->where([
+                ['profiles.status', 'Active'],
+                ['courses.status', 'Active']
+            ])->get();
+
+        return $profiles;
+    }
+
+    public static function filterByCourse($request)
+    {
+        $course_id = ($request->course_id != '' ? $request->course_id : null);
+
+        $profiles = self::select(
+                'profiles.profile_id',
+                'profiles.user_id',
+                'courses.name AS course',
+                DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname) AS trainee'),
+            )
+            ->join('courses', 'courses.course_id', 'profiles.course_id')
+            ->when($course_id, function ($query) use ($course_id) {
+                return $query->where('profiles.course_id', $course_id);
+            })
+            ->where([
+                ['profiles.status', 'Active'],
+                ['courses.status', 'Active']
+            ])->get();
+
+        return !empty($profiles) ? $profiles : null;
+    }
+
     public static function add($request)
-    {      
+    {
         $data = [
             'user_id'           => $request->userID,
             'control_no'        => sprintf('%010s', $request->userID),
