@@ -166,6 +166,8 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('billing/payments', 'PaymentController@index')->name('payments');
             Route::get('billing/payments/view/{id}', 'PaymentController@view')->name('payments-view');
 
+            Route::get('billing/payments/forms/{id}', 'PaymentController@forms')->name('payments-forms');
+
             Route::post('billing/payments/store', 'PaymentController@store')->name('store-payments');
         });
 

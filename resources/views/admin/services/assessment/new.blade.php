@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
 
-    <link rel="stylesheet" href="{{ URL::asset('admin/css/custom.css') }}">
+    <style type="text/css">
+        .modal-body table th, .modal-body table td {
+            background: #f6f7f9 !important;
+        }
+    </style>
 @endsection
 
 @section('breadcrumb')
@@ -21,7 +25,8 @@
 
 @section('content')
     <div id="alert"></div>
-    <form id="new" method="post" novalidate>
+    
+    <form id="form" method="post" novalidate>
     	<div class="row clearfix">
             <div class="col-lg-12">
 
@@ -130,8 +135,8 @@
 
                     <div class="row"  style="float: left; margin-top: -35px">
                        <div class="col-md-12">
-                           <button type="button" class="btn btn-success" id="assess" style="width: 100px">Assess</button>
-                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#assessModal" style="width: 100px">Cancel</button>
+                           <button type="button" class="btn btn-success assess" style="width: 100px">Assess</button>
+                           <button type="button" onclick="history.back();" class="btn btn-danger" style="width: 100px;">Cancel</button>
                        </div>
                    </div>
                 </div>
@@ -139,11 +144,11 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="assessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="    max-width: 600px;">
+        <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width: 1200px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -151,76 +156,81 @@
 
                     <div class="modal-body" style="padding: 15px;">
                         <div class="row">
-                            <div  class="col-lg-12" style="margin-bottom: 15px;">
-                                <small>Lorem ipsum, or lipsum as it is sometimes known, <code>is dummy text</code>  used in laying out print, graphic or web designs.</small>
-                            </div>
+                            <div class="col-md-12">
+                                 <div class="table-responsive">
+                                    <table class="table table-hover table-striped js-basic-example dataTable table-custom spacing5 mb-0" style="margin-top: 0 !important;">
+                                        <thead>
+                                            <tr>
+                                                <th><b>Format:</b></th>
+                                                <th style="width: 30%;">Certificate No.</th>
+                                                <th style="width: 30%;">Registration No.</th>
+                                                <th style="width: 10%;"></th>
+                                            </tr>
+                                        </thead>
 
-                            <div class="col-lg-3">
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
 
-                            </div>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <input id="certificate-prefix" type="text" class="form-control" placeholder="Prefix" style="background-color: #fff;">
+                                                        </div>
 
-                            <div class="col-lg-3 text-center">
-                                 <label>Prefix</label>
-                            </div>
+                                                        <div class="col-lg-4">
+                                                            <input id="certificate-series" type="text" class="form-control" placeholder="Series" style="background-color: #fff;">
+                                                        </div>
 
-                            <div class="col-lg-3 text-center">
-                                 <label>Series</label>
-                            </div>
+                                                        <div class="col-lg-4">
+                                                            <input id="certificate-suffix" type="text" class="form-control" placeholder="Suffix" style="background-color: #fff;">
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                            <div class="col-lg-3 text-center">
-                                 <label>Suffix</label>
-                            </div>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <input id="registration-prefix" type="text" class="form-control" placeholder="Prefix" style="background-color: #fff;">
+                                                        </div>
 
-                            <div class="col-lg-3  text-right" style="padding-right: 0;">
-                                <div class="form-group">
-                                    <label style="margin-top: 6px;"><b>Certificate No:</b></label>
-                                </div>
-                            </div>
+                                                        <div class="col-lg-4">
+                                                            <input id="registration-series" type="text" class="form-control" placeholder="Series" style="background-color: #fff;">
+                                                        </div>
 
-                            <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <input name="cert-prefix" type="text" class="form-control" >
+                                                        <div class="col-lg-4">
+                                                            <input id="registration-suffix" type="text" class="form-control" placeholder="Suffix" style="background-color: #fff;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                  </div>
-                             </div>
-
-                              <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <input name="cert-series" type="text" class="form-control" >
-                                 </div>
-                             </div>
-
-                              <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <input name="cert-suffix" type="text" class="form-control" >
-                                 </div>
-                             </div>
-
-
-                             <div class="col-lg-3 text-right" style="padding-right: 0;">
-                                <div class="form-group">
-                                    <label style="margin-top: 6px;"><b>Registration No:</b></label>
-                                </div>
                             </div>
 
-                            <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <input name="reg-prefix" type="text" class="form-control" >
-                                 </div>
-                             </div>
+                            <div class="col-md-12">
+                                 <div class="table-responsive">
+                                    <table id="dt" class="table table-hover table-striped js-basic-example dataTable table-custom spacing5 mb-0" style="margin-top: 0 !important;">
+                                        <thead>
+                                            <tr>
+                                                <th class="hidden"></th>
+                                                <th>Name of Trainee</th>
+                                                <th style="width: 30%;">Certificate No.</th>
+                                                <th style="width: 30%;">Registration No.</th>
+                                                <th style="width: 10%;">Result</th>
+                                            </tr>
+                                        </thead>
 
-                              <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <input name="reg-series" type="text" class="form-control" >
-                                 </div>
-                             </div>
+                                        <tbody>
 
-                              <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <input name="reg-suffix" type="text" class="form-control" >
+                                        </tbody>
+                                    </table>
                                  </div>
-                             </div>
+                            </div>
                         </div>
-
                     </div>
 
                     <div class="modal-footer">

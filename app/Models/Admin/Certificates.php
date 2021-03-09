@@ -65,6 +65,30 @@ class Certificates extends Model
         return $certificate;
     }
 
+    public static function add($request)
+    {      
+        foreach(json_decode($request->passedIDS) as $passed){
+                
+            $data = [
+                'certificate_no' => $passed->certificateNO,
+                'registration_no' => $passed->registrationNO,
+                'assessment_id' => $request->assessmentID,
+                'course_id'     => $request->course_id,
+                'class_id'      => $request->class_id,
+                'profile_id'    => $passed->profileID,
+                'created_by'    => 1,
+                'dt_created'    => date('Y-m-d H:i:s'),
+                'issued_by'     => 1,
+                'dt_issued'     => date('Y-m-d H:i:s'),
+                'status'        => 'New'
+            ];
+
+            self::insert($data);
+        }
+
+        return true;
+    }
+
     public static function moderate($request)
     {
         DB::beginTransaction();

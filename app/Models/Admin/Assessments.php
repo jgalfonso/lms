@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Admin\AssessmentDetails;
+use App\Models\Admin\Certificates;
 
 class Assessments extends Model
 {
@@ -53,6 +54,10 @@ class Assessments extends Model
             $trainees = json_decode($request->traineesData);
 
             $saveTrainees = AssessmentDetails::add($request->course_id, $request->class_id, $trainees, $id);
+
+
+            $request->request->add(['assessmentID' => $id]);
+            Certificates::add($request);
 
             if (!$saveTrainees) {
                 return $saveTrainees;

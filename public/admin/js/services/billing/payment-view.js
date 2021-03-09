@@ -1,6 +1,6 @@
 $(function () {
     var App = {
-        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/billing/invoices/',
+        baseUrl : window.location.protocol + '//' + window.location.host + '/admin/services/billing/payments/',
         csrfToken : $('meta[name="csrf-token"]').attr('content'),
 
         init: function () {
@@ -16,7 +16,7 @@ $(function () {
       
         bindEvents: function () {
             this.$print.printPage({
-                url: App.baseUrl + "forms/" + $('#invoiceID').val(),
+                url: App.baseUrl + "forms/" + $('#paymentID').val(),
                 attr: "href",
                 message:"Your document is being created..."
             });

@@ -40,6 +40,7 @@ class AssessmentDetails extends Model
                     ->update(['status' => 'Assessed']);
 
 
+                /*
                 $data = [
                     'assessment_id' => $assessment_id,
                     'course_id'     => $course_id,
@@ -53,6 +54,7 @@ class AssessmentDetails extends Model
                 ];
 
                 Certificates::insert($data);
+                */
 
             }
 

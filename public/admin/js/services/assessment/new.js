@@ -47,26 +47,28 @@ $(function () {
 
         setElements: function () {
             this.$class = $('#class_id');
-            this.$assess = $('#save');
-            this.$validateAssess = $('#assess');
+            this.$certificatePrefix = $('#certificate-prefix');
+            this.$certificateSeries = $('#certificate-series');
+            this.$certificateSuffix = $('#certificate-suffix');
+            this.$registrationPrefix = $('#registration-prefix');
+            this.$registrationSeries = $('#registration-series');
+            this.$registrationSuffix = $('#registration-suffix');
 
-            this.$checkboxes = $('input:checkbox');
+            this.$assess = $('.assess');
+            this.$save = $('#save');
         },
 
         bindEvents: function () {
             this.$class.on('change', this.getTrainees);
+            this.$certificatePrefix.on('keyup', this.populateCertificate);
+            this.$certificateSeries.on('keyup', this.populateCertificate);
+            this.$certificateSuffix.on('keyup', this.populateCertificate);
+            this.$registrationPrefix.on('keyup', this.populateRegistration);
+            this.$registrationSeries.on('keyup', this.populateRegistration);
+            this.$registrationSuffix.on('keyup', this.populateRegistration);
+
             this.$assess.on('click', this.assess);
-            this.$validateAssess.on('click', this.validate);
-
-            this.$checkboxes.on('click', function() {
-                var $box = $(this);
-
-                if ($box.is(":checked")) {
-                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
-                    $(group).prop("checked", false);
-                    $box.prop("checked", true);
-                }
-            });
+            this.$save.on('click', this.save);
         },
 
         getTrainees : function() {
@@ -79,8 +81,7 @@ $(function () {
                 dataType: "json",
                 data: {
                     classID    : class_id,
-                    status     : 'Active',
-                    _token     : App.csrfToken
+                    _token      : App.csrfToken
                 },
                 success: function(data) {
                     if(data) {
@@ -98,21 +99,23 @@ $(function () {
                                 '<input type="hidden" name="no_trainees" value="' + data.no_trainees + '">'
                             );
 
+                        $('.modal-title').html('Assessment for Class No.: '+class_info.code+' ('+class_info.name+')');
+
                         table.clear().draw();
 
                         $.each(data.trainees, function(key, value) {
                             var passed = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check passed" value="passed">' +
+                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check passed" value="passed" onclick="check(this);">' +
                                                 '<span></span>' +
                                             '</label>';
 
                             var failed = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check failed" value="failed">' +
+                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check failed" value="failed" onclick="check(this);">' +
                                                 '<span></span>' +
                                             '</label>';
 
                             var incomplete = '<label class="fancy-checkbox text-center">' +
-                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check incomplete" value="incomplete">' +
+                                                '<input type="checkbox" name="assess' + value.control_no + '" class="mark check incomplete" value="incomplete" onclick="check(this);">' +
                                                 '<span></span>' +
                                             '</label>';
 
@@ -129,8 +132,9 @@ $(function () {
                                     "incomplete"    : incomplete,
                                 }).draw();
 
-                            App.init();
+                           
                         });
+
                     }
                 },
                 error : function(request, status, error) {
@@ -172,6 +176,71 @@ $(function () {
         },
 
         assess: function() {
+            if (App.validate()) return; 
+
+            $('#trainees tbody tr').each(function(index, row){
+                var cols = $(row).children('td');
+
+                if ($(cols[4]).find('input[type=checkbox]').is(":checked")) {
+                    
+                    $('#dt > tbody').append('<tr>'+
+                            '<td class="hidden">'+ $(cols[1]).text() +'</td>'+ 
+                            '<td>'+ $(cols[3]).html() +'</td>'+ 
+                            '<td>'+ 
+                                '<div class="row">'+
+                                    '<div class="col-lg-12">'+
+                                        '<input type="text" class="form-control" style="background-color: #fff;">'+
+                                    '</div>'+
+                                '</div>'+
+                            '</td>'+ 
+                            '<td>'+ 
+                                '<div class="row">'+
+                                    '<div class="col-lg-12">'+
+                                        '<input type="text" class="form-control" style="background-color: #fff;">'+
+                                    '</div>'+
+                                '</div>'+
+                            '</td>'+ 
+                            '<td>Passed</td>'+ 
+                        '</tr>');
+                }
+            });
+
+            $('#modal').modal('show');
+        },
+
+        populateCertificate: function() {
+            var prefix = App.$certificatePrefix.val();
+            var series = App.$certificateSeries.val();
+            var suffix = App.$certificateSuffix.val();
+
+            var seq = $.isNumeric(series) ? Number(series) : series;
+            
+            $('#dt tbody tr').each(function(index, row){
+                var cols = $(row).children('td');
+                
+                $(cols[2]).find("input[type=text]").val(prefix+ ($.isNumeric(series) ? leftPad(seq, series.length) : seq)  +suffix);
+
+                seq = $.isNumeric(series) ? Number(seq)+1 : series;
+            });
+        },
+
+        populateRegistration: function() {
+            var prefix = App.$registrationPrefix.val();
+            var series = App.$registrationSeries.val();
+            var suffix = App.$registrationSuffix.val();
+
+            var seq = $.isNumeric(series) ? Number(series) : series;
+            
+            $('#dt tbody tr').each(function(index, row){
+                var cols = $(row).children('td');
+                
+                $(cols[3]).find("input[type=text]").val(prefix+ ($.isNumeric(series) ? leftPad(seq, series.length) : seq)  +suffix);
+
+                seq = $.isNumeric(series) ? Number(seq)+1 : series;
+            });
+        },
+
+        save: function() {
 
             if (App.validate()) return;
 
@@ -208,13 +277,15 @@ $(function () {
                 showLoaderOnConfirm: true
             }, function () {
 
-                var form = document.getElementById('new');
+                var form = document.getElementById('form');
                 var formData = new FormData(form);
                 formData.append('traineesData', JSON.stringify(App.getTraineeData()));
                 formData.append('class_id', $('#class_id').find(":selected").val());
                 formData.append('passed', passed);
                 formData.append('failed', failed);
                 formData.append('incomplete', incomplete);
+
+                formData.append('passedIDS', JSON.stringify(App.getPassedIDS()));
 
                 $.ajax({
                     url: App.baseUrl + "/save-assessment",
@@ -246,33 +317,35 @@ $(function () {
             });
         },
 
+        getPassedIDS : function() {
+            var dt = [];
+
+            $('#dt tbody tr').each(function(index, row){
+                var cols = $(row).children('td');
+                
+                dt.push({
+                    "profileID" : $(cols[0]).text(),
+                    "certificateNO" : $(cols[2]).find("input[type=text]").val(),
+                    "registrationNO" : $(cols[3]).find("input[type=text]").val()
+                });
+            });
+
+            return dt;
+        }, 
+
         validate: function() {
-
-            if (!$('#new').parsley().validate()) {
-                bootstrap_alert.warning('#alert', ' There are some error/s, please correct them bellow.');
-
-                $('html, body').animate({
-                    scrollTop: ($('#alert').offset().top - 300)
-                },500);
-
-                return true;
-            } else if (App.getTraineeData() == 'empty') {
-
-                bootstrap_alert.warning('#alert', ' Please assess all trainees.');
+            if (!$('#form').parsley().validate()) { 
+                bootstrap_alert.warning('#alert', 'There are some error/s, please correct them bellow.'); 
 
                 $('html, body').animate({
                     scrollTop: ($('#alert').offset().top - 300)
                 },500);
 
-                return true;
-
+                return true; 
             } else {
-                $('#assessModal').modal('show');
-
                 return false;
             }
         }
-
     }
 
     App.init();
@@ -295,3 +368,17 @@ function formatDate(date) {
 
     return [month, day, year].join('/');
 }
+
+function leftPad(value, length) { 
+    return ('0'.repeat(length) + value).slice(-length); 
+}
+
+function check(e) {
+    if($(e).is(":checked")) {
+        var group = "input:checkbox[name='" + $(e).attr("name") + "']";
+
+        $(group).prop("checked", false);
+        $(e).prop("checked", true);
+    }
+}
+

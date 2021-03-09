@@ -46,4 +46,13 @@ class PaymentController extends Controller
 
         return view('admin.services.billing.payment-view', compact('payment', 'invoice', 'invoice_items'));
     }
+
+    public function forms($id)
+    {
+        $payment = Payments::getByID($id);
+        $invoice = Invoices::getByID($payment->reference_id);
+        $invoice_items = InvoiceItems::getInvoiceItems($payment->reference_id);
+
+        return view('admin.forms.or', compact('payment', 'invoice', 'invoice_items'));
+    }
 }

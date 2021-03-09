@@ -46,12 +46,12 @@
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>Certification No.:</td>
-                                                <td style="width:80%">: <b>To Be Generated</b></td>
+                                                <td style="width:80%">: <b>{{ $certificate->certificate_no }}</b></td>
                                             </tr>
 
                                             <tr>
                                                 <td>Registration No.:</td>
-                                                <td style="width:80%">: <b>To Be Generated</b></td>
+                                                <td style="width:80%">: <b>{{ $certificate->registration_no }}</b></td>
                                             </tr>
                                         </table>
 
