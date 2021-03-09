@@ -169,6 +169,16 @@
             </ul>
         </li>
 
+        <li class="header">Reports</li>
+        <li class="{{ set_nav_status(['admin/reports/*']) }}">
+            <a href="#" class="has-arrow"><i class="icon-bar-chart"></i><span>Reports</span></a>
+            <ul>
+                <li class="{{ set_nav_status(['admin/reports/trainees/*']) }}">
+                    <a href="{{ route('trainees-report') }}">Trainees</a>
+                </li>
+            </ul>
+        </li>
+
         <li class="header">Manage Users</li>
         <li class="{{ set_nav_status(['admin/manage-users/students*']) }}"><a href="{{ route('students') }}"><i class="icon-users"></i><span>Students</span></a></li>
         <li class="{{ set_nav_status(['admin/manage-users/faculty*']) }}"><a href="{{ route('faculty') }}"><i class="icon-users"></i><span>Faculty</span></a></li>

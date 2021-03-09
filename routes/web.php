@@ -193,6 +193,16 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
         });
     });
 
+    //-------- REPORTS --------//
+    Route::group(['name' => 'reports.', 'prefix' => 'reports', 'namespace' => 'Reports'], function () {
+        //-------- TRAINEES --------//
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('trainees/index', 'TraineesController@index')->name('trainees-report');
+            //-------- AJAX REQUEST FOR TRAINEES --------//
+            Route::get('trainees/filter', 'TraineesController@filter')->name('filter-trainees');
+        });
+    });
+
     //-------- SETUP --------//
     Route::group(['name' => 'setup.', 'prefix' => 'setup', 'namespace' => 'Setup'], function () {
 
