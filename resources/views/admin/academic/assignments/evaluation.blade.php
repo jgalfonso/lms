@@ -102,7 +102,7 @@
                                     <td class="text-right">3 </td>
                                     <td>{{ date('d-m-Y', strtotime($participant->date_created)) }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('submitted-attachments', $participant->participant_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
+                                        <a href="{{ route('assignments-submitted-attachments', $participant->participant_id) }}" type="button" type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

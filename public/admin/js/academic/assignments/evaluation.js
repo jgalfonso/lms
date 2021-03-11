@@ -102,6 +102,7 @@ $(function () {
 
         search : function() {
             var class_id = $('#classes').find(":selected").val();
+            var keyword  = $('#keyword').val();
 
             $.ajax({
                 url: App.baseUrl + '/filterSubmitted',
@@ -109,6 +110,7 @@ $(function () {
                 dataType: "json",
                 data: {
                     'class_id' : class_id,
+                    'keyword'  : keyword,
                 },
                 success: function (data) {
                     table.clear().draw();
