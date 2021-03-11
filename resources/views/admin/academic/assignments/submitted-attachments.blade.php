@@ -88,12 +88,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach ($attachments as $attachment): ?>
                                         <tr>
-                                            <td>image.jpeg</td>
+                                            <td>{{ $attachment->filename }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-sm btn-default" title="" data-toggle="tooltip" data-placement="top" data-original-title="Assess"><i class="fa fa-download"></i></button>
                                             </td>
                                         </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

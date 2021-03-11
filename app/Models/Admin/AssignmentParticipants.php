@@ -16,15 +16,23 @@ class AssignmentParticipants extends Model
      */
     public static function getParticipants()
     {
+        $attachments = DB::table('assignment_attachments')
+            ->select(DB::raw('COUNT(assignment_id) attachments'), 'assignment_id')
+            ->groupBy('assignment_id');
+
         $participants = self::select(
                         'assignment_participants.*',
                         'assignments.title as assignment',
                         'classes.code as class_code',
                         'classes.name as class_name',
                         'profiles.reference_no as student_no',
-                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS student')
+                        DB::raw('CONCAT(profiles.lastname, ", ", profiles.firstname, " ", profiles.middlename) AS student'),
+                        'attachments.attachments'
                     )
                     ->leftJoin('assignments', 'assignment_participants.assignment_id', '=', 'assignments.assignment_id')
+                    ->leftJoinSub($attachments, 'attachments', function ($join) {
+                        $join->on('attachments.assignment_id', 'assignments.assignment_id');
+                    })
                     ->leftJoin('classes', 'assignment_participants.class_id', '=', 'classes.class_id')
                     ->leftJoin('profiles', function($join)
                         {

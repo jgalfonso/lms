@@ -60,9 +60,11 @@ class AssignmentsController extends Controller
     public function submittedAttachments (Request $request, $id)
     {
         $participant  = AssignmentParticipants::getByID($id);
+        $attachments  = AssignmentAttachments::getAttachments($participant->assignment_id);
 
         return view('admin.academic.assignments.submitted-attachments', compact(
-            'participant'
+            'participant',
+            'attachments'
         ));
     }
 

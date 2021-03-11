@@ -71,7 +71,7 @@ Route::group(['name' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], 
             Route::get('assignments/view/{id}', 'AssignmentsController@view')->name('view-assignment');
             Route::get('assignments/edit/{id}', 'AssignmentsController@edit')->name('edit-assignment');
             Route::get('assignments/evaluation', 'AssignmentsController@evaluation')->name('evaluation-assignment');
-            Route::get('assignments/submitted-attachments/{id}', 'AssignmentsController@submittedAttachments')->name('submitted-attachments');
+            Route::get('assignments/submitted-attachments/{id}', 'AssignmentsController@submittedAttachments')->name('assignments-submitted-attachments');
             //-------- AJAX REQUEST FOR ASSIGNMENTS --------//
             Route::post('assignments/store', 'AssignmentsController@store')->name('store-assignment');
             Route::post('assignments/getClasses', 'AssignmentsController@getClasses')->name('get-classes');
